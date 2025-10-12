@@ -13,8 +13,8 @@ const patientSchema = new mongoose.Schema(
       enum: ["male", "female", "other"],
       required: true,
     },
-    dateOfBirth: {
-      type: Date,
+    age: {
+      type: Number,
       required: true,
     },
     address: {

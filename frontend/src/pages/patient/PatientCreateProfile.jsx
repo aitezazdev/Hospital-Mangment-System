@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { FaUserMd, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaUserMd, FaMapMarkerAlt } from "react-icons/fa";
 import { RiGenderlessLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createPatientProfile } from "../../apis/patient";
 
 const PatientCreateProfile = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
   const [message, setMessage] = useState(null);
 
   const [formData, setFormData] = useState({
     gender: "",
-    dateOfBirth: "",
+    age: "",
     address: "",
     medicalHistory: "",
   });
@@ -21,10 +19,12 @@ const PatientCreateProfile = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    if (errors[e.target.name]) {
+    const { name, value } = e.target;
+    if (name === "age" && value < 0) return;
+    setFormData({ ...formData, [name]: value });
+    if (errors[name]) {
       const newErrors = { ...errors };
-      delete newErrors[e.target.name];
+      delete newErrors[name];
       setErrors(newErrors);
     }
   };
@@ -32,8 +32,9 @@ const PatientCreateProfile = () => {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.gender) newErrors.gender = "Gender is required";
-    if (!formData.dateOfBirth)
-      newErrors.dateOfBirth = "Date of Birth is required";
+    if (!formData.age) newErrors.age = "Age is required";
+    if (formData.age && (formData.age < 1 || formData.age > 120))
+      newErrors.age = "Please enter a valid age";
     if (!formData.address) newErrors.address = "Address is required";
     return newErrors;
   };
@@ -85,7 +86,8 @@ const PatientCreateProfile = () => {
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="w-full outline-none text-gray-700 bg-transparent">
+                className="w-full outline-none text-gray-700 bg-transparent"
+              >
                 <option value="">Select Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -98,21 +100,19 @@ const PatientCreateProfile = () => {
           </div>
 
           <div>
-            <label className="text-gray-600 px-3 font-bold block">
-              Date of Birth
-            </label>
+            <label className="text-gray-600 px-3 font-bold block">Age</label>
             <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
-              <FaCalendarAlt className="text-gray-400 text-lg mr-2" />
               <input
-                type="date"
-                name="dateOfBirth"
-                value={formData.dateOfBirth}
+                type="number"
+                name="age"
+                placeholder="Enter your age"
+                value={formData.age}
                 onChange={handleChange}
                 className="w-full outline-none text-gray-700"
               />
             </div>
-            {errors.dateOfBirth && (
-              <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>
+            {errors.age && (
+              <p className="text-red-500 text-sm mt-1">{errors.age}</p>
             )}
           </div>
 
@@ -151,7 +151,8 @@ const PatientCreateProfile = () => {
             disabled={loading}
             className={`w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg font-semibold shadow-md ${
               loading && "bg-emerald-300"
-            }`}>
+            }`}
+          >
             {loading ? "Submitting..." : "Submit Profile"}
           </button>
         </form>

@@ -118,6 +118,7 @@ export const SignInUser = async (req, res, next) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      phone: user.phone,
     };
 
     if (user.role === "patient" || user.role === "doctor") {
