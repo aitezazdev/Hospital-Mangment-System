@@ -102,7 +102,6 @@ export const todayREvenue = async () => {
 export const thisWeekRevenue = async () => {
   try {
     const response = await api.get("/appointment/week-revenue");
-    console.log(response);
     return response.data;
   } catch (error) {
     const backendMessage =

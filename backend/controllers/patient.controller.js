@@ -7,12 +7,19 @@ import { sendEmail } from "../utils/sendEmail.js";
 // Create Patient Profile
 export const createPatientProfile = async (req, res, next) => {
   try {
-    const { gender, dateOfBirth, address, medicalHistory } = req.body;
+    const { gender, age, address, medicalHistory } = req.body;
 
-    if (!gender || !dateOfBirth || !address) {
+    if (!gender || !age || !address) {
       return res
         .status(400)
-        .json({ message: "Gender, Date of Birth, and Address are required" });
+        .json({ message: "Gender, Age, and Address are required" });
+    }
+
+    const parsedAge = parseInt(age, 10);
+    if (isNaN(parsedAge) || parsedAge < 0 || parsedAge > 150) {
+      return res
+        .status(400)
+        .json({ message: "Age must be a valid number between 0 and 150" });
     }
 
     const existingProfile = await Patient.findOne({ user: req.user._id });
@@ -25,7 +32,7 @@ export const createPatientProfile = async (req, res, next) => {
     const newPatient = await Patient.create({
       user: req.user._id,
       gender,
-      dateOfBirth,
+      age: parsedAge,
       address,
       medicalHistory,
     });
@@ -66,7 +73,7 @@ export const createPatientProfile = async (req, res, next) => {
 export const updatePatientProfile = async (req, res, next) => {
   try {
     const userId = req.params.id;
-    const { gender, dateOfBirth, address, medicalHistory } = req.body;
+    const { gender, age, address, medicalHistory } = req.body;
 
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
@@ -80,7 +87,15 @@ export const updatePatientProfile = async (req, res, next) => {
 
     const updates = {};
     if (gender) updates.gender = gender;
-    if (dateOfBirth) updates.dateOfBirth = dateOfBirth;
+    if (age !== undefined) {
+      const parsedAge = parseInt(age, 10);
+      if (isNaN(parsedAge) || parsedAge < 0 || parsedAge > 150) {
+        return res
+          .status(400)
+          .json({ message: "Age must be a valid number between 0 and 150" });
+      }
+      updates.age = parsedAge;
+    }
     if (address) updates.address = address;
     if (medicalHistory) updates.medicalHistory = medicalHistory;
 

@@ -3,10 +3,14 @@ import { FaUserMd, FaMapMarkerAlt } from "react-icons/fa";
 import { RiGenderlessLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { createPatientProfile } from "../../apis/patient";
+import { useDispatch } from "react-redux";
+import { setHasProfile } from "../../redux/slices/auth";
 
 const PatientCreateProfile = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState("error");
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     gender: "",
@@ -49,12 +53,33 @@ const PatientCreateProfile = () => {
 
     setLoading(true);
     setErrors({});
+    setMessage(null);
+
     try {
-      const response = await createPatientProfile(formData);
-      setMessage(response.message);
+      const submitData = {
+        ...formData,
+        age: parseInt(formData.age, 10),
+        medicalHistory: formData.medicalHistory
+          ? formData.medicalHistory
+              .split(",")
+              .map((item) => item.trim())
+              .filter((item) => item !== "")
+          : [],
+      };
+
+      const response = await createPatientProfile(submitData);
+
+      setMessageType("success");
+      setMessage(response.message || "Profile created successfully!");
+      dispatch(setHasProfile(true));
       navigate("/patient/dashboard");
     } catch (error) {
-      setMessage(error.message || "Error submitting profile");
+      setMessageType("error");
+      setMessage(
+        error.response?.data?.message ||
+          error.message ||
+          "Error submitting profile"
+      );
     } finally {
       setLoading(false);
     }
@@ -73,7 +98,12 @@ const PatientCreateProfile = () => {
         </div>
 
         {message && (
-          <div className="bg-red-100 text-red-600 border border-red-400 rounded p-2 mb-4 text-sm text-center">
+          <div
+            className={`${
+              messageType === "success"
+                ? "bg-green-100 text-green-600 border-green-400"
+                : "bg-red-100 text-red-600 border-red-400"
+            } border rounded p-2 mb-4 text-sm text-center`}>
             {message}
           </div>
         )}
@@ -86,8 +116,7 @@ const PatientCreateProfile = () => {
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="w-full outline-none text-gray-700 bg-transparent"
-              >
+                className="w-full outline-none text-gray-700 bg-transparent">
                 <option value="">Select Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -108,6 +137,8 @@ const PatientCreateProfile = () => {
                 placeholder="Enter your age"
                 value={formData.age}
                 onChange={handleChange}
+                min="1"
+                max="120"
                 className="w-full outline-none text-gray-700"
               />
             </div>
@@ -134,13 +165,17 @@ const PatientCreateProfile = () => {
           </div>
 
           <div>
+            <label className="text-gray-600 px-3 font-bold block text-sm mb-1">
+              Medical History (optional, comma-separated)
+            </label>
             <div className="flex items-start border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
               <FaUserMd className="text-gray-400 text-lg mr-2 mt-2" />
               <textarea
                 name="medicalHistory"
-                placeholder="Medical History (optional)"
+                placeholder="e.g., Diabetes, Hypertension, Allergies"
                 value={formData.medicalHistory}
                 onChange={handleChange}
+                rows="3"
                 className="w-full outline-none text-gray-700 resize-none"
               />
             </div>
@@ -149,10 +184,9 @@ const PatientCreateProfile = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg font-semibold shadow-md ${
-              loading && "bg-emerald-300"
-            }`}
-          >
+            className={`w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg font-semibold shadow-md transition-colors ${
+              loading && "bg-emerald-300 cursor-not-allowed"
+            }`}>
             {loading ? "Submitting..." : "Submit Profile"}
           </button>
         </form>

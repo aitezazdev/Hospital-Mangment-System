@@ -27,7 +27,7 @@ const PatientProfile = () => {
   const [isEditingPatient, setIsEditingPatient] = useState(false);
   const [patientForm, setPatientForm] = useState({
     gender: "",
-    dateOfBirth: "",
+    age: "",
     address: "",
     medicalHistory: "",
   });
@@ -43,9 +43,7 @@ const PatientProfile = () => {
             dispatch(setPatientProfile(profileData.patientProfile));
             setPatientForm({
               gender: profileData.patientProfile.gender || "",
-              dateOfBirth: profileData.patientProfile.dateOfBirth
-                ? profileData.patientProfile.dateOfBirth.split("T")[0]
-                : "",
+              age: profileData.patientProfile.age || "",
               address: profileData.patientProfile.address || "",
               medicalHistory: (
                 profileData.patientProfile.medicalHistory || []
@@ -95,9 +93,7 @@ const PatientProfile = () => {
     if (patientProfile) {
       setPatientForm({
         gender: patientProfile.gender || "",
-        dateOfBirth: patientProfile.dateOfBirth
-          ? patientProfile.dateOfBirth.split("T")[0]
-          : "",
+        age: patientProfile.age || "",
         address: patientProfile.address || "",
         medicalHistory: patientProfile.medicalHistory || [],
       });
@@ -106,13 +102,21 @@ const PatientProfile = () => {
   };
 
   const handlePatientChange = (e) => {
-    setPatientForm({ ...patientForm, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    if (name === "age") {
+      const numValue = value === "" ? "" : parseInt(value, 10);
+      setPatientForm({ ...patientForm, [name]: numValue });
+    } else {
+      setPatientForm({ ...patientForm, [name]: value });
+    }
   };
 
   const handleSavePatient = async () => {
     try {
       const updated = await updateProfessionalInfo(profile._id, {
         ...patientForm,
+        age: parseInt(patientForm.age, 10) || 0,
         medicalHistory: patientForm.medicalHistory
           .split(",")
           .map((item) => item.trim())
@@ -124,9 +128,7 @@ const PatientProfile = () => {
 
       setPatientForm({
         gender: updated.patient.gender || "",
-        dateOfBirth: updated.patient.dateOfBirth
-          ? updated.patient.dateOfBirth.split("T")[0]
-          : "",
+        age: updated.patient.age || "",
         address: updated.patient.address || "",
         medicalHistory: (updated.patient.medicalHistory || []).join(", "),
       });
@@ -156,20 +158,16 @@ const PatientProfile = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="bg-emerald-600 text-white rounded-xl shadow-lg p-8 mb-8 flex flex-col md:flex-row justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 flex items-center">
-              <div className="w-8 h-8 bg-blue-500 rounded-lg mr-3"></div>
-              Patient Profile
-            </h1>
-            <p className="text-gray-600 mt-2">
+            <h1 className="text-3xl font-bold mb-2">Patient Profile</h1>
+            <p className="text-emerald-100 text-sm">
               Manage your personal and medical details
             </p>
           </div>
           <button
             onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            className="mt-4 md:mt-0 bg-red-400 text-white hover:bg-red-500 cursor-pointer font-medium px-6 py-3 rounded-xl transition-all duration-200 shadow-md">
             Logout
           </button>
         </div>
@@ -178,25 +176,27 @@ const PatientProfile = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               {!isEditingPersonal ? (
-                <div className="bg-white rounded-xl shadow-lg border-l-4 border-emerald-500 p-6">
+                <div className="bg-white rounded-xl shadow-md p-6">
                   <h2 className="text-xl font-bold text-gray-800 mb-6">
                     Personal Information
                   </h2>
-                  <p>
-                    <strong>Name:</strong> {profile.name}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {profile.email}
-                  </p>
-                  <p>
-                    <strong>Phone:</strong> {profile.phone}
-                  </p>
-                  <p>
-                    <strong>Role:</strong> {profile.role}
-                  </p>
+                  <div className="space-y-2 text-gray-700">
+                    <p>
+                      <strong>Name:</strong> {profile.name}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {profile.email}
+                    </p>
+                    <p>
+                      <strong>Phone:</strong> {profile.phone}
+                    </p>
+                    <p>
+                      <strong>Role:</strong> {profile.role}
+                    </p>
+                  </div>
                 </div>
               ) : (
-                <div className="bg-white rounded-xl shadow-lg border-l-4 border-emerald-500 p-6">
+                <div className="bg-white rounded-xl shadow-md p-6">
                   <h2 className="text-xl font-bold text-gray-800 mb-6">
                     Edit Personal Information
                   </h2>
@@ -234,12 +234,12 @@ const PatientProfile = () => {
                   <div className="flex space-x-4 mt-6">
                     <button
                       onClick={handleSavePersonal}
-                      className="bg-emerald-600 text-white px-4 py-2 rounded-lg">
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg">
                       Save
                     </button>
                     <button
                       onClick={() => setIsEditingPersonal(false)}
-                      className="bg-gray-200 px-4 py-2 rounded-lg">
+                      className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg">
                       Cancel
                     </button>
                   </div>
@@ -247,33 +247,30 @@ const PatientProfile = () => {
               )}
 
               {!isEditingPatient ? (
-                <div className="bg-white rounded-xl shadow-lg border-l-4 border-blue-500 p-6">
+                <div className="bg-white rounded-xl shadow-md p-6">
                   <h2 className="text-xl font-bold text-gray-800 mb-6">
                     Patient Information
                   </h2>
-                  <p>
-                    <strong>Gender:</strong> {patientProfile?.gender}
-                  </p>
-                  <p>
-                    <strong>Date of Birth:</strong>{" "}
-                    {patientProfile?.dateOfBirth
-                      ? new Date(
-                          patientProfile.dateOfBirth
-                        ).toLocaleDateString()
-                      : "N/A"}
-                  </p>
-                  <p>
-                    <strong>Address:</strong> {patientProfile?.address}
-                  </p>
-                  <p>
-                    <strong>Medical History:</strong>{" "}
-                    {patientProfile?.medicalHistory?.length > 0
-                      ? patientProfile.medicalHistory.join(", ")
-                      : "None"}
-                  </p>
+                  <div className="space-y-2 text-gray-700">
+                    <p>
+                      <strong>Gender:</strong> {patientProfile?.gender || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Age:</strong> {patientProfile?.age || "N/A"} years
+                    </p>
+                    <p>
+                      <strong>Address:</strong> {patientProfile?.address || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Medical History:</strong>{" "}
+                      {patientProfile?.medicalHistory?.length > 0
+                        ? patientProfile.medicalHistory.join(", ")
+                        : "None"}
+                    </p>
+                  </div>
                 </div>
               ) : (
-                <div className="bg-white rounded-xl shadow-lg border-l-4 border-blue-500 p-6">
+                <div className="bg-white rounded-xl shadow-md p-6">
                   <h2 className="text-xl font-bold text-gray-800 mb-6">
                     Edit Patient Information
                   </h2>
@@ -287,11 +284,14 @@ const PatientProfile = () => {
                     <option value="female">Female</option>
                   </select>
                   <input
-                    type="date"
-                    name="dateOfBirth"
-                    value={patientForm.dateOfBirth}
+                    type="number"
+                    name="age"
+                    value={patientForm.age}
                     onChange={handlePatientChange}
                     className="w-full mb-4 px-3 py-2 border rounded-lg"
+                    placeholder="Age"
+                    min="0"
+                    max="150"
                   />
                   <textarea
                     name="address"
@@ -307,16 +307,15 @@ const PatientProfile = () => {
                     className="w-full mb-4 px-3 py-2 border rounded-lg"
                     placeholder="Enter medical history (comma separated)"
                   />
-
                   <div className="flex space-x-4 mt-6">
                     <button
                       onClick={handleSavePatient}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
                       Save
                     </button>
                     <button
                       onClick={() => setIsEditingPatient(false)}
-                      className="bg-gray-200 px-4 py-2 rounded-lg">
+                      className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg">
                       Cancel
                     </button>
                   </div>
@@ -325,21 +324,21 @@ const PatientProfile = () => {
             </div>
 
             <div className="space-y-6">
-              <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                <div className="w-20 h-20 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <div className="w-12 h-12 bg-blue-500 rounded-full"></div>
+              <div className="bg-white p-6 rounded-xl shadow-md text-center">
+                <div className="w-20 h-20 bg-emerald-100 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-emerald-700">
+                  {profile.name.charAt(0).toUpperCase()}
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
                   {profile.name}
                 </h3>
-                <p className="text-gray-600 mb-4">{patientProfile?.gender}</p>
+                <p className="text-gray-600 mb-4">{patientProfile?.gender || "Not specified"}</p>
                 <p className="text-sm text-gray-500">
-                  Member Since{" "}
-                  {new Date(profile.createdAt).toLocaleDateString()}
+                  Member Since
+                  <span className="font-semibold"> {new Date(profile.createdAt).toLocaleDateString("en-GB")}</span>
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="bg-white p-6 rounded-xl shadow-md">
                 <h3 className="text-lg font-bold text-gray-800 mb-4">
                   Profile Actions
                 </h3>
