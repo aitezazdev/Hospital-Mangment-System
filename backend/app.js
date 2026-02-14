@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { connectDB } from "./config/db.js";
+import { dbConnection } from "./config/db.js";
 import authRouter from "./routes/auth.route.js";
 import doctorRouter from "./routes/doctor.route.js";
 import { errorHandler } from "./middlewares/error.js";
