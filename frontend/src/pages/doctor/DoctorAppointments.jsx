@@ -193,14 +193,11 @@ const DoctorAppointments = () => {
         return "No appointments found";
     }
   };
-
   return (
     <div className="space-y-6">
-      <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8">
-        <h1 className="text-3xl font-bold mb-2">Appointments</h1>
-        <p className="opacity-90">
-          Manage your patient appointments efficiently
-        </p>
+      <div className="border-b border-slate-200 pb-5 mb-8">
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Appointments</h1>
+        <p className="text-slate-500 text-sm mt-1">Manage your patient appointments efficiently</p>
       </div>
 
       <div className="relative w-2/3 mx-auto">

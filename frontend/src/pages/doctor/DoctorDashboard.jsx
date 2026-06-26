@@ -87,21 +87,19 @@ const DoctorDashboard = () => {
         </div>
       ) : (
         <div className="max-w-7xl mx-auto space-y-10">
-          <div className="bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-2xl shadow-xl p-8">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-              <div>
-                <h1 className="text-3xl font-extrabold text-white mb-1 tracking-tight">
-                  Doctor Dashboard
-                </h1>
-                <p className="text-emerald-100/90 font-medium text-sm">{today}</p>
-              </div>
-              <div
-                className={`mt-4 sm:mt-0 px-4 py-2 rounded-lg font-semibold shadow-sm ${
-                  user.isApproved ? "bg-emerald-100/20 text-emerald-100 border border-emerald-400/20" : "bg-yellow-100/20 text-yellow-100 border border-yellow-400/20"
-                }`}
-              >
-                {user.isApproved ? "Profile Approved" : "Profile Pending Approval"}
-              </div>
+          <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Doctor Dashboard</h1>
+              <p className="text-slate-500 text-sm mt-1">{today}</p>
+            </div>
+            <div
+              className={`px-3 py-1 rounded-md text-xs font-semibold border ${
+                user.isApproved
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+                  : "bg-amber-50 text-amber-700 border-amber-100"
+              }`}
+            >
+              {user.isApproved ? "Profile Approved" : "Profile Pending Approval"}
             </div>
           </div>
 

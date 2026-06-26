@@ -246,17 +246,16 @@ const DoctorAvailability = () => {
   return (
     <div className="space-y-6">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-md p-8 mb-8 flex items-center justify-between">
+        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-1">Doctor Availability</h1>
-            <p className="opacity-90">
-              Manage your weekly schedule and availability
-            </p>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Doctor Availability</h1>
+            <p className="text-slate-500 text-sm mt-1">Manage your weekly schedule and availability</p>
           </div>
           {!isEditing && (
             <button
               onClick={() => editingAvailability()}
-              className="bg-white text-emerald-700 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium shadow-sm transition-all">
+              className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-sm transition-colors cursor-pointer shrink-0"
+            >
               Edit Availability
             </button>
           )}

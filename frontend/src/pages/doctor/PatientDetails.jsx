@@ -119,7 +119,8 @@ const PatientDetails = () => {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="max-w-4xl mx-auto bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 text-white rounded-2xl shadow-xl p-8 mb-8 flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 mb-8 gap-4">
+
         <div>
           <h1 className="text-3xl font-black mb-1">
             {patient.name}
@@ -127,7 +128,8 @@ const PatientDetails = () => {
           <p className="text-slate-300 text-sm">
             {calculateAge(patient.dateOfBirth)} yrs &bull; {patient.gender?.toUpperCase()}
           </p>
-        </div>
+        
+      </div>
         <Link
           to="/doctor/patients"
           className="flex items-center gap-2 text-sm bg-white hover:bg-slate-100 text-slate-900 font-semibold px-4 py-2.5 rounded-xl shadow-md transition"

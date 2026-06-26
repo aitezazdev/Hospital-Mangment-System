@@ -52,7 +52,7 @@ const AiAssistant = () => {
     <div className="py-2">
       <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[85vh]">
         {/* Chat Header */}
-        <div className="bg-gradient-to-r from-teal-950 via-slate-900 to-teal-950 p-6 text-white flex items-center justify-between">
+        <div className="bg-slate-900 p-6 text-white flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center text-slate-900 shadow-md">
               <Sparkles className="w-5 h-5 animate-pulse" />

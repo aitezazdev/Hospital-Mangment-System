@@ -122,9 +122,9 @@ const DoctorPatients = () => {
   return (
     <div className="space-y-6">
       <div className="max-w-7xl mx-auto">
-        <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8">
-          <h1 className="text-3xl font-bold mb-2">Patients</h1>
-          <p className="opacity-90">Manage and track all your patients</p>
+        <div className="border-b border-slate-200 pb-5 mb-8">
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Patients</h1>
+          <p className="text-slate-500 text-sm mt-1">Manage and track all your patients</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

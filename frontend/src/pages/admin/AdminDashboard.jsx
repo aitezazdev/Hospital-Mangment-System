@@ -142,15 +142,17 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-2xl shadow-xl p-8 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 mb-8 gap-4">
+
           <div>
             <div className="flex justify-between">
               <h1 className="text-4xl font-bold mb-4">Admin Dashboard</h1>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div className="bg-white/10 border border-white/20 backdrop-blur-sm rounded-xl px-6 py-3 shadow-inner">
-                  <p className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-0.5">Today</p>
+                <div className="bg-slate-100 border border-slate-200 border border-white/20 backdrop-blur-sm rounded-xl px-6 py-3 shadow-inner">
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Today</p>
                   <p className="font-semibold text-sm">{today}</p>
-                </div>
+                
+      </div>
               </div>
             </div>
           </div>

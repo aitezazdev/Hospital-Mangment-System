@@ -8,7 +8,6 @@ import {
   Clock,
   User,
   LogOut,
-  Activity,
   Menu,
   X,
 } from "lucide-react";
@@ -25,8 +24,6 @@ const DoctorLayout = () => {
   }
 
   const handleLogout = () => {
-    // Clear auth state synchronously FIRST to stop any re-render loops,
-    // then navigate immediately — no async thunk that could race conditions
     dispatch(logout());
     navigate("/auth/signin", { replace: true });
   };
@@ -34,7 +31,7 @@ const DoctorLayout = () => {
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 text-slate-800">
       {/* Mobile Top Header */}
-      <header className="md:hidden flex items-center justify-between bg-teal-950 text-white p-4 shadow-md z-50">
+      <header className="md:hidden flex items-center justify-between bg-slate-900 text-white p-4 shadow-md z-50">
         <div className="flex items-center space-x-3">
           <svg viewBox="0 0 24 24" className="w-7 h-7 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="4" y="3" width="4" height="8" rx="2" className="fill-teal-400" />
@@ -56,15 +53,15 @@ const DoctorLayout = () => {
       {/* Sidebar Navigation */}
       <aside
         className={`
-          bg-gradient-to-b from-teal-950 to-slate-950 text-slate-100 shadow-2xl w-72 flex flex-col z-45
+          bg-slate-900 text-slate-100 w-72 flex flex-col z-45
           fixed inset-y-0 left-0 pt-16 md:pt-0 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         {/* Header Block */}
-        <div className="p-6 border-b border-slate-800/80">
+        <div className="p-6 border-b border-slate-800">
           <div className="flex items-center space-x-3">
-            <svg viewBox="0 0 24 24" className="w-8 h-8 shrink-0 animate-pulse" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 24 24" className="w-8 h-8 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="4" y="3" width="4" height="8" rx="2" className="fill-teal-400" />
               <rect x="4" y="13" width="4" height="8" rx="2" className="fill-emerald-400" />
               <rect x="6" y="10" width="12" height="4" rx="2" className="fill-teal-300" />
@@ -88,12 +85,12 @@ const DoctorLayout = () => {
             className={({ isActive }) =>
               `flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
                 isActive
-                  ? "bg-teal-500 text-slate-950 font-bold shadow-lg shadow-teal-500/20"
+                  ? "bg-teal-700 text-white font-bold"
                   : "text-slate-300 hover:text-white hover:bg-white/5"
               }`
             }
           >
-            <LayoutDashboard className="w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-105" />
+            <LayoutDashboard className="w-5 h-5 shrink-0" />
             <span className="font-semibold text-sm">Dashboard</span>
           </NavLink>
 
@@ -103,12 +100,12 @@ const DoctorLayout = () => {
             className={({ isActive }) =>
               `flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
                 isActive
-                  ? "bg-teal-500 text-slate-950 font-bold shadow-lg shadow-teal-500/20"
+                  ? "bg-teal-700 text-white font-bold"
                   : "text-slate-300 hover:text-white hover:bg-white/5"
               }`
             }
           >
-            <Calendar className="w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-105" />
+            <Calendar className="w-5 h-5 shrink-0" />
             <span className="font-semibold text-sm">Appointments</span>
           </NavLink>
 
@@ -118,12 +115,12 @@ const DoctorLayout = () => {
             className={({ isActive }) =>
               `flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
                 isActive
-                  ? "bg-teal-500 text-slate-950 font-bold shadow-lg shadow-teal-500/20"
+                  ? "bg-teal-700 text-white font-bold"
                   : "text-slate-300 hover:text-white hover:bg-white/5"
               }`
             }
           >
-            <Users className="w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-105" />
+            <Users className="w-5 h-5 shrink-0" />
             <span className="font-semibold text-sm">Patients</span>
           </NavLink>
 
@@ -133,12 +130,12 @@ const DoctorLayout = () => {
             className={({ isActive }) =>
               `flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
                 isActive
-                  ? "bg-teal-500 text-slate-950 font-bold shadow-lg shadow-teal-500/20"
+                  ? "bg-teal-700 text-white font-bold"
                   : "text-slate-300 hover:text-white hover:bg-white/5"
               }`
             }
           >
-            <Clock className="w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-105" />
+            <Clock className="w-5 h-5 shrink-0" />
             <span className="font-semibold text-sm">Availability</span>
           </NavLink>
 
@@ -148,18 +145,18 @@ const DoctorLayout = () => {
             className={({ isActive }) =>
               `flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
                 isActive
-                  ? "bg-teal-500 text-slate-950 font-bold shadow-lg shadow-teal-500/20"
+                  ? "bg-teal-700 text-white font-bold"
                   : "text-slate-300 hover:text-white hover:bg-white/5"
               }`
             }
           >
-            <User className="w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-105" />
+            <User className="w-5 h-5 shrink-0" />
             <span className="font-semibold text-sm">Profile</span>
           </NavLink>
         </nav>
 
         {/* User Block & Logout */}
-        <div className="p-6 border-t border-slate-800/80 space-y-4">
+        <div className="p-6 border-t border-slate-800 space-y-4">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center border border-slate-700">
               <User className="w-5 h-5 text-slate-300" />
