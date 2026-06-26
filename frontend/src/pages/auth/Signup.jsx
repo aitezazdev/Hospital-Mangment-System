@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, error, user, token } = useSelector((state) => state.auth);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const Signup = () => {
   });
 
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       if (user.role === "doctor") {
         navigate("/doctor/create-profile");
       } else if (user.role === "patient") {
@@ -31,7 +31,7 @@ const Signup = () => {
         navigate("/");
       }
     }
-  }, [user, navigate]);
+  }, [user, token, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

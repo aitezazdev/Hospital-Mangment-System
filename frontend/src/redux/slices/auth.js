@@ -61,9 +61,11 @@ const getStoredUser = () => {
   }
 };
 
+const token = localStorage.getItem("token") || null;
+
 const initialState = {
-  user: getStoredUser(),
-  token: localStorage.getItem("token") || null,
+  user: token ? getStoredUser() : null,
+  token: token,
   loading: false,
   error: null,
 };

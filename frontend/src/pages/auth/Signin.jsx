@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import { signinUser } from "../../redux/slices/auth";
 
 const Signin = () => {
   const dispatch = useDispatch();
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, error, user, token } = useSelector((state) => state.auth);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -19,7 +19,7 @@ const Signin = () => {
   });
 
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       if (user.role === "admin") {
         navigate("/admin/dashboard");
       } else if (!user.hasProfile) {
@@ -36,7 +36,7 @@ const Signin = () => {
         }
       }
     }
-  }, [user, navigate]);
+  }, [user, token, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
