@@ -194,15 +194,17 @@ const AllDoctors = () => {
             { key: "rejected", label: "Rejected" },
           ]}
         />
-        <Table
-          rowKey="_id"
-          columns={columns}
-          dataSource={filteredDoctors}
-          loading={{ spinning: loading, indicator: <Spin size="large" /> }}
-          className="rounded-lg shadow-sm"
-          pagination={{ className: "mt-4" }}
-          locale={{ emptyText: <Empty description={getEmptyText()} /> }}
-        />
+        <div className="overflow-x-auto mt-4">
+          <Table
+            rowKey="_id"
+            columns={columns}
+            dataSource={filteredDoctors}
+            loading={{ spinning: loading, indicator: <Spin size="large" /> }}
+            className="rounded-lg shadow-sm"
+            pagination={{ className: "mt-4" }}
+            locale={{ emptyText: <Empty description={getEmptyText()} /> }}
+          />
+        </div>
       </div>
 
       <Modal

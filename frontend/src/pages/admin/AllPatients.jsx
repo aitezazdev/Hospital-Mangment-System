@@ -114,17 +114,19 @@ const AllPatients = () => {
       </div>
 
       <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-        <Table
-          rowKey="_id"
-          columns={columns}
-          dataSource={filteredPatients}
-          loading={{ spinning: loading, indicator: <Spin size="large" /> }}
-          className="rounded-lg shadow-sm"
-          pagination={{ className: "mt-4" }}
-          locale={{
-            emptyText: <Empty description="No patients found" />,
-          }}
-        />
+        <div className="overflow-x-auto mt-4">
+          <Table
+            rowKey="_id"
+            columns={columns}
+            dataSource={filteredPatients}
+            loading={{ spinning: loading, indicator: <Spin size="large" /> }}
+            className="rounded-lg shadow-sm"
+            pagination={{ className: "mt-4" }}
+            locale={{
+              emptyText: <Empty description="No patients found" />,
+            }}
+          />
+        </div>
       </div>
 
       <Modal
