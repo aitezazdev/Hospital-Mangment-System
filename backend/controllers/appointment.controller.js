@@ -275,7 +275,7 @@ export const deleteAppointment = async (req, res, next) => {
 export const getAllAppointments = async (req, res, next) => {
   try {
     const doctorID = req.params.id;
-    const { status } = req.query;
+    const { status, allDates } = req.query;
     if (!doctorID) {
       return res.status(400).json({ message: "Doctor ID is required" });
     }
@@ -294,8 +294,10 @@ export const getAllAppointments = async (req, res, next) => {
       query.status = status;
     }
 
-    const startOfToday = moment().startOf("day").toDate();
-    query.date = { $gte: startOfToday };
+    if (allDates !== "true") {
+      const startOfToday = moment().startOf("day").toDate();
+      query.date = { $gte: startOfToday };
+    }
 
     const appointments = await Appointment.find(query)
       .populate({

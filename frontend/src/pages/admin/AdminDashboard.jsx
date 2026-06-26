@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Users,
-  UserCheck,
-  Calendar,
-  Activity,
-  Clock,
-  CheckCircle,
-  XCircle,
-  RefreshCw,
-} from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { fullList } from "../../apis/admin";
 
 const AdminDashboard = () => {
@@ -44,7 +35,7 @@ const AdminDashboard = () => {
     return (
       <div className="flex flex-col items-center justify-center h-[50vh]">
         <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-gray-600 text-lg">Loading dashboard...</p>
+        <p className="text-slate-600 text-lg">Loading dashboard...</p>
       </div>
     );
   }
@@ -52,15 +43,15 @@ const AdminDashboard = () => {
   if (error) {
     return (
       <div className="flex items-center justify-center h-[50vh] p-4">
-        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full border border-gray-100">
+        <div className="bg-white rounded-xl border border-slate-100 p-8 max-w-md w-full shadow-sm">
           <div className="text-red-500 text-5xl mb-4 text-center">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
+          <h2 className="text-2xl font-bold text-slate-800 mb-2 text-center">
             Error Loading Data
           </h2>
-          <p className="text-gray-600 text-center mb-6">{error}</p>
+          <p className="text-slate-600 text-center mb-6">{error}</p>
           <button
             onClick={fetchData}
-            className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer">
+            className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer border-none">
             <RefreshCw className="w-5 h-5" />
             Retry
           </button>
@@ -79,26 +70,18 @@ const AdminDashboard = () => {
     {
       title: "Total Doctors",
       value: stats.totalDoctors || 0,
-      icon: Users,
-      textColor: "text-emerald-600",
     },
     {
       title: "Pending Approvals",
       value: stats.pendingDoctors || 0,
-      icon: Clock,
-      textColor: "text-amber-600",
     },
     {
       title: "Total Patients",
       value: stats.totalPatients || 0,
-      icon: UserCheck,
-      textColor: "text-blue-600",
     },
     {
       title: "Total Appointments",
       value: stats.totalAppointments || 0,
-      icon: Calendar,
-      textColor: "text-purple-600",
     },
   ];
 
@@ -106,30 +89,18 @@ const AdminDashboard = () => {
     {
       title: "Pending",
       value: appointments.pending || 0,
-      icon: Clock,
-      textColor: "text-amber-600",
-      bgColor: "bg-amber-50",
     },
     {
       title: "Confirmed",
       value: appointments.confirmed || 0,
-      icon: CheckCircle,
-      textColor: "text-emerald-600",
-      bgColor: "bg-emerald-50",
     },
     {
       title: "Completed",
       value: appointments.completed || 0,
-      icon: Activity,
-      textColor: "text-blue-600",
-      bgColor: "bg-blue-50",
     },
     {
       title: "Cancelled",
       value: appointments.cancelled || 0,
-      icon: XCircle,
-      textColor: "text-red-600",
-      bgColor: "bg-red-50",
     },
   ];
 
@@ -143,18 +114,9 @@ const AdminDashboard = () => {
     <div className="space-y-6">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 mb-8 gap-4">
-
           <div>
-            <div className="flex justify-between">
-              <h1 className="text-4xl font-bold mb-4">Admin Dashboard</h1>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div className="bg-slate-100 border border-slate-200 border border-white/20 backdrop-blur-sm rounded-xl px-6 py-3 shadow-inner">
-                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-0.5">Today</p>
-                  <p className="font-semibold text-sm">{today}</p>
-                
-      </div>
-              </div>
-            </div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Admin Dashboard</h1>
+            <p className="text-slate-500 text-sm mt-1">{today}</p>
           </div>
         </div>
 
@@ -162,34 +124,23 @@ const AdminDashboard = () => {
           {statCards.map((stat, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
-              <div className={`h-2 bg-gradient-to-r ${stat.color}`}></div>
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`${stat.bgColor} p-3 rounded-lg`}>
-                    <stat.icon className={`w-6 h-6 ${stat.textColor}`} />
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
-                    <p className={`text-3xl font-bold ${stat.textColor}`}>
-                      {stat.value}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                {stat.title}
+              </span>
+              <span className="text-2xl font-bold text-slate-800 block">
+                {stat.value}
+              </span>
             </div>
           ))}
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center">
-              <Calendar className="w-6 h-6 text-teal-600 mr-3" />
-              <h2 className="text-2xl font-bold text-gray-800">
-                Appointment Overview
-              </h2>
-            </div>
-            <span className="text-sm text-gray-500">
+        <div className="bg-white rounded-xl border border-slate-100 p-6 mb-8 shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider">
+              Appointment Overview
+            </h2>
+            <span className="text-xs text-slate-400 font-semibold">
               Total: {stats.totalAppointments || 0}
             </span>
           </div>
@@ -197,20 +148,19 @@ const AdminDashboard = () => {
             {appointmentCards.map((card, index) => (
               <div
                 key={index}
-                className={`border-1 border-gray-300 rounded-xl p-5 hover:scale-105 transition-transform duration-300`}>
-                <div className="flex items-center justify-between mb-3">
-                  <card.icon className={`w-8 h-8 ${card.textColor}`} />
-                  <span className={`text-4xl font-bold ${card.textColor}`}>
-                    {card.value}
-                  </span>
-                </div>
-                <p className="text-gray-600 font-medium">{card.title}</p>
-                <div className="mt-2 text-xs text-gray-500">
+                className="border border-slate-100 rounded-xl p-5 bg-slate-50/50">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  {card.title}
+                </span>
+                <span className="text-2xl font-bold text-slate-800 block">
+                  {card.value}
+                </span>
+                <div className="mt-2 text-[10px] text-slate-400 font-semibold">
                   {stats.totalAppointments
                     ? `${Math.round(
                         (card.value / stats.totalAppointments) * 100
-                      )}%`
-                    : "0%"}
+                      )}% of total`
+                    : "0% of total"}
                 </div>
               </div>
             ))}
@@ -218,27 +168,27 @@ const AdminDashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-800">Doctors</h3>
-              <Users className="w-5 h-5 text-teal-600" />
+          {/* Doctors Stats */}
+          <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
+            <div className="border-b border-slate-100 pb-3 mb-4">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Doctors</h3>
             </div>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Active</span>
-                <span className="font-semibold text-teal-600">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-slate-400 font-semibold uppercase tracking-wider">Active</span>
+                <span className="font-bold text-slate-800">
                   {activeDoctors}
                 </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Pending</span>
-                <span className="font-semibold text-amber-600">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-slate-400 font-semibold uppercase tracking-wider">Pending Approval</span>
+                <span className="font-bold text-slate-800">
                   {stats.pendingDoctors || 0}
                 </span>
               </div>
-              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-500"
+                  className="h-full bg-teal-600 transition-all duration-500"
                   style={{
                     width: `${
                       stats.totalDoctors
@@ -247,52 +197,52 @@ const AdminDashboard = () => {
                     }%`,
                   }}></div>
               </div>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-[10px] text-slate-400 font-semibold">
                 {stats.totalDoctors
                   ? `${Math.round(
                       (activeDoctors / stats.totalDoctors) * 100
-                    )}% Approved`
-                  : "No data"}
+                    )}% of profiles approved`
+                  : "No profiles"}
               </p>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-800">Patients</h3>
-              <UserCheck className="w-5 h-5 text-blue-600" />
+          {/* Patients Stats */}
+          <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
+            <div className="border-b border-slate-100 pb-3 mb-4">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Patients</h3>
             </div>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Total Registered</span>
-                <span className="font-semibold text-blue-600">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-slate-400 font-semibold uppercase tracking-wider">Total Registered</span>
+                <span className="font-bold text-slate-800">
                   {stats.totalPatients || 0}
                 </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">With Appointments</span>
-                <span className="font-semibold text-purple-600">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-slate-400 font-semibold uppercase tracking-wider">With Appointments</span>
+                <span className="font-bold text-slate-800">
                   {new Set(allAppointments.map((a) => a.patient?._id)).size}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-800">Performance</h3>
-              <Activity className="w-5 h-5 text-purple-600" />
+          {/* Performance Stats */}
+          <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
+            <div className="border-b border-slate-100 pb-3 mb-4">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Performance</h3>
             </div>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Completion Rate</span>
-                <span className="font-semibold text-purple-600">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-slate-400 font-semibold uppercase tracking-wider">Completion Rate</span>
+                <span className="font-bold text-slate-800">
                   {completionRate}%
                 </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Active Today</span>
-                <span className="font-semibold text-emerald-600">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-slate-400 font-semibold uppercase tracking-wider">Active Today</span>
+                <span className="font-bold text-slate-800">
                   {appointments.confirmed || 0}
                 </span>
               </div>
@@ -301,12 +251,13 @@ const AdminDashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-800">
+          {/* Recent Doctors */}
+          <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">
                 Recent Doctors
               </h3>
-              <span className="text-sm text-gray-500">
+              <span className="text-xs text-slate-400 font-semibold">
                 {doctors.length} total
               </span>
             </div>
@@ -314,46 +265,47 @@ const AdminDashboard = () => {
               {doctors.slice(0, 5).map((doctor, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  className="flex items-center justify-between p-3 border border-slate-100 rounded-xl bg-slate-50/50 hover:bg-slate-50 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-teal-50 rounded-full flex items-center justify-center border border-teal-100">
-                      <span className="text-teal-600 font-semibold">
+                    <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center border border-slate-200">
+                      <span className="text-slate-600 text-xs font-semibold">
                         {doctor.user?.name?.charAt(0) || "D"}
                       </span>
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">
+                      <p className="text-xs font-semibold text-slate-800">
                         {doctor.user?.name || "N/A"}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-[10px] text-slate-400 font-semibold">
                         {doctor.specialization || "General"}
                       </p>
                     </div>
                   </div>
                   <span
-                    className={`text-xs px-2 py-1 rounded-full ${
+                    className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${
                       doctor.status === "approved"
-                        ? "bg-teal-50 text-teal-700 border border-teal-100"
-                        : "bg-amber-50 text-amber-700 border border-amber-100"
-                    }`}>
+                        ? "bg-slate-100 text-slate-700 border-slate-200"
+                        : "bg-slate-50 text-slate-500 border-slate-200"
+                    } capitalize`}>
                     {doctor.status}
                   </span>
                 </div>
               ))}
               {doctors.length === 0 && (
-                <p className="text-center text-gray-500 py-8">
+                <p className="text-center text-xs text-slate-400 py-8">
                   No doctors found
                 </p>
               )}
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-800">
+          {/* Recent Patients */}
+          <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">
                 Recent Patients
               </h3>
-              <span className="text-sm text-gray-500">
+              <span className="text-xs text-slate-400 font-semibold">
                 {patients.length} total
               </span>
             </div>
@@ -361,18 +313,18 @@ const AdminDashboard = () => {
               {patients.slice(0, 5).map((patient, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  className="flex items-center justify-between p-3 border border-slate-100 rounded-xl bg-slate-50/50 hover:bg-slate-50 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 font-semibold">
+                    <div className="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center border border-slate-200">
+                      <span className="text-slate-600 text-xs font-semibold">
                         {patient.user?.name?.charAt(0) || "P"}
                       </span>
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">
+                      <p className="text-xs font-semibold text-slate-800">
                         {patient.user?.name || "N/A"}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-[10px] text-slate-400 font-semibold">
                         {patient.user?.email || "N/A"}
                       </p>
                     </div>
@@ -380,7 +332,7 @@ const AdminDashboard = () => {
                 </div>
               ))}
               {patients.length === 0 && (
-                <p className="text-center text-gray-500 py-8">
+                <p className="text-center text-xs text-slate-400 py-8">
                   No patients found
                 </p>
               )}

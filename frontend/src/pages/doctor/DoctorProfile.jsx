@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchUserProfileByEmail, updatePersonalInfo } from "../../apis/user";
-import { logout } from "../../redux/slices/auth";
 import { updateProfessionalInfo } from "../../apis/doctor";
+import { logout } from "../../redux/slices/auth";
+import { setDoctorProfile } from "../../redux/slices/doctorProfile";
+import { LogOut } from "lucide-react";
 
 const DoctorProfile = () => {
   const { user } = useSelector((state) => state.auth);
+  const doctorProfile = useSelector((state) => state.doctorProfile.profile);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   const [personalForm, setPersonalForm] = useState({
     name: "",
@@ -17,6 +24,7 @@ const DoctorProfile = () => {
     phone: "",
     role: "",
   });
+
   const [isEditingProfessional, setIsEditingProfessional] = useState(false);
   const [professionalForm, setProfessionalForm] = useState({
     specialization: "",
@@ -25,9 +33,38 @@ const DoctorProfile = () => {
     clinicAddress: "",
     daysOff: [],
   });
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const doctorProfile = useSelector((state) => state.doctorProfile.profile);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        if (user?.email) {
+          const profileData = await fetchUserProfileByEmail(user.email);
+          setProfile(profileData.user);
+
+          if (profileData.doctorProfile) {
+            dispatch(setDoctorProfile(profileData.doctorProfile));
+            setProfessionalForm({
+              specialization: profileData.doctorProfile.specialization || "",
+              experience: profileData.doctorProfile.experience || "",
+              consultationFee: profileData.doctorProfile.consultationFee || "",
+              clinicAddress: profileData.doctorProfile.clinicAddress || "",
+              daysOff: profileData.doctorProfile.daysOff || [],
+            });
+          }
+        }
+      } catch (err) {
+        setError(err.message || "Failed to fetch profile");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProfile();
+  }, [user?.email, dispatch]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/auth/signin", { replace: true });
+  };
 
   const editingPersonalInfo = () => {
     setPersonalForm({
@@ -40,10 +77,7 @@ const DoctorProfile = () => {
   };
 
   const handlePersonalChange = (e) => {
-    setPersonalForm({
-      ...personalForm,
-      [e.target.name]: e.target.value,
-    });
+    setPersonalForm({ ...personalForm, [e.target.name]: e.target.value });
   };
 
   const handleSavePersonal = async () => {
@@ -52,18 +86,20 @@ const DoctorProfile = () => {
       setProfile(updated.user);
       setIsEditingPersonal(false);
     } catch (err) {
-      setError(err.message || "failed to update personal profile info");
+      setError(err.message || "Failed to update personal profile info");
     }
   };
 
   const editingProfessionalInfo = () => {
-    setProfessionalForm({
-      specialization: doctorProfile.specialization,
-      experience: doctorProfile.experience,
-      consultationFee: doctorProfile.consultationFee,
-      clinicAddress: doctorProfile.clinicAddress,
-      daysOff: doctorProfile.daysOff || [],
-    });
+    if (doctorProfile) {
+      setProfessionalForm({
+        specialization: doctorProfile.specialization || "",
+        experience: doctorProfile.experience || "",
+        consultationFee: doctorProfile.consultationFee || "",
+        clinicAddress: doctorProfile.clinicAddress || "",
+        daysOff: doctorProfile.daysOff || [],
+      });
+    }
     setIsEditingProfessional(true);
   };
 
@@ -75,61 +111,33 @@ const DoctorProfile = () => {
   };
 
   const handleDaysOffChange = (day) => {
-    const newDaysOff = professionalForm.daysOff.includes(day)
-      ? professionalForm.daysOff.filter((d) => d !== day)
-      : [...professionalForm.daysOff, day];
-
-    setProfessionalForm({ ...professionalForm, daysOff: newDaysOff });
+    const currentDays = [...professionalForm.daysOff];
+    const index = currentDays.indexOf(day);
+    if (index > -1) {
+      currentDays.splice(index, 1);
+    } else {
+      currentDays.push(day);
+    }
+    setProfessionalForm({ ...professionalForm, daysOff: currentDays });
   };
 
   const handleSaveProfessional = async () => {
     try {
-      await updateProfessionalInfo(
-        doctorProfile._id,
-        professionalForm
-      );
+      const updated = await updateProfessionalInfo(profile._id, professionalForm);
+      setProfile(updated.user);
+      dispatch(setDoctorProfile(updated.doctor));
       setIsEditingProfessional(false);
     } catch (err) {
-      setError(err.message || "failed to update professional profile info");
+      setError(err.message || "Failed to update professional info");
     }
-  };
-
-  useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        if (user?.email) {
-          const profileData = await fetchUserProfileByEmail(user.email);
-          setProfile(profileData.user);
-        }
-      } catch (err) {
-        setError(err.message || "Failed to fetch profile");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProfile();
-  }, [user?.email]);
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/auth/signin", { replace: true });
   };
 
   if (loading) {
     return (
       <div className="h-[50vh] flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 max-w-sm w-full">
-          <div className="animate-pulse flex space-x-4">
-            <div className="w-12 h-12 bg-teal-100 rounded-full"></div>
-            <div className="flex-1 space-y-3">
-              <div className="h-4 bg-teal-200 rounded w-3/4"></div>
-              <div className="h-3 bg-teal-100 rounded w-1/2"></div>
-            </div>
-          </div>
-          <p className="text-teal-600 font-semibold mt-4 text-center">
-            Loading your profile...
-          </p>
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-100 max-w-sm w-full text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-3 border-teal-600 mx-auto mb-4 border-t-transparent"></div>
+          <p className="text-slate-500 text-xs font-semibold">Loading profile...</p>
         </div>
       </div>
     );
@@ -138,255 +146,239 @@ const DoctorProfile = () => {
   if (error) {
     return (
       <div className="h-[50vh] flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 border-l-4 border-red-500 max-w-md">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-              <div className="w-5 h-5 bg-red-500 rounded-full"></div>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-800">
-                Error Loading Profile
-              </h3>
-              <p className="text-red-600 font-medium">{error}</p>
-            </div>
-          </div>
+        <div className="bg-white p-8 rounded-xl border border-slate-100 border-l-4 border-red-500 max-w-md text-center shadow-sm">
+          <p className="text-red-600 font-semibold text-xs">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 mb-8 gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Doctor Profile</h1>
-            <p className="text-slate-500 text-sm mt-1">Manage your professional information and settings</p>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-750 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer shrink-0"
-          >
-            Logout Session
-          </button>
+    <div className="space-y-8 pb-12">
+      {/* Page Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Doctor Profile</h1>
+          <p className="text-slate-500 text-sm mt-1">Manage your professional information and settings</p>
         </div>
+        <button
+          onClick={handleLogout}
+          className="bg-red-600 hover:bg-red-750 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 shrink-0"
+        >
+          <LogOut className="w-3.5 h-3.5" /> Logout Session
+        </button>
+      </div>
 
-        {profile ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-8">
+      {profile && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Main Content Area (Col-Span 2) */}
+          <div className="lg:col-span-2 space-y-6">
+            
+            {/* 1. Personal Information Section */}
+            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
+              <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-5">
+                <h2 className="text-base font-bold text-slate-800">
+                  Personal Information
+                </h2>
+                {!isEditingPersonal && (
+                  <button
+                    onClick={editingPersonalInfo}
+                    className="text-xs font-semibold text-teal-600 hover:text-teal-700 border border-slate-200 hover:bg-teal-50 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                  >
+                    Edit
+                  </button>
+                )}
+              </div>
+
               {!isEditingPersonal ? (
-                <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
-                  <h2 className="text-xl font-bold text-gray-800 mb-6">
-                    Personal Information
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                        Full Name
-                      </label>
-                      <p className="text-lg font-semibold text-gray-800">
-                        {profile.name}
-                      </p>
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                        Email Address
-                      </label>
-                      <p className="text-lg text-gray-700">{profile.email}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                        Phone Number
-                      </label>
-                      <p className="text-lg text-gray-700">{profile.phone}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                        Role
-                      </label>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800 capitalize">
-                        {profile.role}
-                      </span>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Full Name</span>
+                    <span className="text-xs font-semibold text-slate-800 mt-1 block">{profile.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Email Address</span>
+                    <span className="text-xs font-semibold text-slate-800 mt-1 block">{profile.email}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Phone Number</span>
+                    <span className="text-xs font-semibold text-slate-800 mt-1 block">{profile.phone}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Account Role</span>
+                    <span className="text-xs font-semibold text-slate-800 mt-1 block capitalize">{profile.role}</span>
                   </div>
                 </div>
               ) : (
-                <div className="bg-white rounded-xl shadow-lg border-l-4 border-emerald-500 p-6">
-                  <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                    <div className="w-6 h-6 bg-emerald-500 rounded mr-3"></div>
-                    Edit Personal Information
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                        Full Name
-                      </label>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Full Name</label>
                       <input
                         type="text"
                         name="name"
                         value={personalForm.name}
                         onChange={handlePersonalChange}
-                        className="w-full px-3 py-2 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
                       />
                     </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                        Email Address
-                      </label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Email Address</label>
                       <input
                         type="email"
                         name="email"
                         value={personalForm.email}
                         onChange={handlePersonalChange}
-                        className="w-full px-3 py-2 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
                       />
                     </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                        Phone Number
-                      </label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Phone Number</label>
                       <input
                         type="text"
                         name="phone"
                         value={personalForm.phone}
                         onChange={handlePersonalChange}
-                        className="w-full px-3 py-2 border border-emerald-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
                       />
                     </div>
-                    <div className="space-y-1">
-                      <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                        Role
-                      </label>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Account Role</label>
                       <input
                         type="text"
                         name="role"
                         value={personalForm.role}
                         readOnly
-                        className="w-full px-3 py-2 border border-emerald-300 rounded-lg bg-gray-100 text-gray-600"
+                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs bg-slate-50 text-slate-400 cursor-not-allowed outline-none"
                       />
                     </div>
                   </div>
-
-                  <div className="flex space-x-4 mt-6">
+                  <div className="flex space-x-3 mt-6">
                     <button
                       onClick={handleSavePersonal}
-                      className="bg-emerald-600 hover:bg-emerald-500 cursor-pointer text-white px-4 py-2 rounded-lg font-medium transition">
-                      Save
+                      className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-sm transition-colors cursor-pointer"
+                    >
+                      Save Changes
                     </button>
                     <button
                       onClick={() => setIsEditingPersonal(false)}
-                      className="bg-gray-200 hover:bg-gray-300 cursor-pointer text-gray-800 px-4 py-2 rounded-lg font-medium transition">
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                    >
                       Cancel
                     </button>
                   </div>
                 </div>
               )}
+            </div>
 
-              <div>
-                {!isEditingProfessional ? (
-                  <div>
-                    {doctorProfile && (
-                      <div className="bg-white rounded-xl shadow-lg border-l-4 border-teal-500 p-6">
-                        <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                          <div className="w-6 h-6 bg-teal-500 rounded mr-3"></div>
-                          Professional Information
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="space-y-1">
-                            <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                              Specialization
-                            </label>
-                            <p className="text-lg font-semibold text-gray-800">
-                              {doctorProfile.specialization}
-                            </p>
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                              Experience
-                            </label>
-                            <p className="text-lg text-gray-700">
-                              {doctorProfile.experience} years
-                            </p>
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                              Consultation Fee
-                            </label>
-                            <p className="text-lg font-semibold text-emerald-600">
-                              Rs{" "}
-                              {doctorProfile.consultationFee?.toLocaleString()}
-                            </p>
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                              Status
-                            </label>
-                            <span
-                              className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium capitalize ${
-                                doctorProfile.status === "approved"
-                                  ? "bg-green-100 text-green-800"
-                                  : doctorProfile.status === "rejected"
-                                  ? "bg-red-100 text-red-800"
-                                  : "bg-yellow-100 text-yellow-800"
-                              }`}>
-                              {doctorProfile.status}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="mt-6">
-                          <label className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                            Clinic Address
-                          </label>
-                          <p className="text-lg text-gray-700 mt-1">
-                            {doctorProfile.clinicAddress}
-                          </p>
-                        </div>
+            {/* 2. Professional Information Section */}
+            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
+              <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-5">
+                <h2 className="text-base font-bold text-slate-800">
+                  Professional Information
+                </h2>
+                {!isEditingProfessional && doctorProfile && (
+                  <button
+                    onClick={editingProfessionalInfo}
+                    className="text-xs font-semibold text-teal-600 hover:text-teal-700 border border-slate-200 hover:bg-teal-50 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                  >
+                    Edit
+                  </button>
+                )}
+              </div>
+
+              {!isEditingProfessional ? (
+                doctorProfile ? (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Specialization</span>
+                        <span className="text-xs font-semibold text-slate-800 mt-1 block">{doctorProfile.specialization}</span>
                       </div>
-                    )}
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Experience</span>
+                        <span className="text-xs font-semibold text-slate-800 mt-1 block">{doctorProfile.experience} years</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Consultation Fee</span>
+                        <span className="text-xs font-semibold text-slate-800 mt-1 block">Rs {doctorProfile.consultationFee?.toLocaleString()}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Verification Status</span>
+                        <span className="mt-1 inline-block">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${
+                            doctorProfile.status === "approved"
+                              ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+                              : doctorProfile.status === "rejected"
+                              ? "bg-red-50 text-red-700 border-red-100"
+                              : "bg-amber-50 text-amber-700 border-amber-100"
+                          }`}>
+                            {doctorProfile.status}
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="border-t border-slate-100 pt-5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Clinic Address</span>
+                      <span className="text-xs font-semibold text-slate-800 mt-1 block leading-relaxed">{doctorProfile.clinicAddress}</span>
+                    </div>
                   </div>
                 ) : (
-                  <div className="bg-white rounded-xl shadow-lg border-l-4 border-teal-500 p-6">
-                    <h2 className="text-xl font-bold text-gray-800 mb-6">
-                      Edit Professional Info
-                    </h2>
+                  <p className="text-xs text-slate-400 italic">No professional records found</p>
+                )
+              ) : (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Specialization</label>
+                      <input
+                        type="text"
+                        name="specialization"
+                        value={professionalForm.specialization}
+                        onChange={handleProfessionalChange}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        placeholder="Specialization"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Experience (Years)</label>
+                      <input
+                        type="number"
+                        name="experience"
+                        value={professionalForm.experience}
+                        onChange={handleProfessionalChange}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        placeholder="Experience in years"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Consultation Fee</label>
+                      <input
+                        type="number"
+                        name="consultationFee"
+                        value={professionalForm.consultationFee}
+                        onChange={handleProfessionalChange}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        placeholder="Consultation Fee"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="text-xs font-semibold text-slate-600 block mb-1.5">Clinic Address</label>
+                      <textarea
+                        name="clinicAddress"
+                        value={professionalForm.clinicAddress}
+                        onChange={handleProfessionalChange}
+                        rows={2}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        placeholder="Clinic Address"
+                      />
+                    </div>
+                  </div>
 
-                    <input
-                      type="text"
-                      name="specialization"
-                      value={professionalForm.specialization}
-                      onChange={handleProfessionalChange}
-                      className="w-full mb-4 px-3 py-2 border rounded-lg"
-                      placeholder="Specialization"
-                    />
-
-                    <input
-                      type="number"
-                      name="experience"
-                      value={professionalForm.experience}
-                      onChange={handleProfessionalChange}
-                      className="w-full mb-4 px-3 py-2 border rounded-lg"
-                      placeholder="Experience in years"
-                    />
-
-                    <input
-                      type="number"
-                      name="consultationFee"
-                      value={professionalForm.consultationFee}
-                      onChange={handleProfessionalChange}
-                      className="w-full mb-4 px-3 py-2 border rounded-lg"
-                      placeholder="Consultation Fee"
-                    />
-
-                    <textarea
-                      name="clinicAddress"
-                      value={professionalForm.clinicAddress}
-                      onChange={handleProfessionalChange}
-                      className="w-full mb-4 px-3 py-2 border rounded-lg"
-                      placeholder="Clinic Address"
-                    />
-
-                    <div className="mb-4">
-                      <h4 className="font-semibold mb-2">Days Off</h4>
+                  <div className="border-t border-slate-100 pt-4 mt-4">
+                    <label className="text-xs font-bold text-slate-700 block mb-2">Days Off</label>
+                    <div className="flex flex-wrap gap-x-4 gap-y-2">
                       {[
                         "Sunday",
                         "Monday",
@@ -396,142 +388,104 @@ const DoctorProfile = () => {
                         "Friday",
                         "Saturday",
                       ].map((day) => (
-                        <label
-                          key={day}
-                          className="inline-flex items-center mr-3">
+                        <label key={day} className="inline-flex items-center text-xs text-slate-600 cursor-pointer">
                           <input
                             type="checkbox"
                             checked={professionalForm.daysOff.includes(day)}
                             onChange={() => handleDaysOffChange(day)}
-                            className="mr-2"
+                            className="mr-1.5 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
                           />
                           {day}
                         </label>
                       ))}
                     </div>
-
-                    <div className="flex space-x-4 mt-6">
-                      <button
-                        onClick={handleSaveProfessional}
-                        className="bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded-lg">
-                        Save
-                      </button>
-                      <button
-                        onClick={() => setIsEditingProfessional(false)}
-                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg">
-                        Cancel
-                      </button>
-                    </div>
                   </div>
-                )}
-              </div>
-            </div>
 
-            <div className="space-y-6">
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center">
-                <div className="w-20 h-20 bg-emerald-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <div className="w-12 h-12 bg-emerald-500 rounded-full"></div>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Dr. {profile.name}
-                </h3>
-                {doctorProfile && (
-                  <>
-                    <p className="text-gray-600 mb-4">
-                      {doctorProfile.specialization}
-                    </p>
-                    <div className="flex justify-center space-x-4 text-sm">
-                      <div className="text-center">
-                        <p className="font-bold text-emerald-600">
-                          {doctorProfile.experience}
-                        </p>
-                        <p className="text-gray-500">Years Exp.</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="font-bold text-emerald-600">
-                          Rs {doctorProfile.consultationFee}
-                        </p>
-                        <p className="text-gray-500">Fee</p>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">
-                  Account Status
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Profile Status</span>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        doctorProfile?.isApproved
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}>
-                      {doctorProfile?.isApproved ? "Approved" : "Pending"}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Account Type</span>
-                    <span className="px-2 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-medium">
-                      Doctor
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Member Since</span>
-                    <span className="text-sm text-gray-700">
-                      {new Date(profile.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-2 mt-6">
-                  <button
-                    onClick={() => editingPersonalInfo()}
-                    className="px-3 py-2 cursor-pointer bg-emerald-600 hover:bg-emerald-500 text-white rounded-md">
-                    Edit Personal Info
-                  </button>
-                  <button
-                    onClick={() => editingProfessionalInfo()}
-                    className="px-3 py-2 cursor-pointer bg-emerald-600 hover:bg-emerald-500 text-white rounded-md">
-                    Edit Professional Info
-                  </button>
-                </div>
-              </div>
-
-              {doctorProfile?.daysOff && doctorProfile.daysOff.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h3 className="text-lg font-bold text-gray-800 mb-4">
-                    Days Off
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {doctorProfile.daysOff.map((day, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                        {day}
-                      </span>
-                    ))}
+                  <div className="flex space-x-3 mt-6">
+                    <button
+                      onClick={handleSaveProfessional}
+                      className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-sm transition-colors cursor-pointer"
+                    >
+                      Save Changes
+                    </button>
+                    <button
+                      onClick={() => setIsEditingProfessional(false)}
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               )}
             </div>
+
           </div>
-        ) : (
-          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4"></div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              No Profile Found
-            </h3>
-            <p className="text-gray-600">
-              Unable to load your profile information.
-            </p>
+
+          {/* Right Sidebar: Profile Status Card */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm text-center">
+              <div className="w-20 h-20 bg-slate-100 text-slate-700 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold">
+                {profile.name ? profile.name.charAt(0).toUpperCase() : "D"}
+              </div>
+              <h3 className="text-base font-bold text-slate-800">
+                Dr. {profile.name}
+              </h3>
+              {doctorProfile && (
+                <p className="text-xs text-slate-400 font-semibold mt-0.5">
+                  {doctorProfile.specialization || "Physician"}
+                </p>
+              )}
+
+              <div className="w-full border-t border-slate-100 mt-6 pt-5 space-y-3">
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <span className="font-semibold text-slate-700">Profile Status</span>
+                  <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border ${
+                    doctorProfile?.isApproved
+                      ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+                      : "bg-amber-50 text-amber-700 border-amber-100"
+                  }`}>
+                    {doctorProfile?.isApproved ? "Approved" : "Pending"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <span className="font-semibold text-slate-700">Account Type</span>
+                  <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded border border-slate-200 text-[9px] font-bold uppercase tracking-wider">
+                    Doctor
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <span className="font-semibold text-slate-700">Experience</span>
+                  <span>{doctorProfile?.experience || 0} years</span>
+                </div>
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <span className="font-semibold text-slate-700">Consultation Fee</span>
+                  <span>Rs {doctorProfile?.consultationFee || 0}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Days Off Info (Optional Card) */}
+            {doctorProfile?.daysOff && doctorProfile.daysOff.length > 0 && (
+              <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
+                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">
+                  Days Off
+                </h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {doctorProfile.daysOff.map((day, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-0.5 bg-slate-50 text-slate-600 border border-slate-200 rounded text-xs font-semibold"
+                    >
+                      {day}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+
+        </div>
+      )}
     </div>
   );
 };

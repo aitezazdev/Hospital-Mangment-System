@@ -1,10 +1,10 @@
 import api from "./axios";
 
 // docotor side
-export const allAppointments = async (id, status = "all") => {
+export const allAppointments = async (id, status = "all", allDates = false) => {
   try {
     const { data } = await api.get(
-      `/appointment/appointments/all/${id}?status=${status}`
+      `/appointment/appointments/all/${id}?status=${status}&allDates=${allDates}`
     );
     return data;
   } catch (error) {
