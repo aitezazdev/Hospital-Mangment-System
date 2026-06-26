@@ -247,9 +247,8 @@ export const nextAppointments = async (req, res, next) => {
       });
     }
 
-    const comingAppointments = await Appointment.find({
+    const allAppointments = await Appointment.find({
       patient: patient._id,
-      date: { $gte: new Date() },
     })
       .populate({
         path: "doctor",
@@ -269,11 +268,32 @@ export const nextAppointments = async (req, res, next) => {
       })
       .sort({ date: 1 });
 
-      const threeAppointments = comingAppointments.slice(0, 3);
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const comingAppointments = allAppointments.filter((appt) => {
+      const apptDate = new Date(appt.date);
+      // Keep only pending or confirmed appointments that are today or in the future
+      return (
+        apptDate >= todayStart &&
+        (appt.status === "pending" || appt.status === "confirmed")
+      );
+    });
+
+    const stats = {
+      total: allAppointments.length,
+      pending: allAppointments.filter((appt) => appt.status === "pending").length,
+      confirmed: allAppointments.filter((appt) => appt.status === "confirmed").length,
+      completed: allAppointments.filter((appt) => appt.status === "completed").length,
+      cancelled: allAppointments.filter((appt) => appt.status === "cancelled").length,
+    };
+
+    const threeAppointments = comingAppointments.slice(0, 3);
 
     return res.status(200).json({
       success: true,
-      nextAppointments: threeAppointments || null,
+      nextAppointments: threeAppointments || [],
+      stats,
     });
   } catch (error) {
     next(error);
