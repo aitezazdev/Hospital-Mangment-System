@@ -36,7 +36,7 @@ const generateWithFallback = async (aiInstance, prompt) => {
   throw lastError || new Error("All Gemini models failed to generate content.");
 };
 
-// Symptom Checker & Specialty Recommender (Patient)
+
 export const checkSymptoms = async (req, res, next) => {
   try {
     const { symptoms } = req.body;
@@ -46,7 +46,7 @@ export const checkSymptoms = async (req, res, next) => {
 
     const aiInstance = getGenAI();
     if (!aiInstance) {
-      // Mock Response when API Key is missing
+      
       const mockResponse = `AI Symptom Guidance (Simulation Mode)
 
 Based on your symptoms "${symptoms}", here is some general educational guidance:
@@ -95,7 +95,7 @@ Keep the entire response under 200 words.`;
   }
 };
 
-// Clinical Summarizer (Doctor)
+
 export const summarizeClinicalDetails = async (req, res, next) => {
   try {
     const { patientHistory, reason } = req.body;
@@ -109,7 +109,7 @@ export const summarizeClinicalDetails = async (req, res, next) => {
 
     const aiInstance = getGenAI();
     if (!aiInstance) {
-      // Mock Response when API Key is missing
+      
       const mockSummary = `Patient presents with: "${reason}". Medical history notes: "${historyText}". 
 Focus areas: Assess acute symptoms, review contraindications related to history, check vitals, and outline treatment plan.`;
       
@@ -140,7 +140,7 @@ Write a direct, objective clinical summary highlighting key areas of focus or ri
   }
 };
 
-// AI Prescription Recommender (Doctor Assist)
+
 export const recommendMedicines = async (req, res, next) => {
   try {
     const { symptoms, history } = req.body;
@@ -152,7 +152,7 @@ export const recommendMedicines = async (req, res, next) => {
 
     const aiInstance = getGenAI();
     if (!aiInstance) {
-      // Mock Response when API Key is missing
+      
       const mockRecommendation = `AI Suggested Prescription (Simulation Mode)
 
 Suggested Medicines:

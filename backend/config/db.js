@@ -29,7 +29,7 @@ export const dbConnection = async () => {
 
   console.log(`MongoDB connected!! Host: ${cached.conn.connection.host}`);
 
-  // Auto-seed Admin user if not exists (runs locally and in serverless/production deployments like Vercel)
+  
   try {
     const adminEmail = "admin@hms.com";
     const existingAdmin = await User.findOne({ email: adminEmail });

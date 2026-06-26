@@ -3,7 +3,7 @@ import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { signinUser } from "../../redux/slices/auth";
+import { signinUser, clearError } from "../../redux/slices/auth";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -38,9 +38,17 @@ const Signin = () => {
     }
   }, [user, token, navigate]);
 
+  useEffect(() => {
+    dispatch(clearError());
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    dispatch(clearError());
 
     if (errors[name]) {
       const newErrors = { ...errors };
@@ -80,7 +88,7 @@ const Signin = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 sm:p-8">
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-3xl font-extrabold text-gray-800 my-0.5">
             Sign In

@@ -162,7 +162,7 @@ const PatientProfile = () => {
 
   return (
     <div className="space-y-8 pb-12">
-      {/* Page Header */}
+      {}
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Patient Profile</h1>
@@ -179,7 +179,7 @@ const PatientProfile = () => {
       {profile && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* Left Column: Avatar & Side Details Card */}
+          {}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm flex flex-col items-center text-center">
               <div className="w-20 h-20 bg-slate-100 text-slate-700 rounded-full flex items-center justify-center text-2xl font-bold mb-4">
@@ -203,10 +203,10 @@ const PatientProfile = () => {
             </div>
           </div>
 
-          {/* Right Column (Col-Span 2): Detailed Profile Sections */}
+          {}
           <div className="lg:col-span-2 space-y-6">
             
-            {/* 1. Personal Information */}
+            {}
             <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
               <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-5">
                 <h3 className="text-sm font-bold text-slate-800">
@@ -306,7 +306,7 @@ const PatientProfile = () => {
               )}
             </div>
 
-            {/* 2. Patient Profile Information */}
+            {}
             <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
               <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-5">
                 <h3 className="text-sm font-bold text-slate-800">

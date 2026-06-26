@@ -13,7 +13,7 @@ const AiAssistant = () => {
     const text = textToSend || input;
     if (!text || text.trim() === "") return;
 
-    // Add user message
+    
     setMessages((prev) => [...prev, { sender: "user", text }]);
     setInput("");
     setLoading(true);
@@ -43,7 +43,7 @@ const AiAssistant = () => {
     }
   };
 
-  // Scroll to bottom on new messages
+  
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
@@ -51,7 +51,7 @@ const AiAssistant = () => {
   return (
     <div className="py-2">
       <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[85vh]">
-        {/* Chat Header */}
+        {}
         <div className="bg-slate-900 p-6 text-white flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center text-slate-900 shadow-md">
@@ -67,7 +67,7 @@ const AiAssistant = () => {
           </div>
         </div>
 
-        {/* Disclaimer Bar */}
+        {}
         <div className="bg-amber-50 text-amber-900 px-6 py-3 border-b border-amber-100 flex items-center gap-2 text-xs sm:text-sm font-medium">
           <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
           <span>This is an AI assistant, not a doctor. If you're feeling unwell, please book an appointment with our doctors for a proper checkup.</span>

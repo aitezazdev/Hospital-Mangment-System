@@ -10,6 +10,7 @@ patientRouter.put("/update-profile/:id", authMiddleware, updatePatientProfile);
 patientRouter.delete("/delete", authMiddleware, deletePatientProfileAndAccount);
 patientRouter.get("/patients-all", authMiddleware, listAllPatients);
 patientRouter.get("/name/:id", authMiddleware, getPatientByID);
+patientRouter.get("/:id", authMiddleware, getPatientByID);
 patientRouter.get("/next-appointment", authMiddleware, nextAppointments);
 
 export default patientRouter;

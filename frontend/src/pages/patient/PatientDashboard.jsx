@@ -48,7 +48,7 @@ const PatientDashboard = () => {
 
   return (
     <div className="space-y-8 pb-12">
-      {/* Page Header */}
+      {}
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
@@ -61,37 +61,37 @@ const PatientDashboard = () => {
         </div>
       </div>
 
-      {/* Stats Counter Section (Clean Bold & Thin Styling) */}
+      {}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        {/* Total Card */}
+        {}
         <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Bookings</p>
           <p className="text-3xl font-extrabold text-slate-800 mt-1.5">{stats.total}</p>
         </div>
 
-        {/* Confirmed Card */}
+        {}
         <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Confirmed</p>
           <p className="text-3xl font-extrabold text-slate-800 mt-1.5">{stats.confirmed}</p>
         </div>
 
-        {/* Pending Card */}
+        {}
         <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Pending</p>
           <p className="text-3xl font-extrabold text-slate-800 mt-1.5">{stats.pending}</p>
         </div>
 
-        {/* Completed Card */}
+        {}
         <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Completed</p>
           <p className="text-3xl font-extrabold text-slate-800 mt-1.5">{stats.completed}</p>
         </div>
       </div>
 
-      {/* Main Grid: Upcoming Appointments + Quick Navigation */}
+      {}
       <div className="grid lg:grid-cols-3 gap-8">
         
-        {/* Left/Middle: Upcoming Appointments (Col-Span 2) */}
+        {}
         <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <h2 className="text-lg font-bold text-slate-800">

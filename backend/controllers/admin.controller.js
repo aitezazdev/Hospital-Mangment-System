@@ -4,7 +4,7 @@ import { User } from "../models/User.js";
 import { Appointment } from "../models/Appointment.js";
 import { sendEmail } from "../utils/sendEmail.js";
 
-// approve doctor
+
 export const approveDoctor = async (req, res, next) => {
   try {
     const doctorId = req.params.id;
@@ -48,7 +48,7 @@ export const approveDoctor = async (req, res, next) => {
   }
 };
 
-// not approve doctor
+
 export const notApproveDoctor = async (req, res, next) => {
   try {
     const doctorId = req.params.id;
@@ -96,7 +96,7 @@ export const notApproveDoctor = async (req, res, next) => {
   }
 };
 
-// not approved doctors list
+
 export const getNotApprovedDoctors = async (_req, res, next) => {
   try {
     const doctors = await Doctor.find({ isApproved: false }).populate("user");
@@ -109,7 +109,7 @@ export const getNotApprovedDoctors = async (_req, res, next) => {
   }
 };
 
-// get total doctors, patients, appointments list
+
 export const fullList = async (_req, res, next) => {
   try {
     const doctors = await Doctor.find().populate("user");
@@ -159,7 +159,7 @@ export const fullList = async (_req, res, next) => {
   }
 };
 
-// get all appointments
+
 export const allAppointmentsForAdmin = async (req, res, next) => {
   try {
     const appointments = await Appointment.find()
@@ -175,7 +175,7 @@ export const allAppointmentsForAdmin = async (req, res, next) => {
     if (!appointments) {
       return res.status(500).json({ message: "Failed to fetch appointments" });
     }
-    // Return empty array instead of 404 — no appointments is a valid state
+    
     return res.status(200).json({
       success: true,
       appointments: appointments || [],
@@ -185,11 +185,11 @@ export const allAppointmentsForAdmin = async (req, res, next) => {
   }
 };
 
-// all doctors
+
 export const allDoctors = async (_req, res, next) => {
   try {
     const doctors = await Doctor.find().populate("user", "name email phone");
-    // Return empty array instead of 404 — no doctors is a valid state
+    
     return res.status(200).json({
       success: true,
       doctors: doctors || [],
@@ -199,11 +199,11 @@ export const allDoctors = async (_req, res, next) => {
   }
 };
 
-// all patients
+
 export const allPatients = async (_req, res, next) => {
   try {
     const patients = await Patient.find().populate("user", "name email phone");
-    // Return empty array instead of 404 — no patients is a valid state
+    
     return res.status(200).json({
       success: true,
       patients: patients || [],
@@ -213,7 +213,7 @@ export const allPatients = async (_req, res, next) => {
   }
 };
 
-// edit / update profile
+
 export const editProfile = async (req, res, next) => {
   try {
     const { name, email, phone } = req.body;

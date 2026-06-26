@@ -19,13 +19,13 @@ dotenv.config();
 
 const app = express();
 
-// Secure HTTP Headers
+
 app.use(helmet());
 
-// Compress HTTP Responses
+
 app.use(compression());
 
-// Custom NoSQL Injection Sanitization for Express 5 compatibility (mutates properties without reassigning read-only objects)
+
 const sanitizeObject = (obj) => {
   if (obj && typeof obj === "object") {
     for (const key in obj) {
@@ -47,13 +47,13 @@ const customMongoSanitize = (req, res, next) => {
 
 app.use(customMongoSanitize);
 
-// Parse cookie headers into req.cookies
+
 app.use(cookieParser());
 
-// Rate Limiting
+
 app.use(globalRateLimiter);
 
-// Configure CORS dynamically with credentials
+
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
@@ -99,7 +99,7 @@ app.use("/ai", aiRouter);
 
 app.use(errorHandler);
 
-// Connect to DB once, then start server
+
 dbConnection().then(() => {
   app.listen(process.env.PORT || 5000, () => {
     console.log(`Server is running on port ${process.env.PORT || 5000}`);

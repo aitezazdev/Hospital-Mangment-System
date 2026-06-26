@@ -5,7 +5,7 @@ import { getPatientByID } from "../../apis/patient";
 import api from "../../apis/axios";
 import toast from "react-hot-toast";
 
-// Simple inline assistant icon component — must be defined BEFORE PatientDetails (const is not hoisted)
+
 const BotIcon = ({ className }) => (
   <svg
     className={className}
@@ -27,7 +27,7 @@ const PatientDetails = () => {
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
   
-  // AI summary states
+  
   const [aiSummary, setAiSummary] = useState("");
   const [loadingSummary, setLoadingSummary] = useState(false);
 
@@ -48,7 +48,7 @@ const PatientDetails = () => {
   const handleGenerateSummary = async () => {
     if (!patient) return;
     setLoadingSummary(true);
-    // Only clear previous summary AFTER we have a new one — don't clear on request start
+    
 
     const lastAppointmentReason = patient.appointmentHistory?.[0]?.reason || "No recent appointments";
 
@@ -118,7 +118,7 @@ const PatientDetails = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
+      {}
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 mb-8 gap-4">
 
         <div>
@@ -138,7 +138,7 @@ const PatientDetails = () => {
         </Link>
       </div>
 
-      {/* AI Clinical Summary Section */}
+      {}
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-slate-100 mb-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-teal-500/5 to-transparent rounded-full pointer-events-none" />
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-100">

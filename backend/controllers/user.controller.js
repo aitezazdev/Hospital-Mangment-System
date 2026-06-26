@@ -2,7 +2,7 @@ import { Doctor } from "../models/Doctor.js";
 import { User } from "../models/User.js";
 import { Patient } from "../models/Patient.js";
 
-// update user
+
 export const updateUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
@@ -43,7 +43,7 @@ export const updateUser = async (req, res, next) => {
   }
 };
 
-// profile by email
+
 export const userProfileByEmail = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.params.email });

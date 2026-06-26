@@ -168,7 +168,7 @@ const AdminDashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Doctors Stats */}
+          {}
           <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
             <div className="border-b border-slate-100 pb-3 mb-4">
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Doctors</h3>
@@ -207,7 +207,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Patients Stats */}
+          {}
           <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
             <div className="border-b border-slate-100 pb-3 mb-4">
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Patients</h3>
@@ -228,7 +228,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Performance Stats */}
+          {}
           <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
             <div className="border-b border-slate-100 pb-3 mb-4">
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Performance</h3>
@@ -251,7 +251,7 @@ const AdminDashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-          {/* Recent Doctors */}
+          {}
           <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
             <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">
@@ -299,7 +299,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Recent Patients */}
+          {}
           <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
             <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
               <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">

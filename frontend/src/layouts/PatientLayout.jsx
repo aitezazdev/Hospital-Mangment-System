@@ -30,7 +30,7 @@ const PatientLayout = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 text-slate-800">
-      {/* Mobile Top Header */}
+      {}
       <header className="md:hidden flex items-center justify-between bg-slate-900 text-white p-4 shadow-md z-50">
         <div className="flex items-center space-x-3">
           <svg viewBox="0 0 24 24" className="w-7 h-7 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +50,7 @@ const PatientLayout = () => {
         </button>
       </header>
 
-      {/* Sidebar Navigation */}
+      {}
       <aside
         className={`
           bg-slate-900 text-slate-100 w-72 flex flex-col z-45
@@ -58,7 +58,7 @@ const PatientLayout = () => {
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        {/* Header Block */}
+        {}
         <div className="p-6 border-b border-slate-800">
           <div className="flex items-center space-x-3">
             <svg viewBox="0 0 24 24" className="w-8 h-8 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +77,7 @@ const PatientLayout = () => {
           </div>
         </div>
 
-        {/* Navigation Links */}
+        {}
         <nav className="p-6 flex-1 overflow-y-auto space-y-2">
           <NavLink
             to="/patient/dashboard"
@@ -155,7 +155,7 @@ const PatientLayout = () => {
           </NavLink>
         </nav>
 
-        {/* User Block & Logout */}
+        {}
         <div className="p-6 border-t border-slate-800 space-y-4">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center border border-slate-700">
@@ -180,7 +180,7 @@ const PatientLayout = () => {
         </div>
       </aside>
 
-      {/* Sidebar Overlay (Mobile) */}
+      {}
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
@@ -188,7 +188,7 @@ const PatientLayout = () => {
         />
       )}
 
-      {/* Main Container */}
+      {}
       <main className="flex-1 overflow-auto p-4 md:p-8">
         <div className="min-h-full max-w-7xl mx-auto">
           <Outlet />

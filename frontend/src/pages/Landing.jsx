@@ -61,7 +61,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-emerald-600 selection:text-white">
-      {/* 1. Header / Navigation */}
+      {}
       <header className="sticky top-0 z-50 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
@@ -82,7 +82,7 @@ const Landing = () => {
             </div>
           </div>
 
-          {/* Desktop Nav */}
+          {}
           <nav className="hidden md:flex items-center space-x-8">
             <a href="#departments" className="text-slate-600 hover:text-emerald-600 text-sm font-medium transition-colors">Departments</a>
             <a href="#services" className="text-slate-600 hover:text-emerald-600 text-sm font-medium transition-colors">Portal Access</a>
@@ -112,7 +112,7 @@ const Landing = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -123,7 +123,7 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* Mobile menu dropdown */}
+        {}
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-b border-slate-200">
             <div className="px-4 pt-2 pb-4 space-y-1 text-center">
@@ -154,7 +154,7 @@ const Landing = () => {
         )}
       </header>
 
-      {/* 2. Hero Section */}
+      {}
       <section className="bg-white border-b border-slate-200 py-16 md:py-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-100 text-xs font-semibold px-3.5 py-1 rounded">
@@ -184,7 +184,7 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* 3. Clinical Departments */}
+      {}
       <section id="departments" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-xl mx-auto mb-12">
@@ -213,7 +213,7 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* 4. Portals Section */}
+      {}
       <section id="services" className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-xl mx-auto mb-12">
@@ -223,8 +223,8 @@ const Landing = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Patients */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {}
             <div className="bg-white border border-slate-200 rounded p-6 flex flex-col justify-between h-72 shadow-sm hover:shadow transition-shadow">
               <div className="space-y-3">
                 <span className="text-xs font-bold text-emerald-600 uppercase">Patient Dashboard</span>
@@ -240,7 +240,7 @@ const Landing = () => {
               </button>
             </div>
 
-            {/* Doctors */}
+            {}
             <div className="bg-white border border-slate-200 rounded p-6 flex flex-col justify-between h-72 shadow-sm hover:shadow transition-shadow">
               <div className="space-y-3">
                 <span className="text-xs font-bold text-emerald-600 uppercase">Physician Portal</span>
@@ -255,27 +255,11 @@ const Landing = () => {
                 Access Physician Terminal
               </button>
             </div>
-
-            {/* Admins */}
-            <div className="bg-white border border-slate-200 rounded p-6 flex flex-col justify-between h-72 shadow-sm hover:shadow transition-shadow">
-              <div className="space-y-3">
-                <span className="text-xs font-bold text-emerald-600 uppercase">Administration console</span>
-                <p className="text-slate-500 text-xs leading-relaxed">
-                  Verify doctor credentials, approve clinical staff applications, monitor patient visit counts, and review aggregated metrics.
-                </p>
-              </div>
-              <button
-                onClick={handleGetStarted}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2.5 rounded transition-colors cursor-pointer"
-              >
-                Access Admin Panel
-              </button>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Frequently Asked Questions */}
+      {}
       <section className="py-16 bg-white border-t border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
@@ -317,7 +301,7 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* 6. Footer & Contact Info */}
+      {}
       <footer id="about" className="bg-slate-900 text-slate-400 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-8 border-b border-slate-800 pb-8 mb-8">
           <div className="space-y-3">

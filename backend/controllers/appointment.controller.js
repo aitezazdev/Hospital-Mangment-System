@@ -5,7 +5,7 @@ import { Appointment } from "../models/Appointment.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import mongoose from "mongoose";
 
-// book appointment
+
 export const bookAppointment = async (req, res, next) => {
   try {
     const doctorId = req.params.id;
@@ -130,7 +130,7 @@ export const bookAppointment = async (req, res, next) => {
   }
 };
 
-// update date of an appointment
+
 export const updateAppointment = async (req, res, next) => {
   try {
     const appointmentId = req.params.id;
@@ -234,7 +234,7 @@ export const updateAppointment = async (req, res, next) => {
   }
 };
 
-// delete an appointment
+
 export const deleteAppointment = async (req, res, next) => {
   try {
     const appointmentId = req.params.id;
@@ -271,7 +271,7 @@ export const deleteAppointment = async (req, res, next) => {
   }
 };
 
-// get all Appointments for a doctor
+
 export const getAllAppointments = async (req, res, next) => {
   try {
     const doctorID = req.params.id;
@@ -320,7 +320,7 @@ export const getAllAppointments = async (req, res, next) => {
   }
 };
 
-// approve an appointment of a patient
+
 export const approveAppointment = async (req, res, next) => {
   try {
     const appointmentId = req.params.id;
@@ -370,7 +370,7 @@ export const approveAppointment = async (req, res, next) => {
   }
 };
 
-// cancel an appointment of a patient
+
 export const cancelAppointment = async (req, res, next) => {
   try {
     const appointmentId = req.params.id;
@@ -424,7 +424,7 @@ export const cancelAppointment = async (req, res, next) => {
   }
 };
 
-// mark an appointment as completed
+
 export const completeAppointment = async (req, res, next) => {
   try {
     const appointmentId = req.params.id;
@@ -449,7 +449,7 @@ export const completeAppointment = async (req, res, next) => {
   }
 };
 
-// appointments for today
+
 export const getTodaysAppointments = async (req, res, next) => {
   try {
     const doctorId = req.user._id;
@@ -487,7 +487,7 @@ export const getTodaysAppointments = async (req, res, next) => {
   }
 };
 
-// upcoming week appointments
+
 export const getUpcomingWeekAppointments = async (req, res, next) => {
   try {
     const doctorProfile = await Doctor.findOne({ user: req.user._id });
@@ -524,7 +524,7 @@ export const getUpcomingWeekAppointments = async (req, res, next) => {
   }
 };
 
-// get monthly appointments
+
 export const getMonthlyAppointments = async (req, res, next) => {
   try {
     const doctorProfile = await Doctor.findOne({ user: req.user._id });
@@ -561,7 +561,7 @@ export const getMonthlyAppointments = async (req, res, next) => {
   }
 };
 
-// revenue estimate for the doctor for today
+
 export const getTodaysRevenueEstimate = async (req, res, next) => {
   try {
     const doctorProfile = await Doctor.findOne({ user: req.user._id });
@@ -592,7 +592,7 @@ export const getTodaysRevenueEstimate = async (req, res, next) => {
   }
 };
 
-// revenue for this week
+
 export const revenueForThisWeek = async (req, res, next) => {
   try {
     const doctorProfile = await Doctor.findOne({ user: req.user._id });
@@ -623,7 +623,7 @@ export const revenueForThisWeek = async (req, res, next) => {
   }
 };
 
-// get all patients for the doctor
+
 export const getDoctorPatients = async (req, res, next) => {
   try {
     const userId = req.user._id;
@@ -707,7 +707,7 @@ export const getDoctorPatients = async (req, res, next) => {
   }
 };
 
-// get all appointments for patient
+
 export const getPatientAppointments = async (req, res, next) => {
   try {
     const patientID = req.params.id;
@@ -753,7 +753,7 @@ export const getPatientAppointments = async (req, res, next) => {
   }
 };
 
-// Add or edit prescription for an appointment (Doctor)
+
 export const prescribeMedicines = async (req, res, next) => {
   try {
     const appointmentId = req.params.id;

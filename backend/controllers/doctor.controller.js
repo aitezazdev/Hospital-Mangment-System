@@ -56,7 +56,7 @@ const parseAvailability = (text) => {
   return slots;
 };
 
-// create doctor profile
+
 export const createDoctorProfile = async (req, res, next) => {
   try {
     const {
@@ -118,7 +118,7 @@ export const createDoctorProfile = async (req, res, next) => {
   }
 };
 
-// update doctor profile
+
 export const updateDoctorProfile = async (req, res, next) => {
   try {
     const doctorId = req.params.id;
@@ -146,7 +146,7 @@ export const updateDoctorProfile = async (req, res, next) => {
   }
 };
 
-// delete doctor profile and user account
+
 export const deleteDoctorProfileAndAccount = async (req, res, next) => {
   try {
     const doctorId = req.params.id;
@@ -171,7 +171,7 @@ export const deleteDoctorProfileAndAccount = async (req, res, next) => {
   }
 };
 
-// list all doctors
+
 export const listAllDoctors = async (req, res, next) => {
   try {
     const doctors = await Doctor.find({ isApproved: true }).populate(
@@ -184,7 +184,7 @@ export const listAllDoctors = async (req, res, next) => {
   }
 };
 
-// list doctors with filters
+
 export const listDoctorsWithFilters = async (req, res, next) => {
   try {
     const { specialization, minFee, maxFee, minExperience, maxExperience } =
@@ -216,7 +216,7 @@ export const listDoctorsWithFilters = async (req, res, next) => {
   }
 };
 
-// get available seats for a doctor on a specific date
+
 export const getAvailableSeatsForDoctor = async (req, res, next) => {
   try {
     const doctorId = req.params.id;

@@ -2,10 +2,10 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true, // Crucial for reading/writing HTTP-Only cookies
+  withCredentials: true, 
 });
 
-// A separate instance for refreshing tokens to avoid request looping
+
 const refreshApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
@@ -43,12 +43,12 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Check if error is 401 and not already retried
+    
     if (error.response?.status === 401 && !originalRequest._retry) {
       const errorMsg = error.response.data?.message || "";
       const errorCode = error.response.data?.code || "";
 
-      // Only attempt refresh if it is an expired token error
+      
       if (errorCode === "TOKEN_EXPIRED" || errorMsg.toLowerCase().includes("expired")) {
         if (isRefreshing) {
           return new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ api.interceptors.response.use(
         isRefreshing = true;
 
         try {
-          // Trigger token refresh endpoint
+          
           const response = await refreshApi.post("/auth/refresh");
           const newToken = response.data.token;
 
@@ -85,7 +85,7 @@ api.interceptors.response.use(
           processQueue(refreshError, null);
           isRefreshing = false;
           
-          // Clear user credentials on refresh failure and redirect to signin
+          
           localStorage.removeItem("token");
           localStorage.removeItem("user");
           window.location.href = "/auth/signin?expired=true";
@@ -93,9 +93,9 @@ api.interceptors.response.use(
           return Promise.reject(refreshError);
         }
       } else {
-        // If it's a 401 but not due to expired token (e.g. invalid login, not logged in)
-        // Let the caller handle it directly (such as Login component showing "invalid credentials")
-        // But if the route is protected, we redirect to login
+        
+        
+        
         const currentPath = window.location.pathname;
         if (!currentPath.includes("/auth/")) {
           localStorage.removeItem("token");

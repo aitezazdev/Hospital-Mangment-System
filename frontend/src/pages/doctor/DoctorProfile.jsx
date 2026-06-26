@@ -155,7 +155,7 @@ const DoctorProfile = () => {
 
   return (
     <div className="space-y-8 pb-12">
-      {/* Page Header */}
+      {}
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Doctor Profile</h1>
@@ -172,10 +172,10 @@ const DoctorProfile = () => {
       {profile && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* Main Content Area (Col-Span 2) */}
+          {}
           <div className="lg:col-span-2 space-y-6">
             
-            {/* 1. Personal Information Section */}
+            {}
             <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
               <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-5">
                 <h2 className="text-base font-bold text-slate-800">
@@ -272,7 +272,7 @@ const DoctorProfile = () => {
               )}
             </div>
 
-            {/* 2. Professional Information Section */}
+            {}
             <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
               <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-5">
                 <h2 className="text-base font-bold text-slate-800">
@@ -421,7 +421,7 @@ const DoctorProfile = () => {
 
           </div>
 
-          {/* Right Sidebar: Profile Status Card */}
+          {}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm text-center">
               <div className="w-20 h-20 bg-slate-100 text-slate-700 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold">
@@ -464,7 +464,7 @@ const DoctorProfile = () => {
               </div>
             </div>
 
-            {/* Days Off Info (Optional Card) */}
+            {}
             {doctorProfile?.daysOff && doctorProfile.daysOff.length > 0 && (
               <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
                 <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">

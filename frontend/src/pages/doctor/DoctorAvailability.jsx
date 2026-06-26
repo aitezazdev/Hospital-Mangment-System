@@ -36,7 +36,7 @@ const DoctorAvailability = () => {
     if (!time24) return "";
     const str = time24.toLowerCase().trim();
     
-    // Check if the input already contains AM or PM (e.g., "10am", "4pm")
+    
     if (str.includes("am") || str.includes("pm")) {
       const isPm = str.includes("pm");
       const cleanTime = str.replace(/[a-z]/g, "");
@@ -46,7 +46,7 @@ const DoctorAvailability = () => {
       return `${hours}:${minutes} ${isPm ? "PM" : "AM"}`;
     }
     
-    // Default 24-hour time formatting (e.g., "17:30", "9", "14")
+    
     const parts = str.split(":");
     const hour24 = parseInt(parts[0]) || 0;
     const minutes = parts[1] ? parts[1].padEnd(2, "0").slice(0, 2) : "00";
@@ -60,19 +60,19 @@ const DoctorAvailability = () => {
     if (!timeStr) return "09:00";
     const str = timeStr.toLowerCase().trim();
 
-    // Check if it already matches standard HH:mm (e.g. "09:00", "14:30")
+    
     if (/^\d{2}:\d{2}$/.test(str)) {
       return str;
     }
 
-    // Check if it is a simple integer string (e.g., "9", "14")
+    
     if (/^\d+$/.test(str)) {
       const hour = parseInt(str, 10);
       const safeHour = Math.min(23, Math.max(0, hour));
       return `${safeHour.toString().padStart(2, "0")}:00`;
     }
 
-    // Parse values like "10am", "4pm", "10:30am", "4:15 pm"
+    
     const isPm = str.includes("pm");
     const isAm = str.includes("am");
     const cleanTime = str.replace(/[a-z]/g, "").trim();
@@ -217,11 +217,11 @@ const DoctorAvailability = () => {
       );
       const updateData = { availability, daysOff: availabilityForm.daysOff };
       const result = await updateProfessionalInfo(doctorProfile._id, updateData);
-      // Update Redux store so the view refreshes immediately without a page reload
+      
       if (result?.doctor) {
         dispatch(setDoctorProfile(result.doctor));
       } else {
-        // Optimistically update the store with local form data
+        
         dispatch(setDoctorProfile({ ...doctorProfile, availability, daysOff: availabilityForm.daysOff }));
       }
       toast.success("Availability saved successfully!");

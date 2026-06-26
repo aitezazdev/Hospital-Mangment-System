@@ -3,7 +3,7 @@ import { FaUser, FaLock, FaUserMd } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiUserSettingsFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { signupUser } from "../../redux/slices/auth";
+import { signupUser, clearError } from "../../redux/slices/auth";
 import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
@@ -33,9 +33,17 @@ const Signup = () => {
     }
   }, [user, token, navigate]);
 
+  useEffect(() => {
+    dispatch(clearError());
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    dispatch(clearError());
 
     if (errors[name]) {
       const newErrors = { ...errors };
@@ -97,7 +105,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 sm:p-8">
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-3xl font-extrabold text-gray-800 my-0.5">
             Sign Up

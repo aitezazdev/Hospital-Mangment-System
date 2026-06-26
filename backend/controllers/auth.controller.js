@@ -5,7 +5,7 @@ import { Patient } from "../models/Patient.js";
 import { Doctor } from "../models/Doctor.js";
 import jwt from "jsonwebtoken";
 
-// signup
+
 export const SignUpUser = async (req, res, next) => {
   try {
     const { name, email, password, confirmPassword, role, phone } = req.body;
@@ -55,7 +55,7 @@ export const SignUpUser = async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000 
     });
 
     return res.status(201).json({
@@ -74,7 +74,7 @@ export const SignUpUser = async (req, res, next) => {
   }
 };
 
-// signin
+
 export const SignInUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -115,7 +115,7 @@ export const SignInUser = async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000 
     });
 
     let hasProfile = false;
@@ -157,7 +157,7 @@ export const SignInUser = async (req, res, next) => {
   }
 };
 
-// get user
+
 export const getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
@@ -191,7 +191,7 @@ export const getMe = async (req, res, next) => {
   }
 };
 
-// refresh token
+
 export const RefreshToken = async (req, res, next) => {
   try {
     const refreshToken = req.cookies.refreshToken;
@@ -212,7 +212,7 @@ export const RefreshToken = async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      maxAge: 7 * 24 * 60 * 60 * 1000 
     });
 
     return res.status(200).json({
@@ -224,7 +224,7 @@ export const RefreshToken = async (req, res, next) => {
   }
 };
 
-// logout user
+
 export const LogOutUser = async (req, res, next) => {
   try {
     res.clearCookie("refreshToken", {

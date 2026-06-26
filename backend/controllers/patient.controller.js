@@ -4,7 +4,7 @@ import { Patient } from "../models/Patient.js";
 import { User } from "../models/User.js";
 import { sendEmail } from "../utils/sendEmail.js";
 
-// Create Patient Profile
+
 export const createPatientProfile = async (req, res, next) => {
   try {
     const { gender, age, address, medicalHistory } = req.body;
@@ -69,7 +69,7 @@ export const createPatientProfile = async (req, res, next) => {
   }
 };
 
-// Update Patient Profile
+
 export const updatePatientProfile = async (req, res, next) => {
   try {
     const userId = req.params.id;
@@ -121,7 +121,7 @@ export const updatePatientProfile = async (req, res, next) => {
   }
 };
 
-// Delete Patient Profile and User Account
+
 export const deletePatientProfileAndAccount = async (req, res, next) => {
   try {
     const patientId = req.params.id;
@@ -148,7 +148,7 @@ export const deletePatientProfileAndAccount = async (req, res, next) => {
   }
 };
 
-// List All Patients
+
 export const listAllPatients = async (_req, res, next) => {
   try {
     const patients = await Patient.find().populate("user", "name email");
@@ -158,7 +158,7 @@ export const listAllPatients = async (_req, res, next) => {
   }
 };
 
-// get patient by id
+
 export const getPatientByID = async (req, res, next) => {
   try {
     const patientId = req.params.id;
@@ -228,7 +228,7 @@ export const getPatientByID = async (req, res, next) => {
   }
 };
 
-// next appointment for the patient
+
 export const nextAppointments = async (req, res, next) => {
   try {
     const userId = req.user._id;
@@ -273,7 +273,7 @@ export const nextAppointments = async (req, res, next) => {
 
     const comingAppointments = allAppointments.filter((appt) => {
       const apptDate = new Date(appt.date);
-      // Keep only pending or confirmed appointments that are today or in the future
+      
       return (
         apptDate >= todayStart &&
         (appt.status === "pending" || appt.status === "confirmed")

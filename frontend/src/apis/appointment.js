@@ -1,6 +1,6 @@
 import api from "./axios";
 
-// docotor side
+
 export const allAppointments = async (id, status = "all", allDates = false) => {
   try {
     const { data } = await api.get(
@@ -127,7 +127,7 @@ export const getAllPatients = async () => {
   }
 };
 
-// patient side
+
 export const patientAllAppointments = async (id, status = "all") => {
   try {
     const { data } = await api.get(

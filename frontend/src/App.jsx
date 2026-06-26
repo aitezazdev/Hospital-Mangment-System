@@ -5,13 +5,13 @@ import { setDoctorProfile } from "./redux/slices/doctorProfile";
 import { setPatientProfile } from "./redux/slices/patientProfile";
 import { fetchUserProfileByEmail } from "./apis/user";
 
-// Eager load auth and landing pages for instant user response
+
 import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/Signup";
 import Landing from "./pages/Landing";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// Lazily load large dashboards & portal layouts for optimal bundle chunks
+
 const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const ApproveDoctors = lazy(() => import("./pages/admin/ApproveDoctors"));
@@ -46,12 +46,12 @@ const LoadingSpinner = () => (
 const App = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  // Use primitive email string as dep — prevents re-running on every Redux state update
+  
   const userEmail = user?.email || null;
   const userRole = user?.role || null;
 
   useEffect(() => {
-    if (!userEmail) return; // user logged out — stop immediately, no fetch
+    if (!userEmail) return; 
 
     let cancelled = false;
     const loadProfile = async () => {
@@ -72,18 +72,18 @@ const App = () => {
     };
 
     loadProfile();
-    return () => { cancelled = true; }; // cleanup: cancel stale async calls
-  }, [userEmail, userRole, dispatch]); // stable primitives — won't loop on logout
+    return () => { cancelled = true; }; 
+  }, [userEmail, userRole, dispatch]); 
 
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Routes>
-        {/* Public Routes */}
+        {}
         <Route path="/" element={<Landing />} />
         <Route path="/auth/signin" element={<Signin />} />
         <Route path="/auth/signup" element={<Signup />} />
 
-        {/* Doctor Routes */}
+        {}
         <Route element={<ProtectedRoute role="doctor" />}>
           <Route
             path="/doctor/create-profile"
@@ -99,7 +99,7 @@ const App = () => {
           </Route>
         </Route>
 
-        {/* Patient Routes */}
+        {}
         <Route element={<ProtectedRoute role="patient" />}>
           <Route
             path="/patient/create-profile"
@@ -120,7 +120,7 @@ const App = () => {
           </Route>
         </Route>
 
-        {/* Admin Routes */}
+        {}
         <Route element={<ProtectedRoute role="admin" />}>
           <Route element={<AdminLayout />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -132,7 +132,7 @@ const App = () => {
           </Route>
         </Route>
 
-        {/* Fallback */}
+        {}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

@@ -71,7 +71,7 @@ const DoctorPatients = () => {
     return filtered;
   }, [patients, searchTerm, genderFilter, sortBy, sortOrder]);
 
-  // Reset to page 1 when filters or sort change
+  
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, genderFilter, sortBy, sortOrder]);

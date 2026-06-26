@@ -154,7 +154,7 @@ const AppointmentDetailsModal = ({
         </Descriptions.Item>
       </Descriptions>
 
-      {/* Prescription management section */}
+      {}
       {isEditing ? (
         <div className="mt-6 border-t border-slate-100 pt-4 space-y-4">
           <div className="flex justify-between items-center">

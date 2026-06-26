@@ -117,6 +117,7 @@ const AllPatients = () => {
         <div className="overflow-x-auto mt-4">
           <Table
             rowKey="_id"
+            scroll={{ x: "max-content" }}
             columns={columns}
             dataSource={filteredPatients}
             loading={{ spinning: loading, indicator: <Spin size="large" /> }}
