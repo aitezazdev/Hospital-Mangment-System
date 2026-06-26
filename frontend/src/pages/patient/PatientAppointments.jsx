@@ -39,7 +39,7 @@ const PatientAppointments = () => {
 
   useEffect(() => {
     fetchAppointments();
-  }, [patientProfile, statusFilter]);
+  }, [patientProfile?._id, statusFilter]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -131,7 +131,7 @@ const PatientAppointments = () => {
       render: (_, record) => (
         <div className="flex gap-2">
           <Button
-            className="border-gray-300 hover:border-emerald-500 hover:text-emerald-600"
+            className="border-gray-300 hover:border-teal-500 hover:text-teal-600"
             onClick={() => {
               setSelectedAppointment(record);
               setDetailsVisible(true);
@@ -182,8 +182,8 @@ const PatientAppointments = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl shadow-lg p-8 mb-8">
+    <div className="space-y-6">
+      <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8">
         <h1 className="text-3xl font-bold mb-2">My Appointments</h1>
         <p className="opacity-90">View and track your scheduled appointments</p>
       </div>
@@ -198,7 +198,7 @@ const PatientAppointments = () => {
           className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white 
                shadow-sm placeholder-gray-400 text-gray-700 
                focus:outline-none focus:border-transparent 
-               focus:ring-2 focus:ring-emerald-400 focus:shadow-lg
+               focus:ring-2 focus:ring-teal-400 focus:shadow-lg
                transition-all duration-300 ease-in-out"
         />
       </div>
@@ -234,6 +234,7 @@ const PatientAppointments = () => {
         onClose={() => setDetailsVisible(false)}
         appointment={selectedAppointment}
         mode="patient"
+        onRefresh={fetchAppointments}
       />
 
       <BookAppointmentModal
@@ -245,7 +246,6 @@ const PatientAppointments = () => {
         onSubmit={async (payload, mode) => {
           try {
             if (mode === "reschedule") {
-              console.log(payload);
               await updateAppointment(selectedAppointment._id, payload);
               message.success("Appointment rescheduled successfully");
             }

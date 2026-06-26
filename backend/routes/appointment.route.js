@@ -14,6 +14,7 @@ import {
   getUpcomingWeekAppointments,
   revenueForThisWeek,
   updateAppointment,
+  prescribeMedicines,
 } from "../controllers/appointment.controller.js";
 
 const appointmentRouter = express.Router();
@@ -40,6 +41,11 @@ appointmentRouter.put(
   "/appointment/:id/complete",
   authMiddleware,
   completeAppointment
+);
+appointmentRouter.put(
+  "/appointment/:id/prescribe",
+  authMiddleware,
+  prescribeMedicines
 );
 appointmentRouter.get(
   "/appointments/today",

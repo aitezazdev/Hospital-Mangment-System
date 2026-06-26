@@ -58,11 +58,11 @@ const PatientProfile = () => {
       }
     };
     loadProfile();
-  }, [user, dispatch]);
+  }, [user?.email, dispatch]);
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/auth/signin");
+    navigate("/auth/signin", { replace: true });
   };
 
   const editingPersonalInfo = () => {
@@ -141,24 +141,29 @@ const PatientProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <p className="text-emerald-600">Loading your profile...</p>
+      <div className="h-[50vh] flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 max-w-sm w-full text-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-teal-600 mx-auto mb-4"></div>
+          <p className="text-teal-600 font-semibold">Loading your profile...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <p className="text-red-600">{error}</p>
+      <div className="h-[50vh] flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 border-l-4 border-red-500 max-w-md text-center">
+          <p className="text-red-600 font-semibold">{error}</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="space-y-6">
       <div className="max-w-5xl mx-auto">
-        <div className="bg-emerald-600 text-white rounded-xl shadow-lg p-8 mb-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8 flex flex-col md:flex-row justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold mb-2">Patient Profile</h1>
             <p className="text-emerald-100 text-sm">
@@ -310,7 +315,7 @@ const PatientProfile = () => {
                   <div className="flex space-x-4 mt-6">
                     <button
                       onClick={handleSavePatient}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                      className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg">
                       Save
                     </button>
                     <button
@@ -323,34 +328,22 @@ const PatientProfile = () => {
               )}
             </div>
 
-            <div className="space-y-6">
-              <div className="bg-white p-6 rounded-xl shadow-md text-center">
-                <div className="w-20 h-20 bg-emerald-100 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-emerald-700">
-                  {profile.name.charAt(0).toUpperCase()}
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  {profile.name}
-                </h3>
-                <p className="text-gray-600 mb-4">{patientProfile?.gender || "Not specified"}</p>
-                <p className="text-sm text-gray-500">
-                  Member Since
-                  <span className="font-semibold"> {new Date(profile.createdAt).toLocaleDateString("en-GB")}</span>
-                </p>
+            <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100 flex flex-col items-center justify-center">
+              <div className="w-24 h-24 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center text-3xl font-extrabold mb-4 border-2 border-teal-200">
+                {user?.name ? user.name.charAt(0).toUpperCase() : "P"}
               </div>
-
-              <div className="bg-white p-6 rounded-xl shadow-md">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">
-                  Profile Actions
-                </h3>
+              <h2 className="text-xl font-bold text-gray-800">{user?.name}</h2>
+              <p className="text-gray-500 text-sm mb-4">{user?.email}</p>
+              <div className="w-full border-t pt-4">
                 <div className="space-y-2">
                   <button
                     onClick={() => editingPersonalInfo()}
-                    className="w-full px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-md">
+                    className="w-full px-3 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-md">
                     Edit Personal Info
                   </button>
                   <button
                     onClick={() => editingPatientInfo()}
-                    className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md">
+                    className="w-full px-3 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-md">
                     Edit Patient Info
                   </button>
                 </div>

@@ -43,12 +43,13 @@ const PatientFindDoctors = () => {
     const specialization = doc.specialization?.toLowerCase() || "";
     const clinicAddress = doc.clinicAddress?.toLowerCase() || "";
     const fee = doc.consultationFee || 0;
-    const feeQuery = Number(debouncedSearch);
-    const isFeeSearch = !isNaN(feeQuery);
+    const trimmedQuery = debouncedSearch.trim();
+    const feeQuery = Number(trimmedQuery);
+    const isFeeSearch = trimmedQuery !== "" && !isNaN(feeQuery);
     return (
-      name.includes(debouncedSearch.toLowerCase()) ||
-      specialization.includes(debouncedSearch.toLowerCase()) ||
-      clinicAddress.includes(debouncedSearch.toLowerCase()) ||
+      name.includes(trimmedQuery.toLowerCase()) ||
+      specialization.includes(trimmedQuery.toLowerCase()) ||
+      clinicAddress.includes(trimmedQuery.toLowerCase()) ||
       (isFeeSearch && fee <= feeQuery)
     );
   });
@@ -100,7 +101,7 @@ const PatientFindDoctors = () => {
       render: (_, record) => (
         <div className="flex gap-2">
           <Button
-            className="border-gray-300 hover:border-emerald-500 hover:text-emerald-600"
+            className="border-gray-300 hover:border-teal-500 hover:text-teal-600"
             onClick={() => {
               setSelectedDoctor(record);
               setModalVisible(true);
@@ -109,7 +110,7 @@ const PatientFindDoctors = () => {
           </Button>
           <Button
             type="primary"
-            className="bg-emerald-500 hover:bg-emerald-600 border-none"
+            className="bg-teal-600 hover:bg-teal-700 border-none"
             onClick={() => {
               setDoctorToBook(record);
               setBookingModalVisible(true);
@@ -122,8 +123,8 @@ const PatientFindDoctors = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl shadow-lg p-8 mb-8">
+    <div className="space-y-6">
+      <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8">
         <h1 className="text-3xl font-bold mb-2">Find a Doctor</h1>
         <p className="opacity-90">Browse and book appointments with doctors</p>
       </div>
@@ -138,7 +139,7 @@ const PatientFindDoctors = () => {
           className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white 
                  shadow-sm placeholder-gray-400 text-gray-700 
                  focus:outline-none focus:border-transparent 
-                 focus:ring-2 focus:ring-emerald-400 focus:shadow-lg
+                 focus:ring-2 focus:ring-teal-400 focus:shadow-lg
                  transition-all duration-300 ease-in-out"
         />
       </div>
@@ -163,7 +164,7 @@ const PatientFindDoctors = () => {
         footer={null}
         centered
         title={
-          <h2 className="text-xl font-bold text-emerald-600">Doctor Profile</h2>
+          <h2 className="text-xl font-bold text-teal-700">Doctor Profile</h2>
         }>
         {selectedDoctor && (
           <Descriptions bordered column={1} size="small">

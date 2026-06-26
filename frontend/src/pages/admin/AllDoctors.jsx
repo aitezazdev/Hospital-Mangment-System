@@ -164,8 +164,8 @@ const AllDoctors = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl shadow-lg p-8 mb-8">
+    <div className="space-y-6">
+      <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8">
         <h1 className="text-3xl font-bold mb-2">All Doctors</h1>
         <p className="opacity-90">Manage all registered doctors and their approval status</p>
       </div>
@@ -177,7 +177,7 @@ const AllDoctors = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by Name or Specialization"
-          className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white shadow-sm placeholder-gray-400 text-gray-700 focus:ring-2 focus:ring-emerald-400 focus:shadow-lg transition-all duration-300 ease-in-out"
+          className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white shadow-sm placeholder-gray-400 text-gray-700 focus:ring-2 focus:ring-teal-400 focus:shadow-lg transition-all duration-300 ease-in-out"
         />
       </div>
 
@@ -208,7 +208,7 @@ const AllDoctors = () => {
         onCancel={() => setDetailsVisible(false)}
         footer={null}
         centered
-        title={<h2 className="text-xl font-bold text-emerald-600">Doctor Profile</h2>}
+        title={<h2 className="text-xl font-bold text-teal-700">Doctor Profile</h2>}
       >
         {selectedDoctor && (
           <Descriptions bordered column={1} size="small">

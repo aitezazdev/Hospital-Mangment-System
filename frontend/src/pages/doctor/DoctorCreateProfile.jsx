@@ -5,13 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createDoctorProfile } from "../../apis/doctor";
 import { getMe } from "../../apis/auth";
-import { setUser } from "../../redux/slices/auth";
+import { setUser, logoutUser } from "../../redux/slices/auth";
 
 const DoctorCreateProfile = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [message, setMessage] = useState(null);
   const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    dispatch(logoutUser());
+    navigate("/auth/signin");
+  };
 
   const [formData, setFormData] = useState({
     specialization: "",
@@ -209,10 +214,18 @@ const DoctorCreateProfile = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg font-semibold shadow-md ${
-              loading && "bg-emerald-300"
+            className={`w-full cursor-pointer bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-lg font-semibold shadow-md transition-colors ${
+              loading && "bg-teal-300 cursor-not-allowed"
             }`}>
             {loading ? "Submitting..." : "Submit Profile"}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleSignOut}
+            className="w-full text-center text-sm font-semibold text-gray-500 hover:text-red-500 hover:underline mt-4 cursor-pointer"
+          >
+            Cancel & Sign Out
           </button>
         </form>
       </div>

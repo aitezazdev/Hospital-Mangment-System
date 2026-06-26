@@ -1,8 +1,9 @@
 import { User } from "../models/User.js";
-import { generateToken } from "../utils/token.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
 import bcrypt from "bcrypt";
 import { Patient } from "../models/Patient.js";
 import { Doctor } from "../models/Doctor.js";
+import jwt from "jsonwebtoken";
 
 // signup
 export const SignUpUser = async (req, res, next) => {
@@ -18,7 +19,7 @@ export const SignUpUser = async (req, res, next) => {
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
-        message: "Password must be at least 6 characterbrunos",
+        message: "Password must be at least 6 characters",
       });
     }
 
@@ -47,7 +48,15 @@ export const SignUpUser = async (req, res, next) => {
       phone: req.body.phone || "",
     });
 
-    const token = generateToken(user);
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    });
 
     return res.status(201).json({
       success: true,
@@ -58,7 +67,7 @@ export const SignUpUser = async (req, res, next) => {
         role: user.role,
         phone: user.phone,
       },
-      token,
+      token: accessToken,
     });
   } catch (error) {
     next(error);
@@ -79,7 +88,7 @@ export const SignInUser = async (req, res, next) => {
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
-        message: "Password must be at least 6 characterbrunos",
+        message: "Password must be at least 6 characters",
       });
     }
 
@@ -99,7 +108,15 @@ export const SignInUser = async (req, res, next) => {
       });
     }
 
-    const token = generateToken(user);
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    });
 
     let hasProfile = false;
     let isApproved = false;
@@ -129,11 +146,11 @@ export const SignInUser = async (req, res, next) => {
       userResponse.isApproved = isApproved;
     }
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       message: "User signin successfully",
       user: userResponse,
-      token,
+      token: accessToken,
     });
   } catch (error) {
     next(error);
@@ -168,6 +185,56 @@ export const getMe = async (req, res, next) => {
         hasProfile,
         ...(user.role === "doctor" && { isApproved }),
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// refresh token
+export const RefreshToken = async (req, res, next) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      return res.status(401).json({ success: false, message: "No refresh token provided" });
+    }
+
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(401).json({ success: false, message: "Invalid refresh token: user not found" });
+    }
+
+    const accessToken = generateAccessToken(user);
+    const newRefreshToken = generateRefreshToken(user);
+
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    });
+
+    return res.status(200).json({
+      success: true,
+      token: accessToken,
+    });
+  } catch (error) {
+    return res.status(401).json({ success: false, message: "Invalid or expired refresh token" });
+  }
+};
+
+// logout user
+export const LogOutUser = async (req, res, next) => {
+  try {
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict"
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully"
     });
   } catch (error) {
     next(error);

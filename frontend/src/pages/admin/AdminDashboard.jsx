@@ -42,19 +42,17 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading dashboard...</p>
-        </div>
+      <div className="flex flex-col items-center justify-center h-[50vh]">
+        <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-gray-600 text-lg">Loading dashboard...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full">
+      <div className="flex items-center justify-center h-[50vh] p-4">
+        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full border border-gray-100">
           <div className="text-red-500 text-5xl mb-4 text-center">⚠️</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
             Error Loading Data
@@ -62,7 +60,7 @@ const AdminDashboard = () => {
           <p className="text-gray-600 text-center mb-6">{error}</p>
           <button
             onClick={fetchData}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+            className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer">
             <RefreshCw className="w-5 h-5" />
             Retry
           </button>
@@ -142,16 +140,16 @@ const AdminDashboard = () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto p-6">
-        <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-2xl shadow-xl p-8 mb-8">
+    <div className="space-y-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-2xl shadow-xl p-8 mb-8">
           <div>
             <div className="flex justify-between">
               <h1 className="text-4xl font-bold mb-4">Admin Dashboard</h1>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div className="bg-white text-black bg-opacity-20 backdrop-blur-sm rounded-xl px-6 py-3">
-                  <p className="text-sm opacity-90 mb-1">Today</p>
-                  <p className="font-semibold text-lg">{today}</p>
+                <div className="bg-white/10 border border-white/20 backdrop-blur-sm rounded-xl px-6 py-3 shadow-inner">
+                  <p className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-0.5">Today</p>
+                  <p className="font-semibold text-sm">{today}</p>
                 </div>
               </div>
             </div>
@@ -184,7 +182,7 @@ const AdminDashboard = () => {
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
-              <Calendar className="w-6 h-6 text-emerald-600 mr-3" />
+              <Calendar className="w-6 h-6 text-teal-600 mr-3" />
               <h2 className="text-2xl font-bold text-gray-800">
                 Appointment Overview
               </h2>
@@ -221,12 +219,12 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-gray-800">Doctors</h3>
-              <Users className="w-5 h-5 text-emerald-600" />
+              <Users className="w-5 h-5 text-teal-600" />
             </div>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Active</span>
-                <span className="font-semibold text-emerald-600">
+                <span className="font-semibold text-teal-600">
                   {activeDoctors}
                 </span>
               </div>
@@ -238,7 +236,7 @@ const AdminDashboard = () => {
               </div>
               <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-teal-500 to-teal-600 transition-all duration-500"
                   style={{
                     width: `${
                       stats.totalDoctors
@@ -316,8 +314,8 @@ const AdminDashboard = () => {
                   key={index}
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-                      <span className="text-emerald-600 font-semibold">
+                    <div className="w-10 h-10 bg-teal-50 rounded-full flex items-center justify-center border border-teal-100">
+                      <span className="text-teal-600 font-semibold">
                         {doctor.user?.name?.charAt(0) || "D"}
                       </span>
                     </div>
@@ -333,8 +331,8 @@ const AdminDashboard = () => {
                   <span
                     className={`text-xs px-2 py-1 rounded-full ${
                       doctor.status === "approved"
-                        ? "bg-emerald-100 text-emerald-600"
-                        : "bg-amber-100 text-amber-600"
+                        ? "bg-teal-50 text-teal-700 border border-teal-100"
+                        : "bg-amber-50 text-amber-700 border border-amber-100"
                     }`}>
                     {doctor.status}
                   </span>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Card, Modal, Form, Input, message } from "antd";
-import { logout, setUser } from "../../redux/slices/auth";
+import { logoutUser, setUser } from "../../redux/slices/auth";
 import { editProfile } from "../../apis/admin";
 
 const AdminProfile = () => {
@@ -12,7 +12,7 @@ const AdminProfile = () => {
   const [form] = Form.useForm();
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutUser());
   };
 
   const handleEdit = () => {
@@ -43,34 +43,34 @@ const AdminProfile = () => {
   }, [user]);
 
   return (
-    <div className="min-h-screen flex justify-center items-center p-6">
+    <div className="h-[75vh] flex justify-center items-center p-6">
       <Card
-        className="w-full bg-emerald-200 max-w-md rounded-2xl shadow-2xl border-none"
+        className="w-full bg-white max-w-md rounded-2xl shadow-xl border border-slate-100"
         styles={{ padding: "2rem" }}>
         <div className="flex flex-col items-center text-center">
-          <div className="w-24 h-24 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-3xl font-bold shadow-md mb-4">
+          <div className="w-24 h-24 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 text-3xl font-bold shadow-sm mb-4 border border-teal-100">
             {profile?.name?.charAt(0)?.toUpperCase() || "A"}
           </div>
 
-          <h2 className="text-2xl font-bold text-gray-800 mb-1">
+          <h2 className="text-2xl font-bold text-slate-800 mb-1">
             {profile?.name || "Admin"}
           </h2>
 
-          <p className="text-emerald-600 font-medium text-sm mb-6">
+          <p className="text-teal-600 font-semibold text-sm mb-6 uppercase tracking-wide">
             {profile?.role || "Admin"}
           </p>
 
-          <div className="w-full space-y-4 text-left bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="w-full space-y-4 text-left bg-slate-50 rounded-xl p-5 border border-slate-100">
             <div>
-              <p className="text-gray-500 text-sm">Email</p>
-              <p className="font-semibold text-gray-800">
+              <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Email</p>
+              <p className="font-semibold text-slate-800">
                 {profile?.email || "N/A"}
               </p>
             </div>
 
             <div>
-              <p className="text-gray-500 text-sm">Phone</p>
-              <p className="font-semibold text-gray-800">
+              <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Phone</p>
+              <p className="font-semibold text-slate-800">
                 {profile?.phone || "N/A"}
               </p>
             </div>
@@ -78,16 +78,18 @@ const AdminProfile = () => {
 
           <div className="w-full flex gap-3 mt-8">
             <Button
-            style={{height: "40px"}}
+              style={{ height: "42px", borderRadius: "8px" }}
               type="primary"
+              className="bg-teal-600 hover:bg-teal-700 border-none font-semibold"
               block
               onClick={handleEdit}>
               Edit Profile
             </Button>
 
             <Button
-            style={{height: "40px"}}
+              style={{ height: "42px", borderRadius: "8px" }}
               danger
+              className="hover:bg-red-50 font-semibold"
               block
               onClick={handleLogout}>
               Logout
@@ -101,18 +103,21 @@ const AdminProfile = () => {
         onCancel={() => setIsModalVisible(false)}
         onOk={handleSave}
         title={
-          <span className="text-emerald-600 font-semibold">Edit Profile</span>
+          <span className="text-teal-700 font-bold text-lg">Edit Profile</span>
         }
         okText="Save Changes"
         okButtonProps={{
-          className: "bg-emerald-500 hover:bg-emerald-600 border-none",
+          className: "bg-teal-600 hover:bg-teal-700 border-none font-semibold",
+        }}
+        cancelButtonProps={{
+          className: "hover:border-teal-600 hover:text-teal-600",
         }}>
-        <Form form={form} layout="vertical">
+        <Form form={form} layout="vertical" className="mt-4">
           <Form.Item
             label="Full Name"
             name="name"
             rules={[{ required: true, message: "Please enter your name" }]}>
-            <Input placeholder="Enter full name" />
+            <Input placeholder="Enter full name" className="hover:border-teal-500 focus:border-teal-500" />
           </Form.Item>
           <Form.Item
             label="Email"
@@ -121,7 +126,7 @@ const AdminProfile = () => {
               { required: true, message: "Please enter your email" },
               { type: "email", message: "Invalid email address" },
             ]}>
-            <Input placeholder="Enter email" />
+            <Input placeholder="Enter email" className="hover:border-teal-500 focus:border-teal-500" />
           </Form.Item>
           <Form.Item
             label="Phone"
@@ -133,7 +138,7 @@ const AdminProfile = () => {
                 message: "Enter a valid 11-digit phone number",
               },
             ]}>
-            <Input placeholder="Enter phone number" />
+            <Input placeholder="Enter phone number" className="hover:border-teal-500 focus:border-teal-500" />
           </Form.Item>
         </Form>
       </Modal>

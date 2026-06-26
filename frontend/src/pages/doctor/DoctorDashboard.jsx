@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   todayAppointments,
   getComingWeekAppointments,
   todayREvenue,
   thisWeekRevenue,
 } from "../../apis/appointment";
-import { getMe } from "../../apis/auth";
-import { setUser } from "../../redux/slices/auth";
 
 const DoctorDashboard = () => {
   const { user } = useSelector((state) => state.auth);
@@ -20,7 +18,6 @@ const DoctorDashboard = () => {
   const [weeklyPendingAppointments, setWeeklyPendingAppointments] = useState([]);
   const [todayRevenue, setTodayRevenue] = useState(0);
   const [weekRevenue, setWeekRevenue] = useState(0);
-  const dispatch = useDispatch();
 
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -63,7 +60,7 @@ const DoctorDashboard = () => {
   const fetchThisWeekRevenue = async () => {
     try {
       const data = await thisWeekRevenue();
-      setWeekRevenue(data.totalRevenue);
+      setWeekRevenue(data.totalRevenue || 0);
     } catch (error) {
       setError(error.message || "something went wrong");
     }
@@ -76,20 +73,9 @@ const DoctorDashboard = () => {
     fetchThisWeekRevenue();
   }, []);
 
-  useEffect(() => {
-    const refreshUser = async () => {
-      try {
-        const freshUser = await getMe();
-        dispatch(setUser(freshUser));
-      } catch (err) {
-        console.error("Failed to refresh user", err);
-      }
-    };
-    refreshUser();
-  }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="space-y-6">
       {!user?.isApproved ? (
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-10 text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
@@ -101,17 +87,17 @@ const DoctorDashboard = () => {
         </div>
       ) : (
         <div className="max-w-7xl mx-auto space-y-10">
-          <div className="bg-emerald-600 rounded-xl shadow-md p-8">
+          <div className="bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-2xl shadow-xl p-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
               <div>
-                <h1 className="text-3xl font-bold text-white mb-1">
+                <h1 className="text-3xl font-extrabold text-white mb-1 tracking-tight">
                   Doctor Dashboard
                 </h1>
-                <p className="text-white font-semibold">{today}</p>
+                <p className="text-emerald-100/90 font-medium text-sm">{today}</p>
               </div>
               <div
-                className={`mt-4 sm:mt-0 px-4 py-2 rounded-lg ${
-                  user.isApproved ? "bg-emerald-100 text-emerald-700" : "bg-yellow-100 text-yellow-700"
+                className={`mt-4 sm:mt-0 px-4 py-2 rounded-lg font-semibold shadow-sm ${
+                  user.isApproved ? "bg-emerald-100/20 text-emerald-100 border border-emerald-400/20" : "bg-yellow-100/20 text-yellow-100 border border-yellow-400/20"
                 }`}
               >
                 {user.isApproved ? "Profile Approved" : "Profile Pending Approval"}

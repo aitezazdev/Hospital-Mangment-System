@@ -42,8 +42,8 @@ const AllPatients = () => {
   }, [searchTerm]);
 
   const filteredPatients = patients.filter((p) => {
-    const name = p?.name?.toLowerCase() || "";
-    const email = p?.email?.toLowerCase() || "";
+    const name = p?.user?.name?.toLowerCase() || "";
+    const email = p?.user?.email?.toLowerCase() || "";
     return (
       name.includes(debouncedSearch.toLowerCase()) ||
       email.includes(debouncedSearch.toLowerCase())
@@ -82,6 +82,7 @@ const AllPatients = () => {
       title: "Actions",
       render: (_, record) => (
         <Button
+          className="border-gray-300 hover:border-teal-500 hover:text-teal-600"
           onClick={() => {
             setSelectedPatient(record);
             setDetailsVisible(true);
@@ -93,8 +94,8 @@ const AllPatients = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto bg-emerald-600 text-white rounded-xl shadow-lg p-8 mb-8">
+    <div className="space-y-6">
+      <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8">
         <h1 className="text-3xl font-bold mb-2">All Patients</h1>
         <p className="opacity-90">View and manage all registered patients</p>
       </div>
@@ -106,7 +107,7 @@ const AllPatients = () => {
           value={searchTerm}  
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by Name or Email"
-          className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white shadow-sm placeholder-gray-400 text-gray-700 focus:ring-2 focus:ring-indigo-400 focus:shadow-lg transition-all duration-300 ease-in-out"
+          className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white shadow-sm placeholder-gray-400 text-gray-700 focus:ring-2 focus:ring-teal-400 focus:shadow-lg transition-all duration-300 ease-in-out"
         />
       </div>
 
@@ -130,13 +131,12 @@ const AllPatients = () => {
         footer={null}
         centered
         title={
-          <h2 className="text-xl font-bold text-indigo-600">Patient Profile</h2>
+          <h2 className="text-xl font-bold text-teal-700">Patient Profile</h2>
         }>
         {selectedPatient && (
           <Descriptions bordered column={1} size="small">
             <Descriptions.Item label="Name">
               {selectedPatient.user?.name}
-              {console.log(selectedPatient)}
             </Descriptions.Item>
             <Descriptions.Item label="Email">
               {selectedPatient.user?.email}
@@ -148,7 +148,7 @@ const AllPatients = () => {
               {selectedPatient.gender || "—"}
             </Descriptions.Item>
             <Descriptions.Item label="Age">
-              {selectedPatient.user?.age || "—"}
+              {selectedPatient.age || "—"}
             </Descriptions.Item>
             <Descriptions.Item label="Registered On">
               {new Date(selectedPatient?.user.createdAt).toLocaleDateString()}

@@ -35,8 +35,34 @@ export const signinUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser",
+  async (_, thunkAPI) => {
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {
+      console.error("Logout backend call failed:", error);
+    } finally {
+      thunkAPI.dispatch(logout());
+    }
+  }
+);
+
+
+const getStoredUser = () => {
+  try {
+    const userStr = localStorage.getItem("user");
+    if (!userStr || userStr === "undefined" || userStr === "null") return null;
+    return JSON.parse(userStr);
+  } catch (error) {
+    console.error("Failed to parse stored user from localStorage:", error);
+    localStorage.removeItem("user");
+    return null;
+  }
+};
+
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  user: getStoredUser(),
   token: localStorage.getItem("token") || null,
   loading: false,
   error: null,
@@ -54,7 +80,11 @@ const authSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action.payload));
+      if (action.payload) {
+        localStorage.setItem("user", JSON.stringify(action.payload));
+      } else {
+        localStorage.removeItem("user");
+      }
     },
     setHasProfile: (state, action) => {
       if (state.user) {

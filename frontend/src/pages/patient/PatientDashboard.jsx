@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { nextAppointments } from "../../apis/patient";
+import { Calendar } from "lucide-react";
 
 const PatientDashboard = () => {
   const { user } = useSelector((state) => state.auth);
@@ -29,44 +30,44 @@ const PatientDashboard = () => {
 
   useEffect(() => {
     fetchUpComingThreeAppointments();
-  }, [user]);
+  }, [user?.email]);
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-2xl shadow-xl p-8 mb-10">
+    <div className="space-y-6">
+      <div className="bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-2xl shadow-xl p-8 mb-10">
         <div className="flex flex-col sm:flex-row items-center justify-between">
           <div>
             <h1 className="text-4xl font-extrabold mb-2 tracking-tight">
               Patient Dashboard
             </h1>
-            <p className="text-emerald-100 text-lg">
+            <p className="text-emerald-100/90 text-lg font-medium">
               Manage Your Appointments and Profile Here
             </p>
           </div>
-          <div className="bg-white bg-opacity-20 text-white rounded-lg px-5 py-3 mt-6 sm:mt-0">
-            <p className="text-sm text-black opacity-90">Today</p>
-            <p className="font-semibold text-black">{today}</p>
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-xl px-5 py-3 mt-6 sm:mt-0 shadow-inner">
+            <p className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-0.5">Today</p>
+            <p className="font-semibold text-white text-sm">{today}</p>
           </div>
         </div>
       </div>
 
       {loading ? (
         <div className="flex justify-center items-center h-40">
-          <div className="animate-spin rounded-full h-10 w-10 border-4 border-emerald-500 border-t-transparent"></div>
+          <div className="animate-spin rounded-full h-10 w-10 border-4 border-teal-600 border-t-transparent"></div>
         </div>
       ) : appointments.length > 0 ? (
         <div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-8 flex items-center">
-            <div className="w-8 h-8 bg-emerald-500 rounded-lg mr-3"></div>
+          <h2 className="text-3xl font-bold text-slate-800 mb-8 flex items-center">
+            <Calendar className="w-8 h-8 text-teal-600 mr-3" />
             Upcoming Appointments
           </h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {appointments.map((appt) => (
               <div
                 key={appt._id}
-                className="bg-zinc-200 rounded-2xl shadow-md hover:shadow-xl border border-gray-100 p-6">
+                className="bg-white rounded-2xl shadow-md hover:shadow-xl border border-gray-100 p-6">
                 <div className="mb-4 border-b pb-3">
-                  <h3 className="text-lg font-bold text-emerald-600">
+                  <h3 className="text-lg font-bold text-teal-600">
                     {appt.doctor?.user?.name}
                   </h3>
                   <p className="text-sm text-gray-500">

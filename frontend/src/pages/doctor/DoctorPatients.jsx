@@ -38,9 +38,9 @@ const DoctorPatients = () => {
   const filteredAndSortedPatients = useMemo(() => {
     let filtered = patients.filter((patient) => {
       const matchesSearch =
-        patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        patient.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        patient.phone.includes(searchTerm);
+        patient.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient.phone?.includes(searchTerm);
       const matchesGender =
         !genderFilter ||
         patient.gender?.toLowerCase() === genderFilter.toLowerCase();
@@ -70,6 +70,11 @@ const DoctorPatients = () => {
 
     return filtered;
   }, [patients, searchTerm, genderFilter, sortBy, sortOrder]);
+
+  // Reset to page 1 when filters or sort change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, genderFilter, sortBy, sortOrder]);
 
   const totalPages = Math.ceil(filteredAndSortedPatients.length / itemsPerPage);
   const currentPatients = filteredAndSortedPatients.slice(
@@ -108,16 +113,16 @@ const DoctorPatients = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+      <div className="flex items-center justify-center h-[50vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="space-y-6">
       <div className="max-w-7xl mx-auto">
-        <div className="max-w-7xl mx-auto bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl shadow-lg p-8 mb-8">
+        <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8">
           <h1 className="text-3xl font-bold mb-2">Patients</h1>
           <p className="opacity-90">Manage and track all your patients</p>
         </div>
@@ -313,7 +318,7 @@ const DoctorPatients = () => {
                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                   }
                   disabled={currentPage === totalPages}
-                  classNamea="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                   Next
                 </button>
               </div>

@@ -9,7 +9,7 @@ export const approveDoctor = async (req, res, next) => {
   try {
     const doctorId = req.params.id;
 
-    const doctor = await Doctor.findById(doctorId);
+    const doctor = await Doctor.findById(doctorId).populate("user");
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
@@ -33,10 +33,10 @@ export const approveDoctor = async (req, res, next) => {
       `,
     })
       .then(() => {
-        console.log("Appointment email sent successfully");
+        console.log("Doctor approval email sent successfully");
       })
       .catch((error) => {
-        console.error("Error sending appointment email:", error);
+        console.error("Error sending doctor approval email:", error);
       });
 
     res.status(200).json({
@@ -81,10 +81,10 @@ export const notApproveDoctor = async (req, res, next) => {
       `,
     })
       .then(() => {
-        console.log("Appointment email sent successfully");
+        console.log("Doctor rejection email sent successfully");
       })
       .catch((error) => {
-        console.error("Error sending appointment email:", error);
+        console.error("Error sending doctor rejection email:", error);
       });
 
     res.status(200).json({
@@ -172,13 +172,13 @@ export const allAppointmentsForAdmin = async (req, res, next) => {
         populate: { path: "user", select: "name email phone" },
       });
 
-    if (!appointments || appointments.length <= 0) {
-      return res.status(404).json({ message: "No appointments found" });
+    if (!appointments) {
+      return res.status(500).json({ message: "Failed to fetch appointments" });
     }
-
+    // Return empty array instead of 404 — no appointments is a valid state
     return res.status(200).json({
       success: true,
-      appointments,
+      appointments: appointments || [],
     });
   } catch (error) {
     next(error);
@@ -189,16 +189,11 @@ export const allAppointmentsForAdmin = async (req, res, next) => {
 export const allDoctors = async (_req, res, next) => {
   try {
     const doctors = await Doctor.find().populate("user", "name email phone");
-    if (!doctors || doctors.length <= 0) {
-      return res.status(404).json({ message: "No doctors found" });
-    }
-    res.status(200).json(
-      {
-        success: true,
-        doctors,
-      },
-      { message: "Doctors found successfully" }
-    );
+    // Return empty array instead of 404 — no doctors is a valid state
+    return res.status(200).json({
+      success: true,
+      doctors: doctors || [],
+    });
   } catch (error) {
     next(error);
   }
@@ -208,16 +203,11 @@ export const allDoctors = async (_req, res, next) => {
 export const allPatients = async (_req, res, next) => {
   try {
     const patients = await Patient.find().populate("user", "name email phone");
-    if (!patients || patients.length <= 0) {
-      return res.status(404).json({ message: "No patients found" });
-    }
-    res.status(200).json(
-      {
-        success: true,
-        patients,
-      },
-      { message: "patients found successfully" }
-    );
+    // Return empty array instead of 404 — no patients is a valid state
+    return res.status(200).json({
+      success: true,
+      patients: patients || [],
+    });
   } catch (error) {
     next(error);
   }

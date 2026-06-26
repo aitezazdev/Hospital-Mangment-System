@@ -21,6 +21,8 @@ const appointmentSchema = new mongoose.Schema(
       default: "pending",
     },
     reason: { type: String, default: "" },
+    prescriptionMedicines: { type: String, default: "" },
+    prescriptionNotes: { type: String, default: "" },
   },
   { timestamps: true }
 );

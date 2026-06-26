@@ -153,7 +153,7 @@ const AllAppointments = () => {
           {record.status === "pending" && (
             <Button
               type="primary"
-              className="bg-emerald-500 hover:bg-emerald-600 border-none"
+              className="bg-teal-600 hover:bg-teal-700 border-none"
               onClick={() => handleApprove(record._id)}>
               Approve
             </Button>
@@ -174,7 +174,7 @@ const AllAppointments = () => {
             </Button>
           )}
           <Button
-            className="border-gray-300 hover:border-emerald-500 hover:text-emerald-600"
+            className="border-gray-300 hover:border-teal-500 hover:text-teal-600"
             onClick={() => {
               setSelectedAppointment(record);
               setDetailsVisible(true);
@@ -202,8 +202,8 @@ const AllAppointments = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl shadow-lg p-8 mb-8">
+    <div className="space-y-6">
+      <div className="max-w-7xl mx-auto bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-lg p-8 mb-8">
         <h1 className="text-3xl font-bold mb-2">All Appointments</h1>
         <p className="opacity-90">
           View, manage, and control all appointments across doctors and patients
@@ -220,7 +220,7 @@ const AllAppointments = () => {
           className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white 
             shadow-sm placeholder-gray-400 text-gray-700 
             focus:outline-none focus:border-transparent 
-            focus:ring-2 focus:ring-emerald-400 focus:shadow-lg
+            focus:ring-2 focus:ring-teal-400 focus:shadow-lg
             transition-all duration-300 ease-in-out"
         />
       </div>
@@ -264,9 +264,11 @@ const AllAppointments = () => {
         visible={detailsVisible}
         onClose={() => setDetailsVisible(false)}
         appointment={selectedAppointment}
+        mode="admin"
         onApprove={handleApprove}
         onCancel={handleCancel}
         onComplete={handleComplete}
+        onRefresh={fetchAppointments}
       />
     </div>
   );

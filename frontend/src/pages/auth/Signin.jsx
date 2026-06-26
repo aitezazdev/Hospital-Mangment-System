@@ -2,7 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { signinUser } from "../../redux/slices/auth";
 
 const Signin = () => {
@@ -10,6 +10,8 @@ const Signin = () => {
   const { loading, error, user } = useSelector((state) => state.auth);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isExpired = searchParams.get("expired") === "true";
 
   const [formData, setFormData] = useState({
     email: "",
@@ -87,6 +89,12 @@ const Signin = () => {
             Welcome back! Please login to continue.
           </p>
         </div>
+
+        {isExpired && (
+          <div className="bg-amber-50 border border-amber-200 text-amber-800 rounded-xl p-3 mb-4 text-xs font-semibold flex items-center gap-2 shadow-sm">
+            <span>⚠️ Your session has expired. Please sign in again.</span>
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-100 text-red-600 border border-red-400 rounded p-2 mb-4 text-sm text-center">

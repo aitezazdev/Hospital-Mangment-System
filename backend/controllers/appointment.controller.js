@@ -144,7 +144,6 @@ export const updateAppointment = async (req, res, next) => {
       return res.status(404).json({ message: "Appointment not found" });
     }
 
-    console.log(req.body);
 
     if (!newDate || !slotId || !reason) {
       return res.status(400).json({ message: "All fields are required" });
@@ -396,23 +395,23 @@ export const cancelAppointment = async (req, res, next) => {
 
     sendEmail({
       to: appointment.patient.user.email,
-      subject: "Your Appointment is Confirmed",
+      subject: "Your Appointment has been Cancelled",
       html: `
     <h2>Hello ${appointment.patient.user.name},</h2>
-    <p>Your appointment with Dr. ${
+    <p>We're writing to let you know that your appointment with Dr. ${
       appointment.doctor.user.name
-    } has been <b>confirmed</b>.</p>
+    } has been <b>cancelled</b>.</p>
     <p><b>Date:</b> ${appointment.date.toDateString()}</p>
     <p><b>Time:</b> ${appointment.startTime} - ${appointment.endTime}</p>
-    <p>Please make sure to arrive on time.</p>
+    <p>If you have any questions or would like to reschedule, please contact us or book a new appointment through the platform.</p>
     <p>Regards,<br/>Healthcare Platform Team</p>
   `,
     })
       .then(() => {
-        console.log("Confirmation email sent successfully");
+        console.log("Cancellation email sent successfully");
       })
       .catch((err) => {
-        console.error("Failed to send confirmation email:", err);
+        console.error("Failed to send cancellation email:", err);
       });
 
     res
@@ -746,6 +745,31 @@ export const getPatientAppointments = async (req, res, next) => {
       success: true,
       message: `${query?.status || "all"} appintments fetched succeessful`,
       appointments,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Add or edit prescription for an appointment (Doctor)
+export const prescribeMedicines = async (req, res, next) => {
+  try {
+    const appointmentId = req.params.id;
+    const { prescriptionMedicines, prescriptionNotes } = req.body;
+
+    const appointment = await Appointment.findById(appointmentId);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    appointment.prescriptionMedicines = prescriptionMedicines || "";
+    appointment.prescriptionNotes = prescriptionNotes || "";
+    await appointment.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Prescription saved successfully",
+      appointment,
     });
   } catch (error) {
     next(error);

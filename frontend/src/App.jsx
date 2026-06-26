@@ -1,131 +1,143 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Signup from "./pages/auth/Signup";
-import Signin from "./pages/auth/Signin";
 import { Routes, Route, Navigate } from "react-router-dom";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import DoctorDashboard from "./pages/doctor/DoctorDashboard";
-import PatientDashboard from "./pages/patient/PatientDashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import DoctorProfile from "./pages/doctor/DoctorProfile";
-import DoctorLayout from "./layouts/DoctorLayout";
-import DoctorCreateProfile from "./pages/doctor/DoctorCreateProfile";
-import DoctorAppointments from "./pages/doctor/DoctorAppointments";
-import DoctorPatients from "./pages/doctor/DoctorPatients";
-import DoctorAvailability from "./pages/doctor/DoctorAvailability";
-import PatientCreateProfile from "./pages/patient/PatientCreateProfile";
 import { setDoctorProfile } from "./redux/slices/doctorProfile";
 import { setPatientProfile } from "./redux/slices/patientProfile";
 import { fetchUserProfileByEmail } from "./apis/user";
-import PatientDetails from "./pages/doctor/PatientDetails";
-import PatientLayout from "./layouts/PatientLayout";
-import PatientProfile from "./pages/patient/PatientProfile";
-import PatientAppointments from "./pages/patient/PatientAppointments";
-import PatientFindDoctors from "./pages/patient/PatientFindDoctors";
-import AdminLayout from "./layouts/AdminLayout";
-import AdminProfile from "./pages/admin/AdminProfile";
-import ApproveDoctors from "./pages/admin/ApproveDoctors";
-import AllDoctors from "./pages/admin/AllDoctors";
-import AllPatients from "./pages/admin/AllPatients";
-import AllAppointments from "./pages/admin/AllAppointments";
 
+// Eager load auth and landing pages for instant user response
+import Signin from "./pages/auth/Signin";
+import Signup from "./pages/auth/Signup";
+import Landing from "./pages/Landing";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// Lazily load large dashboards & portal layouts for optimal bundle chunks
+const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const ApproveDoctors = lazy(() => import("./pages/admin/ApproveDoctors"));
+const AllAppointments = lazy(() => import("./pages/admin/AllAppointments"));
+const AllDoctors = lazy(() => import("./pages/admin/AllDoctors"));
+const AllPatients = lazy(() => import("./pages/admin/AllPatients"));
+const AdminProfile = lazy(() => import("./pages/admin/AdminProfile"));
+
+const DoctorLayout = lazy(() => import("./layouts/DoctorLayout"));
+const DoctorDashboard = lazy(() => import("./pages/doctor/DoctorDashboard"));
+const DoctorAppointments = lazy(() => import("./pages/doctor/DoctorAppointments"));
+const DoctorPatients = lazy(() => import("./pages/doctor/DoctorPatients"));
+const PatientDetails = lazy(() => import("./pages/doctor/PatientDetails"));
+const DoctorAvailability = lazy(() => import("./pages/doctor/DoctorAvailability"));
+const DoctorProfile = lazy(() => import("./pages/doctor/DoctorProfile"));
+const DoctorCreateProfile = lazy(() => import("./pages/doctor/DoctorCreateProfile"));
+
+const PatientLayout = lazy(() => import("./layouts/PatientLayout"));
+const PatientDashboard = lazy(() => import("./pages/patient/PatientDashboard"));
+const PatientAppointments = lazy(() => import("./pages/patient/PatientAppointments"));
+const PatientFindDoctors = lazy(() => import("./pages/patient/PatientFindDoctors"));
+const PatientProfile = lazy(() => import("./pages/patient/PatientProfile"));
+const PatientCreateProfile = lazy(() => import("./pages/patient/PatientCreateProfile"));
+const AiAssistant = lazy(() => import("./pages/patient/AiAssistant"));
+
+const LoadingSpinner = () => (
+  <div className="min-h-screen flex items-center justify-center bg-slate-50">
+    <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>
+  </div>
+);
 
 const App = () => {
-  const { user, token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  // Use primitive email string as dep — prevents re-running on every Redux state update
+  const userEmail = user?.email || null;
+  const userRole = user?.role || null;
 
   useEffect(() => {
+    if (!userEmail) return; // user logged out — stop immediately, no fetch
+
+    let cancelled = false;
     const loadProfile = async () => {
-      if (user?.email) {
-        try {
-          const profileData = await fetchUserProfileByEmail(user.email);
+      try {
+        const profileData = await fetchUserProfileByEmail(userEmail);
+        if (cancelled) return;
 
-          if (user.role === "doctor" && profileData?.doctorProfile) {
-            dispatch(setDoctorProfile(profileData.doctorProfile));
-          }
-
-          if (user.role === "patient" && profileData?.patientProfile) {
-            dispatch(setPatientProfile(profileData.patientProfile));
-          }
-        } catch (err) {
-          console.error("Error loading profile:", err);
+        if (userRole === "doctor" && profileData?.doctorProfile) {
+          dispatch(setDoctorProfile(profileData.doctorProfile));
         }
+
+        if (userRole === "patient" && profileData?.patientProfile) {
+          dispatch(setPatientProfile(profileData.patientProfile));
+        }
+      } catch (err) {
+        if (!cancelled) console.error("Error loading profile:", err);
       }
     };
 
     loadProfile();
-  }, [user, dispatch]);
+    return () => { cancelled = true; }; // cleanup: cancel stale async calls
+  }, [userEmail, userRole, dispatch]); // stable primitives — won't loop on logout
 
   return (
-    <Routes>
-      <Route path="/auth/signin" element={<Signin />} />
-      <Route path="/auth/signup" element={<Signup />} />
+    <Suspense fallback={<LoadingSpinner />}>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/auth/signin" element={<Signin />} />
+        <Route path="/auth/signup" element={<Signup />} />
 
-      <Route element={<ProtectedRoute role="doctor" />}>
-        <Route
-          path="/doctor/create-profile"
-          element={<DoctorCreateProfile />}
-        />
-        <Route element={<DoctorLayout />}>
-          <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
-          <Route path="/doctor/appointments" element={<DoctorAppointments />} />
-          <Route path="/doctor/patients" element={<DoctorPatients />} />
-          <Route path="/doctor/patients/:id" element={<PatientDetails />} />
-          <Route path="/doctor/availability" element={<DoctorAvailability />} />
-          <Route path="/doctor/profile" element={<DoctorProfile />} />
-        </Route>
-      </Route>
-
-      <Route element={<ProtectedRoute role="patient" />}>
-        <Route
-          path="/patient/create-profile"
-          element={<PatientCreateProfile />}
-        />
-        <Route element={<PatientLayout />}>
-          <Route path="/patient/dashboard" element={<PatientDashboard />} />
+        {/* Doctor Routes */}
+        <Route element={<ProtectedRoute role="doctor" />}>
           <Route
-            path="/patient/appointments"
-            element={<PatientAppointments />}
+            path="/doctor/create-profile"
+            element={<DoctorCreateProfile />}
           />
+          <Route element={<DoctorLayout />}>
+            <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
+            <Route path="/doctor/appointments" element={<DoctorAppointments />} />
+            <Route path="/doctor/patients" element={<DoctorPatients />} />
+            <Route path="/doctor/patients/:id" element={<PatientDetails />} />
+            <Route path="/doctor/availability" element={<DoctorAvailability />} />
+            <Route path="/doctor/profile" element={<DoctorProfile />} />
+          </Route>
+        </Route>
+
+        {/* Patient Routes */}
+        <Route element={<ProtectedRoute role="patient" />}>
           <Route
-            path="/patient/find-doctors"
-            element={<PatientFindDoctors />}
+            path="/patient/create-profile"
+            element={<PatientCreateProfile />}
           />
-          <Route path="/patient/profile" element={<PatientProfile />} />
+          <Route element={<PatientLayout />}>
+            <Route path="/patient/dashboard" element={<PatientDashboard />} />
+            <Route
+              path="/patient/appointments"
+              element={<PatientAppointments />}
+            />
+            <Route
+              path="/patient/find-doctors"
+              element={<PatientFindDoctors />}
+            />
+            <Route path="/patient/profile" element={<PatientProfile />} />
+            <Route path="/patient/ai-assistant" element={<AiAssistant />} />
+          </Route>
         </Route>
-      </Route>
 
-      <Route element={<ProtectedRoute role="admin" />}>
-        <Route element={<AdminLayout />}>
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/approve-doctors" element={<ApproveDoctors />} />
-          <Route path="/admin/all-appointments" element={<AllAppointments />} />
-          <Route path="/admin/all-doctors" element={<AllDoctors />} />
-          <Route path="/admin/all-patients" element={<AllPatients />} />
-          <Route path="/admin/profile" element={<AdminProfile />} />
+        {/* Admin Routes */}
+        <Route element={<ProtectedRoute role="admin" />}>
+          <Route element={<AdminLayout />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/approve-doctors" element={<ApproveDoctors />} />
+            <Route path="/admin/all-appointments" element={<AllAppointments />} />
+            <Route path="/admin/all-doctors" element={<AllDoctors />} />
+            <Route path="/admin/all-patients" element={<AllPatients />} />
+            <Route path="/admin/profile" element={<AdminProfile />} />
+          </Route>
         </Route>
-      </Route>
 
-      <Route
-        path="/"
-        element={
-          token && user ? (
-            user.role === "admin" ? (
-              <Navigate to="/admin/dashboard" />
-            ) : !user.hasProfile ? (
-              <Navigate to={`/${user.role}/create-profile`} />
-            ) : (
-              <Navigate to={`/${user.role}/dashboard`} />
-            )
-          ) : (
-            <Navigate to="/auth/signin" />
-          )
-        }
-      />
-
-      <Route path="*" element={<h2>404 Page Not Found</h2>} />
-    </Routes>
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
   );
 };
 
 export default App;
+

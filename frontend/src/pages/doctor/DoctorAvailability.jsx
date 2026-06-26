@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateProfessionalInfo } from "../../apis/doctor";
+import { setDoctorProfile } from "../../redux/slices/doctorProfile";
+import toast from "react-hot-toast";
 
 const DoctorAvailability = () => {
   const doctorProfile = useSelector((state) => state.doctorProfile.profile);
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [availabilityForm, setAvailabilityForm] = useState({
@@ -31,11 +34,62 @@ const DoctorAvailability = () => {
 
   const formatTimeTo12Hour = (time24) => {
     if (!time24) return "";
-    const [hours, minutes] = time24.split(":");
-    const hour = parseInt(hours);
-    const ampm = hour >= 12 ? "PM" : "AM";
-    const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+    const str = time24.toLowerCase().trim();
+    
+    // Check if the input already contains AM or PM (e.g., "10am", "4pm")
+    if (str.includes("am") || str.includes("pm")) {
+      const isPm = str.includes("pm");
+      const cleanTime = str.replace(/[a-z]/g, "");
+      const parts = cleanTime.split(":");
+      const hours = parseInt(parts[0]) || 0;
+      const minutes = parts[1] ? parts[1].padEnd(2, "0").slice(0, 2) : "00";
+      return `${hours}:${minutes} ${isPm ? "PM" : "AM"}`;
+    }
+    
+    // Default 24-hour time formatting (e.g., "17:30", "9", "14")
+    const parts = str.split(":");
+    const hour24 = parseInt(parts[0]) || 0;
+    const minutes = parts[1] ? parts[1].padEnd(2, "0").slice(0, 2) : "00";
+    const ampm = hour24 >= 12 ? "PM" : "AM";
+    let hour12 = hour24 % 12;
+    if (hour12 === 0) hour12 = 12;
     return `${hour12}:${minutes} ${ampm}`;
+  };
+
+  const formatTimeTo24Hour = (timeStr) => {
+    if (!timeStr) return "09:00";
+    const str = timeStr.toLowerCase().trim();
+
+    // Check if it already matches standard HH:mm (e.g. "09:00", "14:30")
+    if (/^\d{2}:\d{2}$/.test(str)) {
+      return str;
+    }
+
+    // Check if it is a simple integer string (e.g., "9", "14")
+    if (/^\d+$/.test(str)) {
+      const hour = parseInt(str, 10);
+      const safeHour = Math.min(23, Math.max(0, hour));
+      return `${safeHour.toString().padStart(2, "0")}:00`;
+    }
+
+    // Parse values like "10am", "4pm", "10:30am", "4:15 pm"
+    const isPm = str.includes("pm");
+    const isAm = str.includes("am");
+    const cleanTime = str.replace(/[a-z]/g, "").trim();
+    const parts = cleanTime.split(":");
+    let hour = parseInt(parts[0], 10) || 0;
+    let minute = parseInt(parts[1], 10) || 0;
+
+    if (isPm && hour !== 12) {
+      hour += 12;
+    } else if (isAm && hour === 12) {
+      hour = 0;
+    }
+
+    const safeHour = Math.min(23, Math.max(0, hour));
+    const safeMinute = Math.min(59, Math.max(0, minute));
+
+    return `${safeHour.toString().padStart(2, "0")}:${safeMinute.toString().padStart(2, "0")}`;
   };
 
   const editingAvailability = () => {
@@ -53,8 +107,8 @@ const DoctorAvailability = () => {
         if (weeklySchedule[slot.day]) {
           weeklySchedule[slot.day].isActive = true;
           weeklySchedule[slot.day].slots.push({
-            startTime: slot.startTime,
-            endTime: slot.endTime,
+            startTime: formatTimeTo24Hour(slot.startTime),
+            endTime: formatTimeTo24Hour(slot.endTime),
             maxPatientsPerDay: slot.maxPatientsPerDay || 10,
           });
         }
@@ -162,28 +216,37 @@ const DoctorAvailability = () => {
         }
       );
       const updateData = { availability, daysOff: availabilityForm.daysOff };
-      await updateProfessionalInfo(doctorProfile._id, updateData);
+      const result = await updateProfessionalInfo(doctorProfile._id, updateData);
+      // Update Redux store so the view refreshes immediately without a page reload
+      if (result?.doctor) {
+        dispatch(setDoctorProfile(result.doctor));
+      } else {
+        // Optimistically update the store with local form data
+        dispatch(setDoctorProfile({ ...doctorProfile, availability, daysOff: availabilityForm.daysOff }));
+      }
+      toast.success("Availability saved successfully!");
       setIsEditing(false);
     } catch (err) {
       setError(err.message || "Failed to update availability info");
+      toast.error(err.message || "Failed to save availability");
     }
   };
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-md text-center">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Error</h3>
-          <p className="text-red-600">{error}</p>
+      <div className="h-[50vh] flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-md text-center max-w-md border border-slate-100">
+          <h3 className="text-lg font-semibold text-slate-800 mb-2">Error</h3>
+          <p className="text-red-600 font-medium">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="space-y-6">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-emerald-600 text-white rounded-xl shadow-md p-8 mb-8 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-teal-800 to-emerald-800 text-white rounded-xl shadow-md p-8 mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold mb-1">Doctor Availability</h1>
             <p className="opacity-90">

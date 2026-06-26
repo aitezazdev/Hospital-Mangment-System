@@ -181,3 +181,16 @@ export const deleteAppointment = async (id) => {
     throw new Error(backendMessage);
   }
 };
+
+export const prescribeMedicines = async (id, payload) => {
+  try {
+    const { data } = await api.put(`/appointment/appointment/${id}/prescribe`, payload);
+    return data;
+  } catch (error) {
+    const backendMessage =
+      error?.response?.data?.message ||
+      error?.message ||
+      "Error saving prescription medicines";
+    throw new Error(backendMessage);
+  }
+};

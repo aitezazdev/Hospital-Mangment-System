@@ -4,13 +4,18 @@ import { RiGenderlessLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { createPatientProfile } from "../../apis/patient";
 import { useDispatch } from "react-redux";
-import { setHasProfile } from "../../redux/slices/auth";
+import { setHasProfile, logoutUser } from "../../redux/slices/auth";
 
 const PatientCreateProfile = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState("error");
   const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    dispatch(logoutUser());
+    navigate("/auth/signin");
+  };
 
   const [formData, setFormData] = useState({
     gender: "",
@@ -184,10 +189,18 @@ const PatientCreateProfile = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg font-semibold shadow-md transition-colors ${
-              loading && "bg-emerald-300 cursor-not-allowed"
+            className={`w-full cursor-pointer bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-lg font-semibold shadow-md transition-colors ${
+              loading && "bg-teal-300 cursor-not-allowed"
             }`}>
             {loading ? "Submitting..." : "Submit Profile"}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleSignOut}
+            className="w-full text-center text-sm font-semibold text-gray-500 hover:text-red-500 hover:underline mt-4 cursor-pointer"
+          >
+            Cancel & Sign Out
           </button>
         </form>
       </div>

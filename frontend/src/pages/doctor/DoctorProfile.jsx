@@ -84,7 +84,7 @@ const DoctorProfile = () => {
 
   const handleSaveProfessional = async () => {
     try {
-      const updated = await updateProfessionalInfo(
+      await updateProfessionalInfo(
         doctorProfile._id,
         professionalForm
       );
@@ -109,25 +109,25 @@ const DoctorProfile = () => {
     };
 
     loadProfile();
-  }, [user]);
+  }, [user?.email]);
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/auth/signin");
+    navigate("/auth/signin", { replace: true });
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-lg">
+      <div className="h-[50vh] flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 max-w-sm w-full">
           <div className="animate-pulse flex space-x-4">
-            <div className="w-12 h-12 bg-emerald-200 rounded-full"></div>
+            <div className="w-12 h-12 bg-teal-100 rounded-full"></div>
             <div className="flex-1 space-y-3">
-              <div className="h-4 bg-emerald-200 rounded w-3/4"></div>
-              <div className="h-3 bg-emerald-100 rounded w-1/2"></div>
+              <div className="h-4 bg-teal-200 rounded w-3/4"></div>
+              <div className="h-3 bg-teal-100 rounded w-1/2"></div>
             </div>
           </div>
-          <p className="text-emerald-600 mt-4 text-center">
+          <p className="text-teal-600 font-semibold mt-4 text-center">
             Loading your profile...
           </p>
         </div>
@@ -137,17 +137,17 @@ const DoctorProfile = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-lg border-l-4 border-red-500">
+      <div className="h-[50vh] flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 border-l-4 border-red-500 max-w-md">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-              <div className="w-5 h-5 bg-red-500 rounded"></div>
+              <div className="w-5 h-5 bg-red-500 rounded-full"></div>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-lg font-bold text-slate-800">
                 Error Loading Profile
               </h3>
-              <p className="text-red-600">{error}</p>
+              <p className="text-red-600 font-medium">{error}</p>
             </div>
           </div>
         </div>
@@ -156,12 +156,12 @@ const DoctorProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="space-y-6">
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800 flex items-center">
-              <div className="w-8 h-8 bg-emerald-500 rounded-lg mr-3"></div>
+              <div className="w-8 h-8 bg-teal-600 rounded-lg mr-3"></div>
               Doctor Profile
             </h1>
             <p className="text-gray-600 mt-2">
@@ -291,9 +291,9 @@ const DoctorProfile = () => {
                 {!isEditingProfessional ? (
                   <div>
                     {doctorProfile && (
-                      <div className="bg-white rounded-xl shadow-lg border-l-4 border-blue-500 p-6">
+                      <div className="bg-white rounded-xl shadow-lg border-l-4 border-teal-500 p-6">
                         <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                          <div className="w-6 h-6 bg-blue-500 rounded mr-3"></div>
+                          <div className="w-6 h-6 bg-teal-500 rounded mr-3"></div>
                           Professional Information
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -350,7 +350,7 @@ const DoctorProfile = () => {
                     )}
                   </div>
                 ) : (
-                  <div className="bg-white rounded-xl shadow-lg border-l-4 border-blue-500 p-6">
+                  <div className="bg-white rounded-xl shadow-lg border-l-4 border-teal-500 p-6">
                     <h2 className="text-xl font-bold text-gray-800 mb-6">
                       Edit Professional Info
                     </h2>
@@ -366,7 +366,7 @@ const DoctorProfile = () => {
 
                     <input
                       type="number"
-                      name="experiedoctorProfilence"
+                      name="experience"
                       value={professionalForm.experience}
                       onChange={handleProfessionalChange}
                       className="w-full mb-4 px-3 py-2 border rounded-lg"
@@ -418,7 +418,7 @@ const DoctorProfile = () => {
                     <div className="flex space-x-4 mt-6">
                       <button
                         onClick={handleSaveProfessional}
-                        className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg">
+                        className="bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded-lg">
                         Save
                       </button>
                       <button
