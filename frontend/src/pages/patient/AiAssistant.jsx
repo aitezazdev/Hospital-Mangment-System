@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import api from "../../apis/axios";
-import { Sparkles, Send, User, Bot, AlertTriangle } from "lucide-react";
+import { Activity, Send, User, Stethoscope, AlertTriangle } from "lucide-react";
 import toast from "react-hot-toast";
 
 const AiAssistant = () => {
@@ -23,7 +23,7 @@ const AiAssistant = () => {
       if (response.data.success) {
         setMessages((prev) => [
           ...prev,
-          { sender: "ai", text: response.data.response },
+          { sender: "advisor", text: response.data.response },
         ]);
       } else {
         toast.error("Failed to get response from AI");
@@ -34,8 +34,8 @@ const AiAssistant = () => {
       setMessages((prev) => [
         ...prev,
         {
-          sender: "ai",
-          text: "⚠️ Sorry, I encountered an issue connecting to the symptom checker. Please check that the backend is running and the Gemini API key is configured correctly in the `.env` file.",
+          sender: "advisor",
+          text: "Sorry, I encountered an issue connecting to the symptom checker. Please check that the backend is running and the API key is configured correctly.",
         },
       ]);
     } finally {
@@ -55,11 +55,11 @@ const AiAssistant = () => {
         <div className="bg-slate-900 p-6 text-white flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center text-slate-900 shadow-md">
-              <Sparkles className="w-5 h-5 animate-pulse" />
+              <Activity className="w-5 h-5 animate-pulse" />
             </div>
             <div>
-              <h2 className="text-xl font-bold tracking-tight">AI Health Assistant</h2>
-              <p className="text-xs text-teal-400 font-semibold tracking-wide">Gemini-Powered Diagnosis Recommender</p>
+              <h2 className="text-xl font-bold tracking-tight">Symptom Advisor</h2>
+              <p className="text-xs text-teal-400 font-semibold tracking-wide">Clinical Symptoms Reference Guide</p>
             </div>
           </div>
           <div className="hidden sm:flex items-center gap-1.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-3 py-1 rounded-full text-xs font-semibold">
@@ -70,7 +70,7 @@ const AiAssistant = () => {
         {}
         <div className="bg-amber-50 text-amber-900 px-6 py-3 border-b border-amber-100 flex items-center gap-2 text-xs sm:text-sm font-medium">
           <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-          <span>This is an AI assistant, not a doctor. If you're feeling unwell, please book an appointment with our doctors for a proper checkup.</span>
+          <span>This is an automated symptom advisor tool, not a medical doctor. If you're feeling unwell, please book an appointment with our doctors for a proper checkup.</span>
         </div>
 
         {/* Message Panel */}
@@ -90,14 +90,14 @@ const AiAssistant = () => {
                     : "bg-teal-50 text-teal-600 border-teal-100"
                 }`}
               >
-                {msg.sender === "user" ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+                {msg.sender === "user" ? <User className="w-4 h-4" /> : <Stethoscope className="w-4 h-4" />}
               </div>
 
               {/* Message Box */}
               <div
                 className={`rounded-2xl px-5 py-3.5 text-sm leading-relaxed whitespace-pre-wrap ${
                   msg.sender === "user"
-                    ? "bg-gradient-to-tr from-teal-600 to-emerald-600 text-white rounded-tr-none shadow-md shadow-teal-500/10"
+                    ? "bg-teal-600 text-white rounded-tr-none shadow-md shadow-teal-500/10"
                     : "bg-slate-50 border border-slate-200/80 text-slate-800 rounded-tl-none"
                 }`}
               >
@@ -111,7 +111,7 @@ const AiAssistant = () => {
           {loading && (
             <div className="flex items-start gap-3 max-w-[85%]">
               <div className="w-9 h-9 rounded-full bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 text-teal-600">
-                <Bot className="w-4 h-4" />
+                <Stethoscope className="w-4 h-4" />
               </div>
               <div className="bg-slate-50 border border-slate-200/80 rounded-2xl rounded-tl-none px-5 py-4 flex items-center space-x-1.5">
                 <div className="w-2.5 h-2.5 bg-teal-500 rounded-full animate-bounce delay-100" />

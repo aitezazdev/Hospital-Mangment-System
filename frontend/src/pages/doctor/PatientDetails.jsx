@@ -60,14 +60,14 @@ const PatientDetails = () => {
 
       if (response.data.success) {
         setAiSummary(response.data.summary);
-        toast.success("AI clinical summary generated successfully!");
+        toast.success("Clinical summary generated successfully!");
       } else {
-        toast.error("Failed to generate AI summary");
+        toast.error("Failed to generate clinical summary");
       }
     } catch (error) {
       console.error("Clinical summary generation error:", error);
       toast.error(error.response?.data?.message || "Could not generate clinical summary");
-      setAiSummary("⚠️ Error generating summary. Make sure the Gemini API key is configured on the backend.");
+      setAiSummary("Error generating summary. Make sure the API key is configured on the backend.");
     } finally {
       setLoadingSummary(false);
     }
@@ -140,16 +140,20 @@ const PatientDetails = () => {
 
       {}
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-slate-100 mb-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-teal-500/5 to-transparent rounded-full pointer-events-none" />
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-100">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-teal-500" />
-            <h2 className="text-lg font-black text-slate-900">AI Clinical Assistant</h2>
+        <div className="absolute top-0 right-0 w-24 h-24 bg-teal-500/5 rounded-full pointer-events-none" />
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-4">
+          <div>
+            <h2 className="text-lg font-black text-slate-900">
+              Clinical Summary
+            </h2>
+            <p className="text-slate-400 text-xs mt-0.5">
+              Automated synthesis of diagnostic history and notes.
+            </p>
           </div>
           <button
             onClick={handleGenerateSummary}
             disabled={loadingSummary}
-            className={`inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-md transition-all cursor-pointer ${
+            className={`inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-md transition-all cursor-pointer ${
               loadingSummary && "opacity-75 cursor-not-allowed"
             }`}
           >
@@ -161,7 +165,7 @@ const PatientDetails = () => {
             ) : (
               <>
                 <Activity className="w-4 h-4" />
-                Generate AI Summary
+                Generate Summary
               </>
             )}
           </button>
@@ -170,7 +174,7 @@ const PatientDetails = () => {
         {aiSummary ? (
           <div className="bg-slate-950 text-slate-200 border border-slate-900 rounded-xl p-5 font-medium text-sm leading-relaxed space-y-2">
             <div className="flex items-center gap-1.5 text-teal-400 font-bold uppercase text-xs tracking-wider">
-              <BotIcon className="w-3.5 h-3.5" /> Gemini Clinical Summary
+              <Activity className="w-3.5 h-3.5" /> Clinical Summary
             </div>
             <p className="font-mono text-[13px]">{aiSummary}</p>
           </div>

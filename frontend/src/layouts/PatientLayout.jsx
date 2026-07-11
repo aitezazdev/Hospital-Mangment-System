@@ -6,7 +6,7 @@ import {
   Calendar,
   Search,
   User,
-  Sparkles,
+  Activity,
   LogOut,
   Menu,
   X,
@@ -135,8 +135,8 @@ const PatientLayout = () => {
               }`
             }
           >
-            <Sparkles className="w-5 h-5 shrink-0" />
-            <span className="font-semibold text-sm">AI Health Assistant</span>
+            <Activity className="w-5 h-5 shrink-0" />
+            <span className="font-semibold text-sm">Symptom Advisor</span>
           </NavLink>
 
           <NavLink
