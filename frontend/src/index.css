@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Override emerald with a clean, professional clinical Teal palette */
+  
   --color-emerald-50: #f0fdfa;
   --color-emerald-100: #ccfbf1;
   --color-emerald-200: #99f6e4;
@@ -15,7 +15,7 @@
   --color-emerald-900: #0f3e3c;
   --color-emerald-950: #042f2e;
 
-  /* Let's also do the same for teal/indigo if they are used as layouts so everything is unified */
+  
   --color-teal-50: #f0fdfa;
   --color-teal-100: #ccfbf1;
   --color-teal-200: #99f6e4;
@@ -28,7 +28,7 @@
   --color-teal-900: #0f3e3c;
   --color-teal-950: #042f2e;
 
-  /* Map font-sans to the newly loaded Plus Jakarta Sans font family */
+  
   --font-sans: "Plus Jakarta Sans", sans-serif;
 }
 

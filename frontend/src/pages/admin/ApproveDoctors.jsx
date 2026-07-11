@@ -11,6 +11,8 @@ const ApproveDoctors = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [detailsVisible, setDetailsVisible] = useState(false);
 
+  const [actionLoading, setActionLoading] = useState(false);
+
   const fetchDoctors = async () => {
     setLoading(true);
     try {
@@ -41,22 +43,28 @@ const ApproveDoctors = () => {
   });
 
   const handleApprove = async (id) => {
+    setActionLoading(true);
     try {
       await approveDoctor(id);
       message.success("Doctor approved successfully");
-      fetchDoctors();
+      await fetchDoctors();
     } catch (err) {
       message.error(err.response?.data?.message || "Error approving doctor");
+    } finally {
+      setActionLoading(false);
     }
   };
 
   const handleDisapprove = async (id) => {
+    setActionLoading(true);
     try {
       await rejectDoctor(id);
       message.success("Doctor disapproved successfully");
-      fetchDoctors();
+      await fetchDoctors();
     } catch (err) {
       message.error(err.response?.data?.message || "Error disapproving doctor");
+    } finally {
+      setActionLoading(false);
     }
   };
 
@@ -87,6 +95,7 @@ const ApproveDoctors = () => {
         <div className="flex gap-2">
           <Button
             className="border-zinc-200 hover:border-zinc-800 hover:text-teal-600"
+            disabled={actionLoading}
             onClick={() => {
               setSelectedDoctor(record);
               setDetailsVisible(true);
@@ -100,8 +109,13 @@ const ApproveDoctors = () => {
             onConfirm={() => handleApprove(record._id)}
             okText="Yes"
             cancelText="No"
+            disabled={actionLoading}
           >
-            <Button className="border-zinc-200 hover:border-zinc-800 hover:text-teal-600">
+            <Button
+              loading={actionLoading}
+              disabled={actionLoading}
+              className="border-zinc-200 hover:border-zinc-800 hover:text-teal-600"
+            >
               Approve
             </Button>
           </Popconfirm>
@@ -111,8 +125,14 @@ const ApproveDoctors = () => {
             onConfirm={() => handleDisapprove(record._id)}
             okText="Yes"
             cancelText="No"
+            disabled={actionLoading}
           >
-            <Button danger className="border-zinc-200 hover:border-zinc-800 hover:text-red-600">
+            <Button
+              danger
+              loading={actionLoading}
+              disabled={actionLoading}
+              className="border-zinc-200 hover:border-zinc-800 hover:text-red-600"
+            >
               Reject
             </Button>
           </Popconfirm>

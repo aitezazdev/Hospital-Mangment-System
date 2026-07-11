@@ -50,7 +50,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
+        {}
         <nav className="hidden md:flex items-center space-x-8">
           <Link to="/#departments" className="text-slate-600 hover:text-emerald-600 text-sm font-medium transition-colors">Departments</Link>
           <Link to="/#services" className="text-slate-600 hover:text-emerald-600 text-sm font-medium transition-colors">Portal Access</Link>
@@ -80,7 +80,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Mobile menu button */}
+        {}
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -92,7 +92,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-b border-zinc-200">
           <div className="px-4 pt-2 pb-4 space-y-1 text-center">
