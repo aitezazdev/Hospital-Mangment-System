@@ -93,7 +93,7 @@ const Landing = () => {
             {token && user ? (
               <button
                 onClick={handleGetStarted}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-5 py-2 rounded transition-colors cursor-pointer flex items-center gap-1.5"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-5 py-2 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5"
               >
                 Go to Portal <ChevronRight className="w-4 h-4" />
               </button>
@@ -104,7 +104,7 @@ const Landing = () => {
                 </Link>
                 <Link
                   to="/auth/signup"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2 rounded transition-colors cursor-pointer"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2 rounded-xl transition-colors cursor-pointer"
                 >
                   Book Appointment
                 </Link>
@@ -116,7 +116,7 @@ const Landing = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-slate-600 hover:text-slate-900 focus:outline-none p-2 rounded"
+              className="text-slate-600 hover:text-slate-900 focus:outline-none p-2 rounded-xl"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -127,23 +127,23 @@ const Landing = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-b border-slate-200">
             <div className="px-4 pt-2 pb-4 space-y-1 text-center">
-              <a href="#departments" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600 rounded">Departments</a>
-              <a href="#services" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600 rounded">Portal Access</a>
-              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600 rounded">Contact</a>
+              <a href="#departments" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600 rounded-xl">Departments</a>
+              <a href="#services" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600 rounded-xl">Portal Access</a>
+              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600 rounded-xl">Contact</a>
               <div className="pt-4 border-t border-slate-100 flex flex-col items-center gap-2">
                 {token && user ? (
                   <button
                     onClick={() => { setMobileMenuOpen(false); handleGetStarted(); }}
-                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded"
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-xl"
                   >
                     Go to Portal
                   </button>
                 ) : (
                   <>
-                    <Link to="/auth/signin" onClick={() => setMobileMenuOpen(false)} className="w-full text-slate-700 font-medium py-2 rounded bg-slate-100 block text-center">
+                    <Link to="/auth/signin" onClick={() => setMobileMenuOpen(false)} className="w-full text-slate-700 font-medium py-2 rounded-xl bg-slate-100 block text-center">
                       Sign In
                     </Link>
-                    <Link to="/auth/signup" onClick={() => setMobileMenuOpen(false)} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded block text-center">
+                    <Link to="/auth/signup" onClick={() => setMobileMenuOpen(false)} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-xl block text-center">
                       Book Appointment
                     </Link>
                   </>
@@ -157,7 +157,7 @@ const Landing = () => {
       {}
       <section className="bg-white border-b border-slate-200 py-16 md:py-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-100 text-xs font-semibold px-3.5 py-1 rounded">
+          <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-100 text-xs font-semibold px-3.5 py-1 rounded-full">
             <Shield className="w-3.5 h-3.5 text-emerald-600" /> Fully Accredited Medical Facility
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
@@ -170,13 +170,13 @@ const Landing = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
             <button
               onClick={handleGetStarted}
-              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3.5 rounded transition-all flex items-center justify-center gap-2 cursor-pointer text-base shadow-sm"
+              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-base shadow-sm"
             >
               Book an Appointment <Calendar className="w-4.5 h-4.5" />
             </button>
             <a
               href="#departments"
-              className="w-full sm:w-auto text-slate-600 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 font-semibold px-8 py-3.5 rounded transition-all flex items-center justify-center"
+              className="w-full sm:w-auto text-slate-600 hover:text-slate-950 bg-slate-100 hover:bg-slate-200 font-semibold px-8 py-3.5 rounded-xl transition-all flex items-center justify-center"
             >
               Explore Departments
             </a>
@@ -198,7 +198,7 @@ const Landing = () => {
             {departments.map((dept, index) => {
               const IconComp = dept.icon;
               return (
-                <div key={index} className="bg-slate-50 border border-slate-200 rounded p-6 space-y-3.5 shadow-sm">
+                <div key={index} className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-3.5 shadow-sm">
                   <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center">
                     <IconComp className="w-5.5 h-5.5" />
                   </div>
@@ -225,7 +225,7 @@ const Landing = () => {
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {}
-            <div className="bg-white border border-slate-200 rounded p-6 flex flex-col justify-between h-72 shadow-sm hover:shadow transition-shadow">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between h-72 shadow-sm hover:shadow transition-shadow">
               <div className="space-y-3">
                 <span className="text-xs font-bold text-emerald-600 uppercase">Patient Dashboard</span>
                 <p className="text-slate-500 text-xs leading-relaxed">
@@ -234,14 +234,14 @@ const Landing = () => {
               </div>
               <button
                 onClick={handleGetStarted}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2.5 rounded transition-colors cursor-pointer"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors cursor-pointer"
               >
                 Access Patient Portal
               </button>
             </div>
 
             {}
-            <div className="bg-white border border-slate-200 rounded p-6 flex flex-col justify-between h-72 shadow-sm hover:shadow transition-shadow">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between h-72 shadow-sm hover:shadow transition-shadow">
               <div className="space-y-3">
                 <span className="text-xs font-bold text-emerald-600 uppercase">Physician Portal</span>
                 <p className="text-slate-500 text-xs leading-relaxed">
@@ -250,7 +250,7 @@ const Landing = () => {
               </div>
               <button
                 onClick={handleGetStarted}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2.5 rounded transition-colors cursor-pointer"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors cursor-pointer"
               >
                 Access Physician Terminal
               </button>
@@ -268,7 +268,7 @@ const Landing = () => {
           </div>
 
           <div className="space-y-6">
-            <div className="bg-slate-50 rounded p-5 border border-slate-200 flex gap-4">
+            <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex gap-4">
               <HelpCircle className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-slate-900 text-sm mb-1.5">How do I book an appointment with a specialist?</h4>
@@ -278,8 +278,8 @@ const Landing = () => {
               </div>
             </div>
 
-            <div className="bg-slate-50 rounded p-5 border border-slate-200 flex gap-4">
-              <HelpCircle className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
+            <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex gap-4">
+              <HelpCircle className="w-6 h-6 text-emerald-500 shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-slate-900 text-sm mb-1.5">What is the purpose of the AI Symptom Checker?</h4>
                 <p className="text-slate-500 text-xs leading-relaxed">
@@ -288,8 +288,8 @@ const Landing = () => {
               </div>
             </div>
 
-            <div className="bg-slate-50 rounded p-5 border border-slate-200 flex gap-4">
-              <HelpCircle className="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" />
+            <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex gap-4">
+              <HelpCircle className="w-6 h-6 text-emerald-500 shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-slate-900 text-sm mb-1.5">How are doctor licenses verified?</h4>
                 <p className="text-slate-500 text-xs leading-relaxed">

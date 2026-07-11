@@ -130,7 +130,7 @@ const ApproveDoctors = () => {
       
       </div>
 
-      <div className="relative w-2/3 mx-auto">
+      <div className="relative w-full max-w-2xl mx-auto">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
         <input
           type="text"

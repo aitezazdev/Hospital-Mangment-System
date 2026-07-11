@@ -189,7 +189,7 @@ const PatientCreateProfile = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full cursor-pointer bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-lg font-semibold shadow-md transition-colors ${
+            className={`w-full cursor-pointer bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-xl font-semibold shadow-md transition-colors ${
               loading && "bg-teal-300 cursor-not-allowed"
             }`}>
             {loading ? "Submitting..." : "Submit Profile"}

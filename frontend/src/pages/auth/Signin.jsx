@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaLock } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+import { MdEmail, MdWarning } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { signinUser, clearError } from "../../redux/slices/auth";
@@ -100,7 +100,8 @@ const Signin = () => {
 
         {isExpired && (
           <div className="bg-amber-50 border border-amber-200 text-amber-800 rounded-xl p-3 mb-4 text-xs font-semibold flex items-center gap-2 shadow-sm">
-            <span>⚠️ Your session has expired. Please sign in again.</span>
+            <MdWarning className="text-amber-600 text-base shrink-0" />
+            <span>Your session has expired. Please sign in again.</span>
           </div>
         )}
 

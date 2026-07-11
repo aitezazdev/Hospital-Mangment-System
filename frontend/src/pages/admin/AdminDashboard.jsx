@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, AlertTriangle } from "lucide-react";
 import { fullList } from "../../apis/admin";
 
 const AdminDashboard = () => {
@@ -44,7 +44,9 @@ const AdminDashboard = () => {
     return (
       <div className="flex items-center justify-center h-[50vh] p-4">
         <div className="bg-white rounded-xl border border-slate-100 p-8 max-w-md w-full shadow-sm">
-          <div className="text-red-500 text-5xl mb-4 text-center">⚠️</div>
+          <div className="flex justify-center text-red-500 mb-4">
+            <AlertTriangle className="w-12 h-12" />
+          </div>
           <h2 className="text-2xl font-bold text-slate-800 mb-2 text-center">
             Error Loading Data
           </h2>
