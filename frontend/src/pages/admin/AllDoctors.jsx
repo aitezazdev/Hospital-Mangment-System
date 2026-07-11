@@ -91,9 +91,9 @@ const AllDoctors = () => {
       title: "Status",
       render: (_, record) => {
         const statusColors = {
-          approved: "bg-green-100 text-green-700 border-green-300",
-          rejected: "bg-red-100 text-red-700 border-red-300",
-          pending: "bg-orange-100 text-orange-700 border-orange-300",
+          approved: "bg-green-100 text-green-700 border-zinc-200",
+          rejected: "bg-red-100 text-red-700 border-zinc-200",
+          pending: "bg-orange-100 text-orange-700 border-zinc-200",
         };
         return (
           <span
@@ -165,7 +165,7 @@ const AllDoctors = () => {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-slate-200 pb-5 mb-8">
+      <div className="border-b border-zinc-200 pb-5 mb-8">
 
         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">All Doctors</h1>
         <p className="text-slate-500 text-sm mt-1">Manage all registered doctors and their approval status</p>
@@ -179,11 +179,11 @@ const AllDoctors = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by Name or Specialization"
-          className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white shadow-sm placeholder-gray-400 text-gray-700 focus:ring-2 focus:ring-teal-400 focus:shadow-lg transition-all duration-300 ease-in-out"
+          className="w-full pl-12 pr-4 py-3 rounded-full border border-zinc-200 bg-white shadow-sm placeholder-gray-400 text-gray-700 focus:ring-2 focus:ring-zinc-800 focus:shadow-lg transition-all duration-300 ease-in-out"
         />
       </div>
 
-      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-zinc-200">
         <Tabs
           activeKey={statusFilter}
           onChange={setStatusFilter}

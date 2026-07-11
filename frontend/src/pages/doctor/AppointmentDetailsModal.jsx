@@ -145,7 +145,7 @@ const AppointmentDetailsModal = ({
               value={customReason}
               onChange={(e) => setCustomReason(e.target.value)}
               placeholder="No reason specified. Provide symptoms/reason for AI recommendation..."
-              className="text-slate-800 text-xs border border-slate-200 focus:border-teal-500 rounded-md"
+              className="text-slate-800 text-xs border border-zinc-200 focus:border-zinc-200 rounded-md"
               disabled={aiLoading}
             />
           ) : (
@@ -164,12 +164,12 @@ const AppointmentDetailsModal = ({
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium border ${
               appointment.status === "pending"
-                ? "bg-orange-100 text-orange-700 border-orange-300"
+                ? "bg-orange-100 text-orange-700 border-zinc-200"
                 : appointment.status === "confirmed"
-                ? "bg-green-100 text-green-700 border-green-300"
+                ? "bg-green-100 text-green-700 border-zinc-200"
                 : appointment.status === "completed"
-                ? "bg-blue-100 text-blue-700 border-blue-300"
-                : "bg-red-100 text-red-700 border-red-300"
+                ? "bg-teal-100 text-teal-700 border-zinc-200"
+                : "bg-red-100 text-red-700 border-zinc-200"
             }`}
           >
             {appointment.status}
@@ -179,7 +179,7 @@ const AppointmentDetailsModal = ({
 
       {}
       {isEditing ? (
-        <div className="mt-6 border-t border-slate-100 pt-4 space-y-4">
+        <div className="mt-6 border-t border-zinc-200 pt-4 space-y-4">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-bold text-teal-700">Write Prescription</h3>
             <Button
@@ -188,14 +188,14 @@ const AppointmentDetailsModal = ({
               loading={aiLoading}
               disabled={aiLoading}
               onClick={handleAiRecommend}
-              className="text-xs flex items-center gap-1.5 border-teal-500 text-teal-700 hover:text-teal-800"
+              className="text-xs flex items-center gap-1.5 border-zinc-200 text-teal-700 hover:text-teal-800"
             >
               <Sparkles className="w-3.5 h-3.5" /> {aiLoading ? "Generating..." : "Suggest with AI"}
             </Button>
           </div>
 
           {aiLoading && (
-            <div className="flex items-center gap-2 text-xs text-teal-600 animate-pulse py-2 px-3 bg-teal-50/50 border border-teal-100 rounded-lg font-semibold">
+            <div className="flex items-center gap-2 text-xs text-teal-600 animate-pulse py-2 px-3 bg-teal-50/50 border border-zinc-200 rounded-lg font-semibold">
               <span>AI is generating prescription suggestions</span>
               <span className="flex space-x-1 items-center h-2">
                 <span className="w-1.5 h-1.5 bg-teal-600 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
@@ -245,7 +245,7 @@ const AppointmentDetailsModal = ({
           </div>
         </div>
       ) : (
-        <div className="mt-6 border-t border-slate-100 pt-4 space-y-3">
+        <div className="mt-6 border-t border-zinc-200 pt-4 space-y-3">
           <div className="flex justify-between items-center">
             <h3 className="text-sm font-bold text-teal-700">Prescription</h3>
             {mode === "doctor" &&
@@ -262,7 +262,7 @@ const AppointmentDetailsModal = ({
               )}
           </div>
 
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3">
+          <div className="bg-slate-50 p-4 rounded-xl border border-zinc-200 space-y-3">
             <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                 Recommended Medicines
@@ -313,7 +313,7 @@ const AppointmentDetailsModal = ({
           {appointment.status === "confirmed" && (
             <Button
               type="default"
-              className="bg-blue-500 hover:bg-blue-600 text-white border-none font-semibold"
+              className="bg-teal-600 hover:bg-teal-700 text-white border-none font-semibold"
               onClick={() => {
                 onComplete(appointment._id);
                 onClose();

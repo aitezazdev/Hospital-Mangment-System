@@ -106,8 +106,8 @@ const PatientCreateProfile = () => {
           <div
             className={`${
               messageType === "success"
-                ? "bg-green-100 text-green-600 border-green-400"
-                : "bg-red-100 text-red-600 border-red-400"
+                ? "bg-green-100 text-green-600 border-zinc-200"
+                : "bg-red-100 text-red-600 border-zinc-200"
             } border rounded p-2 mb-4 text-sm text-center`}>
             {message}
           </div>
@@ -115,7 +115,7 @@ const PatientCreateProfile = () => {
 
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <RiGenderlessLine className="text-gray-400 text-lg mr-2" />
               <select
                 name="gender"
@@ -135,7 +135,7 @@ const PatientCreateProfile = () => {
 
           <div>
             <label className="text-gray-600 px-3 font-bold block">Age</label>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <input
                 type="number"
                 name="age"
@@ -153,7 +153,7 @@ const PatientCreateProfile = () => {
           </div>
 
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaMapMarkerAlt className="text-gray-400 text-lg mr-2" />
               <input
                 type="text"
@@ -173,7 +173,7 @@ const PatientCreateProfile = () => {
             <label className="text-gray-600 px-3 font-bold block text-sm mb-1">
               Medical History (optional, comma-separated)
             </label>
-            <div className="flex items-start border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-start border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaUserMd className="text-gray-400 text-lg mr-2 mt-2" />
               <textarea
                 name="medicalHistory"

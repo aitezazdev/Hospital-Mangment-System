@@ -59,7 +59,7 @@ const PatientLayout = () => {
         `}
       >
         {}
-        <div className="p-6 border-b border-slate-800">
+        <div className="p-6 border-b border-zinc-800">
           <div className="flex items-center space-x-3">
             <svg viewBox="0 0 24 24" className="w-8 h-8 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="4" y="3" width="4" height="8" rx="2" className="fill-teal-400" />
@@ -156,9 +156,9 @@ const PatientLayout = () => {
         </nav>
 
         {}
-        <div className="p-6 border-t border-slate-800 space-y-4">
+        <div className="p-6 border-t border-zinc-800 space-y-4">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center border border-slate-700">
+            <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center border border-zinc-800">
               <User className="w-5 h-5 text-slate-300" />
             </div>
             <div className="flex-1 min-w-0">
@@ -172,7 +172,7 @@ const PatientLayout = () => {
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer border border-red-500/20 hover:border-transparent"
+            className="w-full flex items-center justify-center gap-2 bg-red-600/10 hover:bg-red-600 text-red-400 hover:text-white py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer border border-zinc-200 hover:border-transparent"
           >
             <LogOut className="w-4 h-4" />
             Logout Session

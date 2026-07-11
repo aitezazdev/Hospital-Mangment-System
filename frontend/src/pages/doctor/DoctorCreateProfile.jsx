@@ -98,8 +98,8 @@ const DoctorCreateProfile = () => {
           <div
             className={`${
               message.toLowerCase().includes("error")
-                ? "bg-red-100 text-red-700 border-red-400"
-                : "bg-green-100 text-green-700 border-green-400"
+                ? "bg-red-100 text-red-700 border-zinc-200"
+                : "bg-green-100 text-green-700 border-zinc-200"
             } border rounded p-2 mb-4 text-sm text-center`}>
             {message}
           </div>
@@ -111,7 +111,7 @@ const DoctorCreateProfile = () => {
               {" "}
               Specialization{" "}
             </label>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <RiStethoscopeLine className="text-gray-400 text-lg mr-2" />
               <input
                 type="text"
@@ -132,7 +132,7 @@ const DoctorCreateProfile = () => {
               {" "}
               Experience (years){" "}
             </label>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaCalendarAlt className="text-gray-400 text-lg mr-2" />
               <input
                 type="number"
@@ -153,7 +153,7 @@ const DoctorCreateProfile = () => {
               {" "}
               Consultation Fee (Rs.){" "}
             </label>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaDollarSign className="text-gray-400 text-lg mr-2" />
               <input
                 type="number"
@@ -174,7 +174,7 @@ const DoctorCreateProfile = () => {
               {" "}
               Clinic Address{" "}
             </label>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaMapMarkerAlt className="text-gray-400 text-lg mr-2" />
               <input
                 type="text"
@@ -195,7 +195,7 @@ const DoctorCreateProfile = () => {
               {" "}
               Availability{" "}
             </label>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaCalendarAlt className="text-gray-400 text-lg mr-2" />
               <input
                 type="text"

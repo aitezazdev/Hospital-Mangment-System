@@ -103,7 +103,7 @@ const PatientDetails = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[50vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-200"></div>
       </div>
     );
   }
@@ -119,7 +119,7 @@ const PatientDetails = () => {
   return (
     <div className="space-y-6">
       {}
-      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 mb-8 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-200 pb-5 mb-8 gap-4">
 
         <div>
           <h1 className="text-3xl font-black mb-1">
@@ -139,9 +139,9 @@ const PatientDetails = () => {
       </div>
 
       {}
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-slate-100 mb-8 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-zinc-200 mb-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-24 h-24 bg-teal-500/5 rounded-full pointer-events-none" />
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 pb-4 mb-4">
           <div>
             <h2 className="text-lg font-black text-slate-900">
               Clinical Summary
@@ -172,7 +172,7 @@ const PatientDetails = () => {
         </div>
 
         {aiSummary ? (
-          <div className="bg-slate-950 text-slate-200 border border-slate-900 rounded-xl p-5 font-medium text-sm leading-relaxed space-y-2">
+          <div className="bg-slate-950 text-slate-200 border border-zinc-800 rounded-xl p-5 font-medium text-sm leading-relaxed space-y-2">
             <div className="flex items-center gap-1.5 text-teal-400 font-bold uppercase text-xs tracking-wider">
               <Activity className="w-3.5 h-3.5" /> Clinical Summary
             </div>
@@ -186,7 +186,7 @@ const PatientDetails = () => {
       </div>
 
       {/* Patient Information Panel */}
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-slate-100 mb-8">
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-zinc-200 mb-8">
         <h2 className="text-lg font-black mb-4 text-slate-900">
           Personal Information
         </h2>
@@ -224,14 +224,14 @@ const PatientDetails = () => {
       </div>
 
       {/* Medical History Section */}
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-slate-100 mb-8">
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-zinc-200 mb-8">
         <h2 className="text-lg font-black mb-4 text-slate-900">Medical History</h2>
         {patient.medicalHistory && patient.medicalHistory.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {patient.medicalHistory.map((item, idx) => (
               <span
                 key={idx}
-                className="bg-indigo-50 border border-indigo-100 text-indigo-700 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm"
+                className="bg-teal-50 border border-zinc-200 text-teal-700 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm"
               >
                 {item}
               </span>
@@ -243,16 +243,16 @@ const PatientDetails = () => {
       </div>
 
       {/* Appointment History Panel */}
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-slate-100">
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md p-6 border border-zinc-200">
         <h2 className="text-lg font-black mb-4 text-slate-900 flex items-center gap-2">
-          <Calendar className="h-5 w-5 text-indigo-600" /> Appointment History
+          <Calendar className="h-5 w-5 text-teal-600" /> Appointment History
         </h2>
         {patient.appointmentHistory?.length > 0 ? (
           <div className="space-y-4">
             {patient.appointmentHistory.map((appt, i) => (
               <div
                 key={i}
-                className="bg-slate-50 rounded-xl p-5 border border-slate-150 shadow-sm"
+                className="bg-slate-50 rounded-xl p-5 border border-zinc-200 shadow-sm"
               >
                 <div className="flex justify-between items-center mb-3">
                   <span className="font-bold text-slate-800">

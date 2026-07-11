@@ -114,7 +114,7 @@ const DoctorPatients = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[50vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-200"></div>
       </div>
     );
   }
@@ -122,13 +122,13 @@ const DoctorPatients = () => {
   return (
     <div className="space-y-6">
       <div className="max-w-7xl mx-auto">
-        <div className="border-b border-slate-200 pb-5 mb-8">
+        <div className="border-b border-zinc-200 pb-5 mb-8">
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Patients</h1>
           <p className="text-slate-500 text-sm mt-1">Manage and track all your patients</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-lg shadow-sm border border-zinc-200 p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">
@@ -144,7 +144,7 @@ const DoctorPatients = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-lg shadow-sm border border-zinc-200 p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">
@@ -161,7 +161,7 @@ const DoctorPatients = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+        <div className="bg-white rounded-lg shadow-sm border border-zinc-200 p-6 mb-6">
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -171,7 +171,7 @@ const DoctorPatients = () => {
                   placeholder="Search by name, email, or phone..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full pl-10 pr-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-800 focus:border-zinc-800"
                 />
               </div>
             </div>
@@ -180,7 +180,7 @@ const DoctorPatients = () => {
               <select
                 value={genderFilter}
                 onChange={(e) => setGenderFilter(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                className="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-800 focus:border-zinc-800">
                 <option value="">All Genders</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -196,7 +196,7 @@ const DoctorPatients = () => {
                   setSortBy(field);
                   setSortOrder(order);
                 }}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                className="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-zinc-800 focus:border-zinc-800">
                 <option value="name-asc">Name A-Z</option>
                 <option value="name-desc">Name Z-A</option>
                 <option value="totalVisits-desc">Most Visits</option>
@@ -209,7 +209,7 @@ const DoctorPatients = () => {
         </div>
 
         {currentPatients.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+          <div className="bg-white rounded-lg shadow-sm border border-zinc-200 p-12 text-center">
             <User className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">
               No patients found
@@ -224,7 +224,7 @@ const DoctorPatients = () => {
               <Link
                 to={`/doctor/patients/${patient._id}`}
                 key={patient._id}
-                className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                className="bg-white rounded-lg shadow-sm border border-zinc-200 hover:shadow-md transition-shadow">
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
@@ -280,7 +280,7 @@ const DoctorPatients = () => {
         )}
 
         {totalPages > 1 && (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 px-6 py-4">
+          <div className="bg-white rounded-lg shadow-sm border border-zinc-200 px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-700">
                 Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
@@ -296,7 +296,7 @@ const DoctorPatients = () => {
                     setCurrentPage((prev) => Math.max(prev - 1, 1))
                   }
                   disabled={currentPage === 1}
-                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-zinc-200 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                   Previous
                 </button>
 
@@ -307,7 +307,7 @@ const DoctorPatients = () => {
                     className={`px-3 py-2 text-sm font-medium rounded-md ${
                       currentPage === i + 1
                         ? "bg-emerald-600 text-white"
-                        : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+                        : "text-gray-700 bg-white border border-zinc-200 hover:bg-gray-50"
                     }`}>
                     {i + 1}
                   </button>
@@ -318,7 +318,7 @@ const DoctorPatients = () => {
                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                   }
                   disabled={currentPage === totalPages}
-                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-zinc-200 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
                   Next
                 </button>
               </div>

@@ -99,21 +99,21 @@ const Signin = () => {
         </div>
 
         {isExpired && (
-          <div className="bg-amber-50 border border-amber-200 text-amber-800 rounded-xl p-3 mb-4 text-xs font-semibold flex items-center gap-2 shadow-sm">
+          <div className="bg-amber-50 border border-zinc-200 text-amber-800 rounded-xl p-3 mb-4 text-xs font-semibold flex items-center gap-2 shadow-sm">
             <MdWarning className="text-amber-600 text-base shrink-0" />
             <span>Your session has expired. Please sign in again.</span>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-100 text-red-600 border border-red-400 rounded p-2 mb-4 text-sm text-center">
+          <div className="bg-red-100 text-red-600 border border-zinc-200 rounded p-2 mb-4 text-sm text-center">
             {error}
           </div>
         )}
 
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <MdEmail className="text-gray-400 text-xl mr-2" />
               <input
                 name="email"
@@ -131,7 +131,7 @@ const Signin = () => {
           </div>
 
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaLock className="text-gray-400 text-lg mr-2" />
               <input
                 name="password"

@@ -116,14 +116,14 @@ const Signup = () => {
         </div>
 
         {error && (
-          <div className="bg-red-100 text-red-600 border border-red-400 rounded p-2 mb-4 text-sm text-center">
+          <div className="bg-red-100 text-red-600 border border-zinc-200 rounded p-2 mb-4 text-sm text-center">
             {error}
           </div>
         )}
 
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaUser className="text-gray-400 text-lg mr-2" />
               <input
                 name="name"
@@ -141,7 +141,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <MdEmail className="text-gray-400 text-lg mr-2" />
               <input
                 name="email"
@@ -159,7 +159,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaLock className="text-gray-400 text-lg mr-2" />
               <input
                 name="password"
@@ -176,7 +176,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaLock className="text-gray-400 text-lg mr-2" />
               <input
                 name="confirmPassword"
@@ -195,7 +195,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <RiUserSettingsFill className="text-gray-400 text-lg mr-2" />
               <select
                 name="role"
@@ -215,7 +215,7 @@ const Signup = () => {
           </div>
 
           <div>
-            <div className="flex items-center border-b-2 border-emerald-400 focus-within:border-emerald-500 px-3 py-2">
+            <div className="flex items-center border-b-2 border-zinc-200 focus-within:border-zinc-800 px-3 py-2">
               <FaUser className="text-gray-400 text-lg mr-2" />
               <input
                 name="phone"

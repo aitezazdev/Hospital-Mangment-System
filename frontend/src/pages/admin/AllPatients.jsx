@@ -82,7 +82,7 @@ const AllPatients = () => {
       title: "Actions",
       render: (_, record) => (
         <Button
-          className="border-gray-300 hover:border-teal-500 hover:text-teal-600"
+          className="border-zinc-200 hover:border-zinc-800 hover:text-teal-600"
           onClick={() => {
             setSelectedPatient(record);
             setDetailsVisible(true);
@@ -95,7 +95,7 @@ const AllPatients = () => {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-slate-200 pb-5 mb-8">
+      <div className="border-b border-zinc-200 pb-5 mb-8">
 
         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">All Patients</h1>
         <p className="text-slate-500 text-sm mt-1">View and manage all registered patients</p>
@@ -109,11 +109,11 @@ const AllPatients = () => {
           value={searchTerm}  
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by Name or Email"
-          className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white shadow-sm placeholder-gray-400 text-gray-700 focus:ring-2 focus:ring-teal-400 focus:shadow-lg transition-all duration-300 ease-in-out"
+          className="w-full pl-12 pr-4 py-3 rounded-full border border-zinc-200 bg-white shadow-sm placeholder-gray-400 text-gray-700 focus:ring-2 focus:ring-zinc-800 focus:shadow-lg transition-all duration-300 ease-in-out"
         />
       </div>
 
-      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-zinc-200">
         <div className="overflow-x-auto mt-4">
           <Table
             rowKey="_id"

@@ -113,10 +113,10 @@ const PatientAppointments = () => {
       dataIndex: "status",
       render: (s) => {
         const colors = {
-          pending: "bg-orange-100 text-orange-700 border-orange-300",
-          confirmed: "bg-green-100 text-green-700 border-green-300",
-          cancelled: "bg-red-100 text-red-700 border-red-300",
-          completed: "bg-blue-100 text-blue-700 border-blue-300",
+          pending: "bg-orange-100 text-orange-700 border-zinc-200",
+          confirmed: "bg-green-100 text-green-700 border-zinc-200",
+          cancelled: "bg-red-100 text-red-700 border-zinc-200",
+          completed: "bg-blue-100 text-blue-700 border-zinc-200",
         };
         return (
           <span
@@ -131,7 +131,7 @@ const PatientAppointments = () => {
       render: (_, record) => (
         <div className="flex gap-2">
           <Button
-            className="border-gray-300 hover:border-teal-500 hover:text-teal-600"
+            className="border-zinc-200 hover:border-zinc-800 hover:text-teal-600"
             onClick={() => {
               setSelectedAppointment(record);
               setDetailsVisible(true);
@@ -141,7 +141,7 @@ const PatientAppointments = () => {
           {record.status === "pending" && (
             <>
               <Button
-                className="border-gray-300 hover:border-blue-500 hover:text-blue-600"
+                className="border-zinc-200 hover:border-zinc-800 hover:text-blue-600"
                 onClick={() => {
                   setSelectedAppointment(record);
                   setShowRescheduleModal(true);
@@ -155,7 +155,7 @@ const PatientAppointments = () => {
                 cancelText="No">
                 <Button
                   danger
-                  className="border-gray-300 hover:border-red-500 hover:text-red-600">
+                  className="border-zinc-200 hover:border-zinc-800 hover:text-red-600">
                   Delete
                 </Button>
               </Popconfirm>
@@ -183,7 +183,7 @@ const PatientAppointments = () => {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-slate-200 pb-5 mb-8">
+      <div className="border-b border-zinc-200 pb-5 mb-8">
         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">My Appointments</h1>
         <p className="text-slate-500 text-sm mt-1">View and track your scheduled appointments</p>
       </div>
@@ -195,15 +195,15 @@ const PatientAppointments = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by Doctor Name or Reason"
-          className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white 
+          className="w-full pl-12 pr-4 py-3 rounded-full border border-zinc-200 bg-white 
                shadow-sm placeholder-gray-400 text-gray-700 
                focus:outline-none focus:border-transparent 
-               focus:ring-2 focus:ring-teal-400 focus:shadow-lg
+               focus:ring-2 focus:ring-zinc-800 focus:shadow-lg
                transition-all duration-300 ease-in-out"
         />
       </div>
 
-      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-gray-100 mt-6">
+      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-zinc-200 mt-6">
         <Tabs
           activeKey={statusFilter}
           onChange={setStatusFilter}

@@ -135,8 +135,8 @@ const DoctorProfile = () => {
   if (loading) {
     return (
       <div className="h-[50vh] flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-100 max-w-sm w-full text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-3 border-teal-600 mx-auto mb-4 border-t-transparent"></div>
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-zinc-200 max-w-sm w-full text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-3 border-zinc-200 mx-auto mb-4 border-t-transparent"></div>
           <p className="text-slate-500 text-xs font-semibold">Loading profile...</p>
         </div>
       </div>
@@ -146,7 +146,7 @@ const DoctorProfile = () => {
   if (error) {
     return (
       <div className="h-[50vh] flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl border border-slate-100 border-l-4 border-red-500 max-w-md text-center shadow-sm">
+        <div className="bg-white p-8 rounded-xl border border-zinc-200 border-l-4 border-zinc-200 max-w-md text-center shadow-sm">
           <p className="text-red-600 font-semibold text-xs">{error}</p>
         </div>
       </div>
@@ -156,7 +156,7 @@ const DoctorProfile = () => {
   return (
     <div className="space-y-8 pb-12">
       {}
-      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-200 pb-5 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Doctor Profile</h1>
           <p className="text-slate-500 text-sm mt-1">Manage your professional information and settings</p>
@@ -176,15 +176,15 @@ const DoctorProfile = () => {
           <div className="lg:col-span-2 space-y-6">
             
             {}
-            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
-              <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-5">
+            <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm">
+              <div className="flex justify-between items-center border-b border-zinc-200 pb-4 mb-5">
                 <h2 className="text-base font-bold text-slate-800">
                   Personal Information
                 </h2>
                 {!isEditingPersonal && (
                   <button
                     onClick={editingPersonalInfo}
-                    className="text-xs font-semibold text-teal-600 hover:text-teal-700 border border-slate-200 hover:bg-teal-50 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                    className="text-xs font-semibold text-teal-600 hover:text-teal-700 border border-zinc-200 hover:bg-teal-50 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
                   >
                     Edit
                   </button>
@@ -220,7 +220,7 @@ const DoctorProfile = () => {
                         name="name"
                         value={personalForm.name}
                         onChange={handlePersonalChange}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-zinc-800 focus:border-zinc-800"
                       />
                     </div>
                     <div>
@@ -230,7 +230,7 @@ const DoctorProfile = () => {
                         name="email"
                         value={personalForm.email}
                         onChange={handlePersonalChange}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-zinc-800 focus:border-zinc-800"
                       />
                     </div>
                     <div>
@@ -240,7 +240,7 @@ const DoctorProfile = () => {
                         name="phone"
                         value={personalForm.phone}
                         onChange={handlePersonalChange}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-zinc-800 focus:border-zinc-800"
                       />
                     </div>
                     <div>
@@ -250,7 +250,7 @@ const DoctorProfile = () => {
                         name="role"
                         value={personalForm.role}
                         readOnly
-                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs bg-slate-50 text-slate-400 cursor-not-allowed outline-none"
+                        className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-xs bg-slate-50 text-slate-400 cursor-not-allowed outline-none"
                       />
                     </div>
                   </div>
@@ -273,15 +273,15 @@ const DoctorProfile = () => {
             </div>
 
             {}
-            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
-              <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-5">
+            <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm">
+              <div className="flex justify-between items-center border-b border-zinc-200 pb-4 mb-5">
                 <h2 className="text-base font-bold text-slate-800">
                   Professional Information
                 </h2>
                 {!isEditingProfessional && doctorProfile && (
                   <button
                     onClick={editingProfessionalInfo}
-                    className="text-xs font-semibold text-teal-600 hover:text-teal-700 border border-slate-200 hover:bg-teal-50 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+                    className="text-xs font-semibold text-teal-600 hover:text-teal-700 border border-zinc-200 hover:bg-teal-50 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
                   >
                     Edit
                   </button>
@@ -309,17 +309,17 @@ const DoctorProfile = () => {
                         <span className="mt-1 inline-block">
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${
                             doctorProfile.status === "approved"
-                              ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+                              ? "bg-emerald-50 text-emerald-700 border-zinc-200"
                               : doctorProfile.status === "rejected"
-                              ? "bg-red-50 text-red-700 border-red-100"
-                              : "bg-amber-50 text-amber-700 border-amber-100"
+                              ? "bg-red-50 text-red-700 border-zinc-200"
+                              : "bg-amber-50 text-amber-700 border-zinc-200"
                           }`}>
                             {doctorProfile.status}
                           </span>
                         </span>
                       </div>
                     </div>
-                    <div className="border-t border-slate-100 pt-5">
+                    <div className="border-t border-zinc-200 pt-5">
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Clinic Address</span>
                       <span className="text-xs font-semibold text-slate-800 mt-1 block leading-relaxed">{doctorProfile.clinicAddress}</span>
                     </div>
@@ -337,7 +337,7 @@ const DoctorProfile = () => {
                         name="specialization"
                         value={professionalForm.specialization}
                         onChange={handleProfessionalChange}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-zinc-800 focus:border-zinc-800"
                         placeholder="Specialization"
                       />
                     </div>
@@ -348,7 +348,7 @@ const DoctorProfile = () => {
                         name="experience"
                         value={professionalForm.experience}
                         onChange={handleProfessionalChange}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-zinc-800 focus:border-zinc-800"
                         placeholder="Experience in years"
                       />
                     </div>
@@ -359,7 +359,7 @@ const DoctorProfile = () => {
                         name="consultationFee"
                         value={professionalForm.consultationFee}
                         onChange={handleProfessionalChange}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-zinc-800 focus:border-zinc-800"
                         placeholder="Consultation Fee"
                       />
                     </div>
@@ -370,13 +370,13 @@ const DoctorProfile = () => {
                         value={professionalForm.clinicAddress}
                         onChange={handleProfessionalChange}
                         rows={2}
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-zinc-800 focus:border-zinc-800"
                         placeholder="Clinic Address"
                       />
                     </div>
                   </div>
 
-                  <div className="border-t border-slate-100 pt-4 mt-4">
+                  <div className="border-t border-zinc-200 pt-4 mt-4">
                     <label className="text-xs font-bold text-slate-700 block mb-2">Days Off</label>
                     <div className="flex flex-wrap gap-x-4 gap-y-2">
                       {[
@@ -393,7 +393,7 @@ const DoctorProfile = () => {
                             type="checkbox"
                             checked={professionalForm.daysOff.includes(day)}
                             onChange={() => handleDaysOffChange(day)}
-                            className="mr-1.5 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+                            className="mr-1.5 rounded border-zinc-200 text-teal-600 focus:ring-zinc-800"
                           />
                           {day}
                         </label>
@@ -423,7 +423,7 @@ const DoctorProfile = () => {
 
           {}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm text-center">
+            <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm text-center">
               <div className="w-20 h-20 bg-slate-100 text-slate-700 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold">
                 {profile.name ? profile.name.charAt(0).toUpperCase() : "D"}
               </div>
@@ -436,20 +436,20 @@ const DoctorProfile = () => {
                 </p>
               )}
 
-              <div className="w-full border-t border-slate-100 mt-6 pt-5 space-y-3">
+              <div className="w-full border-t border-zinc-200 mt-6 pt-5 space-y-3">
                 <div className="flex items-center justify-between text-xs text-slate-500">
                   <span className="font-semibold text-slate-700">Profile Status</span>
                   <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border ${
                     doctorProfile?.isApproved
-                      ? "bg-emerald-50 text-emerald-700 border-emerald-100"
-                      : "bg-amber-50 text-amber-700 border-amber-100"
+                      ? "bg-emerald-50 text-emerald-700 border-zinc-200"
+                      : "bg-amber-50 text-amber-700 border-zinc-200"
                   }`}>
                     {doctorProfile?.isApproved ? "Approved" : "Pending"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-xs text-slate-500">
                   <span className="font-semibold text-slate-700">Account Type</span>
-                  <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded border border-slate-200 text-[9px] font-bold uppercase tracking-wider">
+                  <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded border border-zinc-200 text-[9px] font-bold uppercase tracking-wider">
                     Doctor
                   </span>
                 </div>
@@ -466,7 +466,7 @@ const DoctorProfile = () => {
 
             {}
             {doctorProfile?.daysOff && doctorProfile.daysOff.length > 0 && (
-              <div className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
+              <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm">
                 <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">
                   Days Off
                 </h3>
@@ -474,7 +474,7 @@ const DoctorProfile = () => {
                   {doctorProfile.daysOff.map((day, index) => (
                     <span
                       key={index}
-                      className="px-2 py-0.5 bg-slate-50 text-slate-600 border border-slate-200 rounded text-xs font-semibold"
+                      className="px-2 py-0.5 bg-slate-50 text-slate-600 border border-zinc-200 rounded text-xs font-semibold"
                     >
                       {day}
                     </span>

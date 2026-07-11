@@ -43,9 +43,9 @@ const AdminProfile = () => {
 
   return (
     <div className="h-[70vh] flex justify-center items-center p-6">
-      <div className="w-full bg-white max-w-md rounded-xl border border-slate-100 p-8 shadow-sm">
+      <div className="w-full bg-white max-w-md rounded-xl border border-zinc-200 p-8 shadow-sm">
         <div className="flex flex-col items-center text-center">
-          <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-2xl font-bold border border-slate-200 mb-4">
+          <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-2xl font-bold border border-zinc-200 mb-4">
             {profile?.name?.charAt(0)?.toUpperCase() || "A"}
           </div>
 
@@ -57,7 +57,7 @@ const AdminProfile = () => {
             {profile?.role || "Admin"}
           </p>
 
-          <div className="w-full space-y-4 text-left bg-slate-50/50 rounded-xl p-5 border border-slate-100">
+          <div className="w-full space-y-4 text-left bg-slate-50/50 rounded-xl p-5 border border-zinc-200">
             <div>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                 Email Address
@@ -107,14 +107,14 @@ const AdminProfile = () => {
           className: "bg-teal-600 hover:bg-teal-700 border-none font-semibold text-xs py-1.5 px-3 rounded-lg",
         }}
         cancelButtonProps={{
-          className: "hover:border-slate-400 hover:text-slate-600 text-xs py-1.5 px-3 rounded-lg",
+          className: "hover:border-zinc-800 hover:text-slate-600 text-xs py-1.5 px-3 rounded-lg",
         }}>
         <Form form={form} layout="vertical" className="mt-4">
           <Form.Item
             label={<span className="text-xs font-semibold text-slate-600">Full Name</span>}
             name="name"
             rules={[{ required: true, message: "Please enter your name" }]}>
-            <Input placeholder="Enter full name" className="hover:border-teal-500 focus:border-teal-500 rounded-lg text-xs py-2" />
+            <Input placeholder="Enter full name" className="hover:border-zinc-800 focus:border-zinc-800 rounded-lg text-xs py-2" />
           </Form.Item>
           <Form.Item
             label={<span className="text-xs font-semibold text-slate-600">Email</span>}
@@ -123,7 +123,7 @@ const AdminProfile = () => {
               { required: true, message: "Please enter your email" },
               { type: "email", message: "Invalid email address" },
             ]}>
-            <Input placeholder="Enter email" className="hover:border-teal-500 focus:border-teal-500 rounded-lg text-xs py-2" />
+            <Input placeholder="Enter email" className="hover:border-zinc-800 focus:border-zinc-800 rounded-lg text-xs py-2" />
           </Form.Item>
           <Form.Item
             label={<span className="text-xs font-semibold text-slate-600">Phone</span>}
@@ -135,7 +135,7 @@ const AdminProfile = () => {
                 message: "Enter a valid 11-digit phone number",
               },
             ]}>
-            <Input placeholder="Enter phone number" className="hover:border-teal-500 focus:border-teal-500 rounded-lg text-xs py-2" />
+            <Input placeholder="Enter phone number" className="hover:border-zinc-800 focus:border-zinc-800 rounded-lg text-xs py-2" />
           </Form.Item>
         </Form>
       </Modal>

@@ -86,7 +86,7 @@ const ApproveDoctors = () => {
       render: (_, record) => (
         <div className="flex gap-2">
           <Button
-            className="border-gray-300 hover:border-teal-500 hover:text-teal-600"
+            className="border-zinc-200 hover:border-zinc-800 hover:text-teal-600"
             onClick={() => {
               setSelectedDoctor(record);
               setDetailsVisible(true);
@@ -101,7 +101,7 @@ const ApproveDoctors = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button className="border-gray-300 hover:border-teal-600 hover:text-teal-600">
+            <Button className="border-zinc-200 hover:border-zinc-800 hover:text-teal-600">
               Approve
             </Button>
           </Popconfirm>
@@ -112,7 +112,7 @@ const ApproveDoctors = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button danger className="border-gray-300 hover:border-red-500 hover:text-red-600">
+            <Button danger className="border-zinc-200 hover:border-zinc-800 hover:text-red-600">
               Reject
             </Button>
           </Popconfirm>
@@ -123,7 +123,7 @@ const ApproveDoctors = () => {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-slate-200 pb-5 mb-8">
+      <div className="border-b border-zinc-200 pb-5 mb-8">
 
         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Doctor Approvals</h1>
         <p className="text-slate-500 text-sm mt-1">Review and approve new doctors joining the platform</p>
@@ -137,15 +137,15 @@ const ApproveDoctors = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by Name or Specialization"
-          className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 bg-white 
+          className="w-full pl-12 pr-4 py-3 rounded-full border border-zinc-200 bg-white 
             shadow-sm placeholder-gray-400 text-gray-700 
             focus:outline-none focus:border-transparent 
-            focus:ring-2 focus:ring-teal-400 focus:shadow-lg
+            focus:ring-2 focus:ring-zinc-800 focus:shadow-lg
             transition-all duration-300 ease-in-out"
         />
       </div>
 
-      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-gray-100 mt-6">
+      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 border border-zinc-200 mt-6">
         <div className="overflow-x-auto mt-4">
           <Table
             rowKey="_id"

@@ -49,7 +49,7 @@ const PatientDashboard = () => {
   return (
     <div className="space-y-8 pb-12">
       {}
-      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-200 pb-5 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
             Welcome back, <span className="text-teal-600">{user?.name || "Patient"}</span>
@@ -64,25 +64,25 @@ const PatientDashboard = () => {
       {}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {}
-        <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Bookings</p>
           <p className="text-3xl font-extrabold text-slate-800 mt-1.5">{stats.total}</p>
         </div>
 
         {}
-        <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Confirmed</p>
           <p className="text-3xl font-extrabold text-slate-800 mt-1.5">{stats.confirmed}</p>
         </div>
 
         {}
-        <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Pending</p>
           <p className="text-3xl font-extrabold text-slate-800 mt-1.5">{stats.pending}</p>
         </div>
 
         {}
-        <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Completed</p>
           <p className="text-3xl font-extrabold text-slate-800 mt-1.5">{stats.completed}</p>
         </div>
@@ -93,27 +93,27 @@ const PatientDashboard = () => {
         
         {}
         <div className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
             <h2 className="text-lg font-bold text-slate-800">
               Upcoming Active Schedules
             </h2>
             {appointments.length > 0 && (
-              <span className="text-xs font-semibold bg-slate-50 text-slate-600 px-2.5 py-1 rounded-md border border-slate-100">
+              <span className="text-xs font-semibold bg-slate-50 text-slate-600 px-2.5 py-1 rounded-md border border-zinc-200">
                 Next {appointments.length} Visits
               </span>
             )}
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-16 bg-white border border-slate-100 rounded-xl">
-              <div className="animate-spin rounded-full h-8 w-8 border-3 border-teal-600 mx-auto border-t-transparent"></div>
+            <div className="flex justify-center items-center py-16 bg-white border border-zinc-200 rounded-xl">
+              <div className="animate-spin rounded-full h-8 w-8 border-3 border-zinc-200 mx-auto border-t-transparent"></div>
             </div>
           ) : appointments.length > 0 ? (
             <div className="space-y-4">
               {appointments.map((appt) => (
                 <div
                   key={appt._id}
-                  className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+                  className="bg-white border border-zinc-200 rounded-xl p-5 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
                 >
                   <div className="space-y-3 w-full">
                     <div className="flex items-start justify-between">
@@ -128,15 +128,15 @@ const PatientDashboard = () => {
                       <div className="sm:hidden">
                         <span className={`px-2.5 py-0.5 text-xs font-semibold rounded-md border ${
                           appt.status === "confirmed"
-                            ? "bg-emerald-50 text-emerald-700 border-emerald-100"
-                            : "bg-amber-50 text-amber-700 border-amber-100"
+                            ? "bg-emerald-50 text-emerald-700 border-zinc-200"
+                            : "bg-amber-50 text-amber-700 border-zinc-200"
                         }`}>
                           {appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}
                         </span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs text-slate-500 border-t border-slate-100 pt-3">
+                    <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs text-slate-500 border-t border-zinc-200 pt-3">
                       <div>
                         <span className="font-semibold text-slate-700 block">Date</span>
                         {new Date(appt.date).toLocaleDateString("en-GB", {
@@ -163,8 +163,8 @@ const PatientDashboard = () => {
                   <div className="hidden sm:flex flex-col items-end justify-center shrink-0">
                     <span className={`px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md border ${
                       appt.status === "confirmed"
-                        ? "bg-emerald-50 text-emerald-700 border-emerald-100"
-                        : "bg-amber-50 text-amber-700 border-amber-100"
+                        ? "bg-emerald-50 text-emerald-700 border-zinc-200"
+                        : "bg-amber-50 text-amber-700 border-zinc-200"
                     }`}>
                       {appt.status}
                     </span>
@@ -173,7 +173,7 @@ const PatientDashboard = () => {
               ))}
             </div>
           ) : (
-            <div className="bg-white border border-dashed border-slate-200 rounded-xl p-10 text-center flex flex-col items-center justify-center space-y-4">
+            <div className="bg-white border border-dashed border-zinc-200 rounded-xl p-10 text-center flex flex-col items-center justify-center space-y-4">
               <div className="max-w-xs">
                 <h4 className="text-sm font-bold text-slate-800">No Upcoming Appointments</h4>
                 <p className="text-xs text-slate-500 mt-1">
@@ -192,7 +192,7 @@ const PatientDashboard = () => {
 
         {/* Right Sidebar: Quick Actions & Portal Links */}
         <div className="space-y-6">
-          <div className="border-b border-slate-100 pb-3">
+          <div className="border-b border-zinc-200 pb-3">
             <h2 className="text-lg font-bold text-slate-800">
               Quick Portals
             </h2>
@@ -202,7 +202,7 @@ const PatientDashboard = () => {
             {/* Book Doctor */}
             <Link
               to="/patient/find-doctors"
-              className="group block bg-white border border-slate-100 rounded-xl p-5 shadow-sm hover:border-slate-300 transition-all"
+              className="group block bg-white border border-zinc-200 rounded-xl p-5 shadow-sm hover:border-zinc-800 transition-all"
             >
               <h4 className="text-xs font-bold text-slate-800 group-hover:text-teal-600 transition-colors flex items-center justify-between">
                 Find Clinical Specialist
@@ -216,7 +216,7 @@ const PatientDashboard = () => {
             {/* AI Assistant */}
             <Link
               to="/patient/ai-assistant"
-              className="group block bg-white border border-slate-100 rounded-xl p-5 shadow-sm hover:border-slate-300 transition-all"
+              className="group block bg-white border border-zinc-200 rounded-xl p-5 shadow-sm hover:border-zinc-800 transition-all"
             >
               <h4 className="text-xs font-bold text-slate-800 group-hover:text-teal-600 transition-colors flex items-center justify-between">
                 AI Health Assistant
@@ -230,7 +230,7 @@ const PatientDashboard = () => {
             {/* View Profile */}
             <Link
               to="/patient/profile"
-              className="group block bg-white border border-slate-100 rounded-xl p-5 shadow-sm hover:border-slate-300 transition-all"
+              className="group block bg-white border border-zinc-200 rounded-xl p-5 shadow-sm hover:border-zinc-800 transition-all"
             >
               <h4 className="text-xs font-bold text-slate-800 group-hover:text-teal-600 transition-colors flex items-center justify-between">
                 Manage Health Profile

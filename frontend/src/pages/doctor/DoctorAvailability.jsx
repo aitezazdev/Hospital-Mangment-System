@@ -235,7 +235,7 @@ const DoctorAvailability = () => {
   if (error) {
     return (
       <div className="h-[50vh] flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-md text-center max-w-md border border-slate-100">
+        <div className="bg-white p-8 rounded-xl shadow-md text-center max-w-md border border-zinc-200">
           <h3 className="text-lg font-semibold text-slate-800 mb-2">Error</h3>
           <p className="text-red-600 font-medium">{error}</p>
         </div>
@@ -246,7 +246,7 @@ const DoctorAvailability = () => {
   return (
     <div className="space-y-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 mb-8 gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-200 pb-5 mb-8 gap-4">
           <div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Doctor Availability</h1>
             <p className="text-slate-500 text-sm mt-1">Manage your weekly schedule and availability</p>
@@ -294,7 +294,7 @@ const DoctorAvailability = () => {
                                     {daySlots.map((slot, index) => (
                                       <div
                                         key={index}
-                                        className="bg-white border border-gray-200 px-3 py-1 rounded-md text-sm">
+                                        className="bg-white border border-zinc-200 px-3 py-1 rounded-md text-sm">
                                         {formatTimeTo12Hour(slot.startTime)} -{" "}
                                         {formatTimeTo12Hour(slot.endTime)}
                                         <span className="text-gray-500 ml-2">
@@ -391,7 +391,7 @@ const DoctorAvailability = () => {
                   {daysOfWeek.map((day) => (
                     <div
                       key={day}
-                      className="border border-gray-200 rounded-lg p-4">
+                      className="border border-zinc-200 rounded-lg p-4">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center space-x-3">
                           <input
@@ -401,7 +401,7 @@ const DoctorAvailability = () => {
                               availabilityForm.weeklySchedule[day].isActive
                             }
                             onChange={() => toggleDayActive(day)}
-                            className="w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500"
+                            className="w-5 h-5 text-emerald-600 rounded focus:ring-zinc-800"
                           />
                           <label
                             htmlFor={`day-${day}`}
@@ -446,7 +446,7 @@ const DoctorAvailability = () => {
                                         e.target.value
                                       )
                                     }
-                                    className="px-3 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500"
+                                    className="px-3 py-1 border border-zinc-200 rounded focus:ring-2 focus:ring-zinc-800"
                                   />
                                   <span className="text-gray-500">to</span>
                                   <input
@@ -460,7 +460,7 @@ const DoctorAvailability = () => {
                                         e.target.value
                                       )
                                     }
-                                    className="px-3 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500"
+                                    className="px-3 py-1 border border-zinc-200 rounded focus:ring-2 focus:ring-zinc-800"
                                   />
                                   <div className="flex items-center space-x-2">
                                     <label className="text-sm text-gray-600">
@@ -479,7 +479,7 @@ const DoctorAvailability = () => {
                                           parseInt(e.target.value)
                                         )
                                       }
-                                      className="w-20 px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500"
+                                      className="w-20 px-2 py-1 border border-zinc-200 rounded focus:ring-2 focus:ring-zinc-800"
                                     />
                                   </div>
                                   <button
@@ -507,7 +507,7 @@ const DoctorAvailability = () => {
                     </div>
                   ))}
                 </div>
-                <div className="mt-8 pt-6 border-t border-gray-200">
+                <div className="mt-8 pt-6 border-t border-zinc-200">
                   <h3 className="text-lg font-medium text-gray-800 mb-4">
                     Days Off (General)
                   </h3>
@@ -518,7 +518,7 @@ const DoctorAvailability = () => {
                           type="checkbox"
                           checked={availabilityForm.daysOff.includes(day)}
                           onChange={() => handleDaysOffChange(day)}
-                          className="w-4 h-4 text-red-600 rounded focus:ring-red-500"
+                          className="w-4 h-4 text-red-600 rounded focus:ring-zinc-800"
                         />
                         <span className="ml-2 text-sm text-gray-700">
                           {day}

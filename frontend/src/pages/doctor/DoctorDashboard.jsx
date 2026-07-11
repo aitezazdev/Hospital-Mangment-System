@@ -109,7 +109,7 @@ const DoctorDashboard = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-[50vh]">
-        <div className="w-16 h-16 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <div className="w-16 h-16 border-4 border-zinc-200 border-t-transparent rounded-full animate-spin mb-4"></div>
         <p className="text-slate-600 text-lg">Loading dashboard...</p>
       </div>
     );
@@ -138,7 +138,7 @@ const DoctorDashboard = () => {
   return (
     <div className="space-y-6">
       {!user?.isApproved ? (
-        <div className="max-w-4xl mx-auto bg-white rounded-xl border border-slate-100 p-10 text-center shadow-sm">
+        <div className="max-w-4xl mx-auto bg-white rounded-xl border border-zinc-200 p-10 text-center shadow-sm">
           <h2 className="text-2xl font-bold text-slate-800 mb-2">
             Account Pending Approval
           </h2>
@@ -148,20 +148,20 @@ const DoctorDashboard = () => {
         </div>
       ) : (
         <div className="max-w-7xl mx-auto space-y-10">
-          <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 pb-5 gap-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-zinc-200 pb-5 gap-4">
             <div>
               <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
                 Doctor Dashboard
               </h1>
               <p className="text-slate-500 text-sm mt-1">{today}</p>
             </div>
-            <div className="px-3 py-1 rounded-md text-xs font-semibold border bg-slate-50 text-slate-700 border-slate-200">
+            <div className="px-3 py-1 rounded-md text-xs font-semibold border bg-slate-50 text-slate-700 border-zinc-200">
               Profile Approved
             </div>
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl text-sm">
+            <div className="bg-red-50 border border-zinc-200 text-red-700 p-4 rounded-xl text-sm">
               {error}
             </div>
           )}
@@ -170,9 +170,9 @@ const DoctorDashboard = () => {
             {periods.map((period, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm"
+                className="bg-white rounded-xl border border-zinc-200 p-6 shadow-sm"
               >
-                <div className="border-b border-slate-100 pb-3 mb-4">
+                <div className="border-b border-zinc-200 pb-3 mb-4">
                   <h3 className="text-sm font-bold text-slate-800">
                     {period.name}
                   </h3>
@@ -215,7 +215,7 @@ const DoctorDashboard = () => {
               Revenue Estimates
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
+              <div className="bg-white rounded-xl border border-zinc-200 p-6 shadow-sm">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
                   Today's Revenue
                 </span>
@@ -226,7 +226,7 @@ const DoctorDashboard = () => {
                   Estimated earnings
                 </span>
               </div>
-              <div className="bg-white rounded-xl border border-slate-100 p-6 shadow-sm">
+              <div className="bg-white rounded-xl border border-zinc-200 p-6 shadow-sm">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
                   Weekly Revenue
                 </span>
