@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Navbar from "../../components/Navbar";
 import { FaLock } from "react-icons/fa";
 import { MdEmail, MdWarning } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,8 +88,10 @@ const Signin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 sm:p-8">
+    <div className="min-h-screen flex flex-col bg-slate-50">
+      <Navbar />
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 sm:p-8 border border-zinc-200">
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-3xl font-extrabold text-gray-800 my-0.5">
             Sign In
@@ -175,6 +178,7 @@ const Signin = () => {
             Sign up
           </Link>
         </p>
+      </div>
       </div>
     </div>
   );
